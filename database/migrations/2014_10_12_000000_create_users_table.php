@@ -20,6 +20,11 @@ class CreateUsersTable extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
+            // тип пользователя
+            // individual (ind) - физическое лицо
+            // entepreneur (ent) - физическое лицо-предприниматель
+            // firm - фирма
+            $table->enum('type', ['ind', 'ent', 'firm']);
             $table->timestamps();
         });
     }
