@@ -17,4 +17,14 @@ class News extends Model
         'created_at',
         'updated_at',
     ];
+
+    public function offer()
+    {
+        return $this->belongsTo(Offer::class, 'offer_id', 'id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
 }

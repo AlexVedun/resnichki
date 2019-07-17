@@ -17,4 +17,9 @@ class OfferMedia extends Model
         'created_at',
         'updated_at',
     ];
+
+    public function offerDetails()
+    {
+        return $this->belongsTo(OfferDetails::class, 'offer_details_id', 'id');
+    }
 }

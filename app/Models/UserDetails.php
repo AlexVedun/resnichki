@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class UserDetail extends Model
+class UserDetails extends Model
 {
     protected $table = 'user_details';
 
@@ -27,4 +27,9 @@ class UserDetail extends Model
         'created_at',
         'updated_at',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
 }

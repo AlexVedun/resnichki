@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class OfferDetail extends Model
+class OfferDetails extends Model
 {
     protected $table = 'offer_details';
 
@@ -19,4 +19,9 @@ class OfferDetail extends Model
         'created_at',
         'updated_at',
     ];
+
+    public function offerMedia()
+    {
+        return $this->hasMany(OfferMedia::class);
+    }
 }

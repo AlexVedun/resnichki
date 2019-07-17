@@ -16,4 +16,9 @@ class Category extends Model
         'created_at',
         'updated_at',
     ];
+
+    public function offers()
+    {
+        return $this->hasMany(Offer::class);
+    }
 }
