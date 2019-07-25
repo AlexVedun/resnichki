@@ -24,4 +24,9 @@ class OfferDetails extends Model
     {
         return $this->hasMany(OfferMedia::class);
     }
+
+    public function offer()
+    {
+        return $this->belongsTo(Offer::class, 'offer_id', 'id');
+    }
 }

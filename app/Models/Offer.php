@@ -34,4 +34,9 @@ class Offer extends Model
     {
         return $this->hasOne(News::class);
     }
+
+    public function details()
+    {
+        return $this->hasOne(OfferDetails::class);
+    }
 }
