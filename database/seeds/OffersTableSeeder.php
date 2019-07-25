@@ -18,11 +18,20 @@ class OffersTableSeeder extends Seeder
         $max_category_id = DB::table('categories')->max('id');
 
         for ($i=0; $i < 20; $i++) {
+            $userId = rand(1, $max_user_id);
+            $title = $faker->realText(rand(20, 50));
             DB::table('offers')->insert([
-                'title' => $faker->realText(rand(20, 50)),
+                'title' => $title,
                 'description' => $faker->realText(rand(30, 100)),
                 'category_id' => rand(1, $max_category_id),
-                'user_id' => rand(1, $max_user_id),
+                'user_id' => $userId,
+                'created_at' => now(),
+            ]);
+            $offerId = DB::table('offers')->max('id');
+            DB::table('news')->insert([
+                'news' => $title,
+                'offer_id' => $offerId,
+                'user_id' => $userId,
                 'created_at' => now(),
             ]);
         }
