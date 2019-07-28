@@ -22,7 +22,7 @@ class OffersTableSeeder extends Seeder
             $title = $faker->realText(rand(20, 50));
             DB::table('offers')->insert([
                 'title' => $title,
-                'shot_descr' => $faker->realText(rand(30, 100)),
+                'short_descr' => $faker->realText(rand(30, 100)),
                 'category_id' => rand(1, $max_category_id),
                 'user_id' => $userId,
                 'created_at' => now(),

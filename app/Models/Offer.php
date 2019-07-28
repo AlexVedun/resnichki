@@ -12,7 +12,7 @@ class Offer extends Model
 
     protected $fillable = [
         'title',
-        'shot_descr',
+        'short_descr',
         'category_id',
         'user_id',
         'cover',
