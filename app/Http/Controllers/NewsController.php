@@ -35,11 +35,13 @@ class NewsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        News::create([
+            'news' => $request->news,
+        ]);
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified <resource class="">    </resource>
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
