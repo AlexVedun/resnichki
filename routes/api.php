@@ -23,3 +23,4 @@ Route::resource('offers', 'OfferController');
 Route::resource('users', 'UserController');
 Route::resource('login', 'LoginUserController');
 Route::resource('register', 'RegisterUserController');
+Route::resource('chunck', 'ChunckController');
