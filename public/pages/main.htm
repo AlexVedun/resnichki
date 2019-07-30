@@ -1,0 +1,58 @@
+<div id="main-div" >
+    <div class="row">
+        <div class="col s12">
+            <span class="center-align"><h2>Название сайта</h2></span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s6 card-panel">
+            <div class="row">
+                <span class="center-align"><h4>О проекте</h4></span>
+            </div>
+            <div class="row">
+                <span>Этот проект задуман для ...</span>
+            </div>
+        </div>
+        <div class="col s6 card-panel">
+            <div class="row">
+                <span class="center-align"><h4>Новости</h4></span>
+            </div>
+            <div class="row">
+                <ul class="collection" data-bind="foreach: news">
+                    <li class="collection-item" data-bind="text: news"></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // ViewModel object
+    let MainViewModel = {
+        news: ko.observableArray([]),
+        UpdateNews: function() {
+            RootViewModel.PreloaderShow();
+            $.ajax({
+                url: "api/news",
+                type: 'GET'
+            }).done(function(resp) {
+                RootViewModel.PreloaderHide();
+                resp.forEach(element => {
+                    MainViewModel.news.push(element);
+                });
+            }).fail(function(xhr, status, text) {
+                RootViewModel.PreloaderHide();
+                alert("error: " + text);
+            });
+        }
+    }
+
+    // object activation
+    ko.applyBindings(MainViewModel, document.getElementById("main-div"));
+
+    // update news when main page becomes visible
+    $(document).on("MainVisible", function () {
+        MainViewModel.UpdateNews();
+    });
+
+</script>
