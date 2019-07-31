@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Category;
+use Illuminate\Support\Facades\File;
 
 class CategoryController extends Controller
 {
@@ -14,7 +15,18 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return Category::all();
+        $categories = Category::all();
+        $result = collect();
+        foreach ($categories as $category) {
+            $item = $category;
+            $image = public_path().'//covers//'.$category->cover;
+            $imageData = base64_encode(file_get_contents($image));
+            $item->cover = 'data: '.mime_content_type($image).';base64,'.$imageData;
+            //$item->cover = base64_encode(File::get(public_path().'//covers//'.$category->cover));
+            $result->push($item);
+        }
+        return $result;
+        //return Category::all();
     }
 
     /**

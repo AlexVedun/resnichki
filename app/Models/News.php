@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\User;
 
 class News extends Model
 {
@@ -16,6 +17,10 @@ class News extends Model
         'user_id',
         'created_at',
         'updated_at',
+    ];
+
+    protected $hidden = [
+        'user_id',
     ];
 
     public function offer()

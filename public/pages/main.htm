@@ -19,7 +19,15 @@
             </div>
             <div class="row">
                 <ul class="collection" data-bind="foreach: news">
-                    <li class="collection-item" data-bind="text: news"></li>
+                    <!-- <li class="collection-item" data-bind="text: news"></li> -->
+                    <li class="collection-item">
+                        <div class="row">
+                            <!--ko text: date--><!--/ko--> - <!--ko text: user.name--><!--/ko-->
+                        </div>
+                        <div class="row">
+                            <!--ko text: news--><!--/ko-->
+                        </div>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -38,6 +46,8 @@
             }).done(function(resp) {
                 RootViewModel.PreloaderHide();
                 resp.forEach(element => {
+                    element.date = moment(element.created_at).format('DD.MM.YYYY');
+                    //console.log(element.date);
                     MainViewModel.news.push(element);
                 });
             }).fail(function(xhr, status, text) {

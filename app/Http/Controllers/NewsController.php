@@ -14,7 +14,9 @@ class NewsController extends Controller
      */
     public function index()
     {
-        return News::all();
+        $news = News::all();
+        $news->load('user');
+        return $news;
     }
 
     /**
