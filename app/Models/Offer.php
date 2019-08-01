@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\User;
 
 class Offer extends Model
 {
@@ -18,6 +19,10 @@ class Offer extends Model
         'cover',
         'created_at',
         'updated_at',
+    ];
+
+    protected $hidden = [
+        'user_id',
     ];
 
     public function category()

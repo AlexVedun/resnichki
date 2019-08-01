@@ -1,0 +1,65 @@
+<div id="offer-div" >
+    <div class="row">
+        <div class="col s12">
+            <span class="center-align"><h2 data-bind="text: title"></h2></span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s4">
+            <img class="materialboxed responsive-img" width="400" data-bind="attr: { src: cover }">
+        </div>
+        <div class="col s8">
+            <div class="row">
+                <h5><!--ko text: userName--><!--/ko--></h5>
+            </div>
+            <div class="row">
+                <a data-bind="attr: { href: link }">Контакты исполнителя</a>
+            </div>
+            <div class="row">
+                <!--ko text: description--><!--/ko-->
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let OfferViewModel = {
+        // properties
+        title: ko.observable(''),
+        userName: ko.observable(''),
+        description: ko.observable(''),
+        cover: ko.observable(''),
+        link: ko.observable(''),
+        // methods
+        UpdateOffer: function() {
+            RootViewModel.PreloaderShow();
+            $.ajax({
+                url: "api/offers/" + chunckParams['param'],
+                type: 'GET'
+            }).done(function(resp) {
+                OfferViewModel.title(resp.title);
+                OfferViewModel.userName(resp.user.name);
+                OfferViewModel.description(resp.details.description);
+                OfferViewModel.cover(resp.cover);
+                OfferViewModel.link('#user/' + resp.user.id);
+                RootViewModel.PreloaderHide();
+            }).fail(function(xhr, status, text) {
+                RootViewModel.PreloaderHide();
+                alert("error: " + text);
+            });
+        }
+    }
+
+    // object activation
+    ko.applyBindings(OfferViewModel, document.getElementById("offer-div"));
+
+    // update news when main page becomes visible
+    $(document).on("OfferVisible", function () {
+        OfferViewModel.UpdateOffer();
+    });
+
+    // activate materialboxed
+    $(document).ready(function(){
+        $('.materialboxed').materialbox();
+    });
+</script>
