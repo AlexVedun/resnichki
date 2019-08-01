@@ -1,5 +1,6 @@
-﻿body {
-}
+﻿/* body {
+
+} */
 
 .preloader-wrapper {
     position: absolute;
@@ -7,6 +8,10 @@
     left: calc(50% - 32px);
     /*display: none;*/
     z-index: 1000;
+}
+
+.offer-image-preview {
+    height: 200px;
 }
 
 /*section {

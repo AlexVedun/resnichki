@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use Illuminate\Support\Facades\File;
+use App\Helpers\GlobalFunctions;
 
 class CategoryController extends Controller
 {
@@ -19,9 +20,10 @@ class CategoryController extends Controller
         $result = collect();
         foreach ($categories as $category) {
             $item = $category;
-            $image = public_path().'//covers//'.$category->cover;
+            $item->cover = GlobalFunctions::ConvertImage2base64('//covers//'.$category->cover);
+            /* $image = public_path().'//covers//'.$category->cover;
             $imageData = base64_encode(file_get_contents($image));
-            $item->cover = 'data: '.mime_content_type($image).';base64,'.$imageData;
+            $item->cover = 'data: '.mime_content_type($image).';base64,'.$imageData; */
             //$item->cover = base64_encode(File::get(public_path().'//covers//'.$category->cover));
             $result->push($item);
         }
@@ -61,7 +63,16 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        return Category::find($id)->offers;
+        $categoryName = Category::find($id)->name;
+        $categoryOffers = Category::find($id)->offers;
+        foreach ($categoryOffers as $offer) {
+            $offer->cover = GlobalFunctions::ConvertImage2base64('//media//covers//'.$offer->cover);
+        }
+        return response()->json([
+            'name' => $categoryName,
+            'offers' => $categoryOffers,
+        ]);
+        //return Category::find($id)->offers;
     }
 
     /**
