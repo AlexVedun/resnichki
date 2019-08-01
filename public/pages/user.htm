@@ -1,0 +1,171 @@
+<div id="user-div" >
+    <div class="row">
+        <div class="col s12">
+            <span class="center-align"><h3 data-bind="text: title"></h3></span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s6 offset-s3">
+            <div data-bind="if: contact_name ">
+                <div class="row input-field">
+                    <i class="material-icons prefix">face</i>
+                    <input id="contact_name" type="text" data-bind="attr: { value: contact_name }" disabled>
+                    <label class="active" for="contact_name">Контактное лицо</label>
+                </div>
+            </div>
+            <div data-bind="if: phone ">
+                <div class="row input-field">
+                    <i class="material-icons prefix">phone</i>
+                    <input id="phone" type="text" data-bind="attr: { value: phone }" disabled>
+                    <label class="active" for="phone">Рабочий телефон</label>
+                </div>
+            </div>
+            <div data-bind="if: mobile_1 ">
+                <div class="row input-field">
+                    <i class="material-icons prefix">phone_android</i>
+                    <input id="mobile_1" type="text" data-bind="attr: { value: mobile_1 }" disabled>
+                    <label class="active" for="mobile_1">Мобильный телефон №1</label>
+                </div>
+            </div>
+            <div data-bind="if: mobile_2 ">
+                <div class="row input-field">
+                    <i class="material-icons prefix">phone_android</i>
+                    <input id="mobile_2" type="text" data-bind="attr: { value: mobile_2 }" disabled>
+                    <label class="active" for="mobile_2">Мобильный телефон №2</label>
+                </div>
+            </div>
+            <div data-bind="if: mobile_3 ">
+                <div class="row input-field">
+                    <i class="material-icons prefix">phone_android</i>
+                    <input id="mobile_3" type="text" data-bind="attr: { value: mobile_3 }" disabled>
+                    <label class="active" for="mobile_3">Мобильный телефон №3</label>
+                </div>
+            </div>
+            <div data-bind="if: viber ">
+                <div class="row input-field">
+                    <i class="material-icons prefix">chat</i>
+                    <input id="viber" type="text" data-bind="attr: { value: viber }" disabled>
+                    <label class="active" for="viber">Viber</label>
+                </div>
+            </div>
+            <div data-bind="if: whats_up ">
+                <div class="row input-field">
+                    <!-- <i class="material-icons prefix">chat</i> -->
+                    <i class="prefix icon ion-logo-whatsapp"></i>
+                    <input id="whats_up" type="text" data-bind="attr: { value: whats_up }" disabled>
+                    <label class="active" for="whats_up">WhatsUp</label>
+                </div>
+            </div>
+            <div data-bind="if: telegram ">
+                <div class="row input-field">
+                    <!-- <i class="material-icons prefix">chat</i> -->
+                    <i class="prefix icon ion-md-paper-plane"></i>
+                    <input id="telegram" type="text" data-bind="attr: { value: telegram }" disabled>
+                    <label class="active" for="telegram">Telegram</label>
+                </div>
+            </div>
+            <div data-bind="if: skype ">
+                <div class="row input-field">
+                    <!-- <i class="material-icons prefix">chat</i> -->
+                    <i class="prefix icon ion-logo-skype"></i>
+                    <input id="skype" type="text" data-bind="attr: { value: skype }" disabled>
+                    <label class="active" for="skype">Skype</label>
+                </div>
+            </div>
+            <div data-bind="if: vkontakte ">
+                <div class="row input-field">
+                    <!-- <i class="material-icons prefix">chat</i> -->
+                    <i class="prefix icon ion-logo-vk"></i>
+                    <input id="vkontakte" type="text" data-bind="attr: { value: vkontakte }" disabled>
+                    <label class="active" for="vkontakte">ВКонтакте</label>
+                </div>
+            </div>
+            <div data-bind="if: instagram ">
+                <div class="row input-field">
+                    <!-- <i class="material-icons prefix">chat</i> -->
+                    <i class="prefix icon ion-logo-instagram"></i>
+                    <input id="instagram" type="text" data-bind="attr: { value: instagram }" disabled>
+                    <label class="active" for="instagram">Instagram</label>
+                </div>
+            </div>
+            <div data-bind="if: web_site ">
+                <div class="row input-field">
+                    <i class="material-icons prefix">web</i>
+                    <input id="web_site" type="text" data-bind="attr: { value: web_site }" disabled>
+                    <label class="active" for="web_site">Web-site</label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let UserViewModel = {
+        // properties
+        title: ko.observable(''),
+        contact_name: ko.observable(''),
+        phone: ko.observable(''),
+        mobile_1: ko.observable(''),
+        mobile_2: ko.observable(''),
+        mobile_3: ko.observable(''),
+        viber: ko.observable(''),
+        whats_up: ko.observable(''),
+        telegram: ko.observable(''),
+        skype: ko.observable(''),
+        vkontakte: ko.observable(''),
+        web_site: ko.observable(''),
+        instagram: ko.observable(''),
+        // methods
+        UpdateUser: function() {
+            RootViewModel.PreloaderShow();
+            $.ajax({
+                url: "api/users/" + chunckParams['param'],
+                type: 'GET'
+            }).done(function(resp) {
+                console.log(resp);
+                UserViewModel.title(resp.name + ' (контактные данные)');
+                if (resp.details != null){
+                    UserViewModel.contact_name(resp.details.contact_name);
+                    UserViewModel.phone(resp.details.phone);
+                    UserViewModel.mobile_1(resp.details.mobile_1);
+                    UserViewModel.mobile_2(resp.details.mobile_2);
+                    UserViewModel.mobile_3(resp.details.mobile_3);
+                    UserViewModel.viber(resp.details.viber);
+                    UserViewModel.whats_up(resp.details.whats_up);
+                    UserViewModel.telegram(resp.details.telegram);
+                    UserViewModel.skype(resp.details.skype);
+                    UserViewModel.vkontakte(resp.details.vkontakte);
+                    UserViewModel.web_site(resp.details.web_site);
+                    UserViewModel.instagram(resp.details.instagram);
+                }
+                else {
+                    UserViewModel.contact_name('');
+                    UserViewModel.phone('');
+                    UserViewModel.mobile_1('');
+                    UserViewModel.mobile_2('');
+                    UserViewModel.mobile_3('');
+                    UserViewModel.viber('');
+                    UserViewModel.whats_up('');
+                    UserViewModel.telegram('');
+                    UserViewModel.skype('');
+                    UserViewModel.vkontakte('');
+                    UserViewModel.web_site('');
+                    UserViewModel.instagram('');
+                }
+                RootViewModel.PreloaderHide();
+            }).fail(function(xhr, status, text) {
+                RootViewModel.PreloaderHide();
+                alert("error: " + text);
+            });
+        }
+    }
+
+    // object activation
+    ko.applyBindings(UserViewModel, document.getElementById("user-div"));
+
+    // update news when main page becomes visible
+    $(document).on("UserVisible", function () {
+        UserViewModel.UpdateUser();
+    });
+
+</script>
