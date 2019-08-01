@@ -8,12 +8,14 @@
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+        <link href="https://unpkg.com/ionicons@4.5.10-0/dist/css/ionicons.min.css" rel="stylesheet">
         {{-- Scripts --}}
         <script src="{{ asset('js/jquery-3.4.1.min.js') }}"></script>
         <script src="{{ asset('js/knockout-3.5.0.js') }}"></script>
         <script src="{{ asset('js/materialize.min.js') }}"></script>
         <script src="{{ asset('js/sammy-0.7.6.min.js') }}"></script>
         <script src="{{ asset('js/moment.min.js') }}"></script>
+        <script src="{{ asset('js/global.js') }}"></script>
         {{-- CSS style --}}
         <link href="{{ asset('css/materialize.min.css') }}" rel="stylesheet">
         <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
@@ -42,6 +44,9 @@
             {{-- main window sections --}}
             <section id="main" data-bind="visible: sections.main" class="row"></section>
             <section id="categories" data-bind="visible: sections.categories" class="row"></section>
+            <section id="category" data-bind="visible: sections.category" class="row"></section>
+            <section id="offer" data-bind="visible: sections.offer" class="row"></section>
+            <section id="user" data-bind="visible: sections.user" class="row"></section>
         </div>
 
         {{-- main script --}}
@@ -52,6 +57,9 @@
                 sections: {
                     main: ko.observable(true),
                     categories: ko.observable(false),
+                    category: ko.observable(false),
+                    offer: ko.observable(false),
+                    user: ko.observable(false),
                 },
                 preloader: ko.observable(false),
                 // methods
@@ -129,6 +137,11 @@
                     RootViewModel.HideAll();
                     RootViewModel.ShowChunck(this.params['chunck']);
                 });
+                this.get('#:chunck/:param', function () {
+                    RootViewModel.HideAll();
+                    chunckParams['param'] = this.params['param'];
+                    RootViewModel.ShowChunck(this.params['chunck']);
+                });
             }).run();
 
             // side menu activation
@@ -139,6 +152,9 @@
             // events for pages visualisation
             let mainVisibleEvent = new Event("MainVisible");
             let categoriesVisibleEvent = new Event("CategoriesVisible");
+            let categoryVisibleEvent = new Event("CategoryVisible");
+            let offerVisibleEvent = new Event("OfferVisible");
+            let userVisibleEvent = new Event("UserVisible");
 
             RootViewModel.sections.main.subscribe(function (newValue) {
                 if (newValue) {
@@ -149,6 +165,24 @@
             RootViewModel.sections.categories.subscribe(function (newValue) {
                 if (newValue) {
                     document.dispatchEvent(categoriesVisibleEvent);
+                }
+            });
+
+            RootViewModel.sections.category.subscribe(function (newValue) {
+                if (newValue) {
+                    document.dispatchEvent(categoryVisibleEvent);
+                }
+            });
+
+            RootViewModel.sections.offer.subscribe(function (newValue) {
+                if (newValue) {
+                    document.dispatchEvent(offerVisibleEvent);
+                }
+            });
+
+            RootViewModel.sections.user.subscribe(function (newValue) {
+                if (newValue) {
+                    document.dispatchEvent(userVisibleEvent);
                 }
             });
         </script>
