@@ -25,6 +25,7 @@ class OffersTableSeeder extends Seeder
                 'short_descr' => $faker->realText(rand(30, 100)),
                 'category_id' => rand(1, $max_category_id),
                 'user_id' => $userId,
+                'cover' => 'no_category_cover.png',
                 'created_at' => now(),
             ]);
             $offerId = DB::table('offers')->max('id');

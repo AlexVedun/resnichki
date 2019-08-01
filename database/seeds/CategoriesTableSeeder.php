@@ -12,8 +12,8 @@ class CategoriesTableSeeder extends Seeder
     public function run()
     {
         DB::table('categories')->insert([
-            ['name' => 'Фотосъемка', 'created_at' => now(), 'cover' => 'no_category_cover.png'],
-            ['name' => 'Видеосъемка', 'created_at' => now(), 'cover' => 'no_category_cover.png'],
+            ['name' => 'Фотосъемка', 'created_at' => now(), 'cover' => 'photo.jpg'],
+            ['name' => 'Видеосъемка', 'created_at' => now(), 'cover' => 'video.jpg'],
             ['name' => 'Ведущие', 'created_at' => now(), 'cover' => 'no_category_cover.png'],
             ['name' => 'Организация свадьбы', 'created_at' => now(), 'cover' => 'no_category_cover.png'],
             ['name' => 'Оформление и украшение', 'created_at' => now(), 'cover' => 'no_category_cover.png'],
