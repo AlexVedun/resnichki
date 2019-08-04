@@ -1,0 +1,175 @@
+<div id="performer-div" >
+    <div class="row">
+        <div class="col s12">
+            <span class="center-align"><h2 data-bind="text: title"></h2></span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s12">
+            <ul class="performer-tabs tabs">
+            <li class="tab col s3"><a class="active" href="#contacts">Контактные данные</a></li>
+            <li class="tab col s3"><a href="#offers">Предложения</a></li>
+            <li class="tab col s3"><a href="#change-password">Изменить пароль</a></li>
+            <!-- <li class="tab col s3"><a href="#test4">Test 4</a></li> -->
+            </ul>
+        </div>
+        <div id="contacts" class="col s12">
+            <form id="contacts-form">
+                <div class="row">
+                    <div class="col s6 offset-s3">
+                        <div class="row input-field">
+                            <i class="material-icons prefix">face</i>
+                            <input id="contact_name" type="text" data-bind="attr: { value: contactsForm.contact_name }">
+                            <label class="active" for="contact_name">Контактное лицо</label>
+                        </div>
+                        <div class="row input-field">
+                            <i class="material-icons prefix">phone</i>
+                            <input id="phone" type="text" data-bind="attr: { value: contactsForm.phone }">
+                            <label class="active" for="phone">Рабочий телефон</label>
+                        </div>
+                        <div class="row input-field">
+                            <i class="material-icons prefix">phone_android</i>
+                            <input id="mobile_1" type="text" data-bind="attr: { value: contactsForm.mobile_1 }">
+                            <label class="active" for="mobile_1">Мобильный телефон №1</label>
+                        </div>
+                        <div class="row input-field">
+                            <i class="material-icons prefix">phone_android</i>
+                            <input id="mobile_2" type="text" data-bind="attr: { value: contactsForm.mobile_2 }">
+                            <label class="active" for="mobile_2">Мобильный телефон №2</label>
+                        </div>
+                        <div class="row input-field">
+                            <i class="material-icons prefix">phone_android</i>
+                            <input id="mobile_3" type="text" data-bind="attr: { value: contactsForm.mobile_3 }">
+                            <label class="active" for="mobile_3">Мобильный телефон №3</label>
+                        </div>
+                        <div class="row input-field">
+                            <i class="material-icons prefix">chat</i>
+                            <input id="viber" type="text" data-bind="attr: { value: contactsForm.viber }">
+                            <label class="active" for="viber">Viber</label>
+                        </div>
+                        <div class="row input-field">
+                            <i class="prefix icon ion-logo-whatsapp"></i>
+                            <input id="whats_up" type="text" data-bind="attr: { value: contactsForm.whats_up }">
+                            <label class="active" for="whats_up">WhatsUp</label>
+                        </div>
+                        <div class="row input-field">
+                            <i class="prefix icon ion-md-paper-plane"></i>
+                            <input id="telegram" type="text" data-bind="attr: { value: contactsForm.telegram }">
+                            <label class="active" for="telegram">Telegram</label>
+                        </div>
+                        <div class="row input-field">
+                            <i class="prefix icon ion-logo-skype"></i>
+                            <input id="skype" type="text" data-bind="attr: { value: contactsForm.skype }">
+                            <label class="active" for="skype">Skype</label>
+                        </div>
+                        <div class="row input-field">
+                            <i class="prefix icon ion-logo-vk"></i>
+                            <input id="vkontakte" type="text" data-bind="attr: { value: contactsForm.vkontakte }">
+                            <label class="active" for="vkontakte">ВКонтакте</label>
+                        </div>
+                        <div class="row input-field">
+                            <i class="prefix icon ion-logo-instagram"></i>
+                            <input id="instagram" type="text" data-bind="attr: { value: contactsForm.instagram }">
+                            <label class="active" for="instagram">Instagram</label>
+                        </div>
+                        <div class="row input-field">
+                            <i class="material-icons prefix">web</i>
+                            <input id="web_site" type="text" data-bind="attr: { value: contactsForm.web_site }">
+                            <label class="active" for="web_site">Web-site</label>
+                        </div>
+                        <div class="row">
+                            <button class="col s4 offset-s4 btn waves-effect waves-light" data-bind="click: SaveContactsForm">
+                                <i class="material-icons left">save</i>
+                                Сохранить
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div id="offers" class="col s12"></div>
+        <div id="change-password" class="col s12"></div>
+        <!-- <div id="test4" class="col s12">Test 4</div> -->
+    </div>
+</div>
+
+<script>
+    let PerformerViewModel = {
+        // properties
+        title: ko.observable(''),
+        contactsForm: {
+            contact_name: ko.observable(''),
+            phone: ko.observable(''),
+            mobile_1: ko.observable(''),
+            mobile_2: ko.observable(''),
+            mobile_3: ko.observable(''),
+            viber: ko.observable(''),
+            whats_up: ko.observable(''),
+            telegram: ko.observable(''),
+            skype: ko.observable(''),
+            vkontakte: ko.observable(''),
+            web_site: ko.observable(''),
+            instagram: ko.observable(''),
+        },
+        // methods
+        UpdatePerformer: function() {
+            RootViewModel.PreloaderShow();
+            $.ajax({
+                url: "api/user/get",
+                type: 'POST',
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("Authorization", 'Bearer '+ localStorage.getItem('wedding_token') /* RootViewModel.token() */);
+                }
+            }).done(function(resp) {
+                if (resp.details != null){
+                    PerformerViewModel.contactsForm.contact_name(resp.details.contact_name);
+                    PerformerViewModel.contactsForm.phone(resp.details.phone);
+                    PerformerViewModel.contactsForm.mobile_1(resp.details.mobile_1);
+                    PerformerViewModel.contactsForm.mobile_2(resp.details.mobile_2);
+                    PerformerViewModel.contactsForm.mobile_3(resp.details.mobile_3);
+                    PerformerViewModel.contactsForm.viber(resp.details.viber);
+                    PerformerViewModel.contactsForm.whats_up(resp.details.whats_up);
+                    PerformerViewModel.contactsForm.telegram(resp.details.telegram);
+                    PerformerViewModel.contactsForm.skype(resp.details.skype);
+                    PerformerViewModel.contactsForm.vkontakte(resp.details.vkontakte);
+                    PerformerViewModel.contactsForm.web_site(resp.details.web_site);
+                    PerformerViewModel.contactsForm.instagram(resp.details.instagram);
+                }
+                else {
+                    PerformerViewModel.contactsForm.contact_name('');
+                    PerformerViewModel.contactsForm.phone('');
+                    PerformerViewModel.contactsForm.mobile_1('');
+                    PerformerViewModel.contactsForm.mobile_2('');
+                    PerformerViewModel.contactsForm.mobile_3('');
+                    PerformerViewModel.contactsForm.viber('');
+                    PerformerViewModel.contactsForm.whats_up('');
+                    PerformerViewModel.contactsForm.telegram('');
+                    PerformerViewModel.contactsForm.skype('');
+                    PerformerViewModel.contactsForm.vkontakte('');
+                    PerformerViewModel.contactsForm.web_site('');
+                    PerformerViewModel.contactsForm.instagram('');
+                }
+                RootViewModel.PreloaderHide();
+            }).fail(function(xhr, status, text) {
+                RootViewModel.PreloaderHide();
+                alert("error: " + text);
+            });
+        },
+        SaveContactsForm:function() {
+
+        }
+    }
+
+    // object activation
+    ko.applyBindings(PerformerViewModel, document.getElementById("performer-div"));
+
+    // update news when main page becomes visible
+    $(document).on("PerformerVisible", function () {
+        PerformerViewModel.UpdatePerformer();
+    });
+
+    // activate tabs
+    $(document).ready(function(){
+        $('.performer-tabs').tabs();
+    });
+</script>

@@ -22,36 +22,39 @@
     </head>
     <body>
         <header>
-        <div class="container">
-            {{-- main menu --}}
-            <nav>
-                <div class="nav-wrapper">
-                    <a href="#" data-target="slide-out" class="sidenav-trigger show-on-med-and-down"><i class="material-icons">menu</i></a>
-                    <ul id="nav-mobile" class="right hide-on-med-and-down">
-                        <li><a href="#main" data-bind="">Главная</a></li>
-                        <li><a href="#categories" data-bind="">Категории</a></li>
-                    </ul>
-                </div>
-            </nav>
-            {{-- side menu --}}
-            <ul id="slide-out" class="sidenav">
-                <li><a class="waves-effect sidenav-close" href="#main" data-bind="">Главная</a></li>
-                <li><a class="waves-effect sidenav-close" href="#categories" data-bind="">Категории</a></li>
-            </ul>
+            <div class="container">
+                {{-- main menu --}}
+                <nav>
+                    <div class="nav-wrapper">
+                        <a href="#" data-target="slide-out" class="sidenav-trigger show-on-med-and-down"><i class="material-icons">menu</i></a>
+                        <ul id="nav-mobile" class="right hide-on-med-and-down">
+                            <li><a href="#main" data-bind="">Главная</a></li>
+                            <li><a href="#categories" data-bind="">Категории</a></li>
+                        </ul>
+                    </div>
+                </nav>
+                {{-- side menu --}}
+                <ul id="slide-out" class="sidenav">
+                    <li><a class="waves-effect sidenav-close" href="#main" data-bind="">Главная</a></li>
+                    <li><a class="waves-effect sidenav-close" href="#categories" data-bind="">Категории</a></li>
+                </ul>
             </div>
         </header>
         <main>
             <div class="container">
-            {{-- progress bar --}}
-            <div class="progress" data-bind="visible: preloader">
-                <div class="indeterminate"></div>
-            </div>
-            {{-- main window sections --}}
-            <section id="main" data-bind="visible: sections.main" class="row"></section>
-            <section id="categories" data-bind="visible: sections.categories" class="row"></section>
-            <section id="category" data-bind="visible: sections.category" class="row"></section>
-            <section id="offer" data-bind="visible: sections.offer" class="row"></section>
-            <section id="user" data-bind="visible: sections.user" class="row"></section>
+                {{-- progress bar --}}
+                <div class="progress" data-bind="visible: preloader">
+                    <div class="indeterminate"></div>
+                </div>
+                {{-- main window sections --}}
+                <section id="main" data-bind="visible: sections.main" class="row"></section>
+                <section id="categories" data-bind="visible: sections.categories" class="row"></section>
+                <section id="category" data-bind="visible: sections.category" class="row"></section>
+                <section id="offer" data-bind="visible: sections.offer" class="row"></section>
+                <section id="user" data-bind="visible: sections.user" class="row"></section>
+                <section id="performer" data-bind="visible: sections.performer" class="row"></section>
+                <section id="login" data-bind="visible: sections.login" class="row"></section>
+                <section id="admin" data-bind="visible: sections.admin" class="row"></section>
             </div>
         </main>
         {{-- footer --}}
@@ -67,7 +70,7 @@
         {{-- <footer class="page-footer">
             <div class="container">
 
-        </div>
+            </div>
         </footer> --}}
 
         {{-- main script --}}
@@ -81,6 +84,9 @@
                     category: ko.observable(false),
                     offer: ko.observable(false),
                     user: ko.observable(false),
+                    performer: ko.observable(false),
+                    login: ko.observable(false),
+                    admin: ko.observable(false),
                 },
                 preloader: ko.observable(false),
                 // methods
@@ -176,6 +182,8 @@
             let categoryVisibleEvent = new Event("CategoryVisible");
             let offerVisibleEvent = new Event("OfferVisible");
             let userVisibleEvent = new Event("UserVisible");
+            let performerVisibleEvent = new Event("PerformerVisible");
+            let adminVisibleEvent = new Event("AdminVisible");
 
             RootViewModel.sections.main.subscribe(function (newValue) {
                 if (newValue) {
@@ -204,6 +212,18 @@
             RootViewModel.sections.user.subscribe(function (newValue) {
                 if (newValue) {
                     document.dispatchEvent(userVisibleEvent);
+                }
+            });
+
+            RootViewModel.sections.performer.subscribe(function (newValue) {
+                if (newValue) {
+                    document.dispatchEvent(performerVisibleEvent);
+                }
+            });
+
+            RootViewModel.sections.admin.subscribe(function (newValue) {
+                if (newValue) {
+                    document.dispatchEvent(adminVisibleEvent);
                 }
             });
         </script>
