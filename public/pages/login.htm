@@ -1,0 +1,122 @@
+<div id="login-div" >
+    <div class="row">
+        <div class="col s12">
+            <span class="center-align"><h3>Вход</h3></span>
+        </div>
+    </div>
+    <div class="row">
+        <form id="login-form" class="card col s6 offset-s3">
+            <div class="card-content">
+                <div class="row input-field">
+                    <i class="material-icons prefix">mail</i>
+                    <input class="validate" id="email" type="email" data-bind="value: loginForm.email">
+                    <label for="email">E-mail</label>
+                </div>
+                <div class="row input-field">
+                    <i class="icon ion-md-key prefix"></i>
+                    <input class="validate" id="password" type="password" data-bind="value: loginForm.password">
+                    <label for="password">Пароль</label>
+                </div>
+                <div class="row">
+                    <p>
+                        <label>
+                            <input type="checkbox" />
+                            <span data-bind="click: RememberMeClick">Запомнить меня</span>
+                        </label>
+                    </p>
+                </div>
+                <div class="row">
+                    <button class="col s4 offset-s4 btn waves-effect waves-light" data-bind="click: LoginUser">
+                        <i class="left icon ion-md-log-in"></i>
+                        Вход
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    let LoginViewModel = {
+        // properties
+        loginForm:{
+            email: ko.observable(''),
+            password: ko.observable(''),
+            remember_me: ko.observable(false),
+        },
+        // methods
+        LoginUser: function() {
+            let formData = ko.toJS(this.loginForm);
+            RootViewModel.PreloaderShow();
+            $.ajax({
+                url: "api/login",
+                data: formData,
+                type: 'POST'
+            }).done(function(resp) {
+                //RootViewModel.token(resp.token);
+                localStorage.setItem('wedding_token', resp.token);
+                RootViewModel.PreloaderHide();
+                switch (resp.user.role) {
+                    case 'admin':
+                        break;
+                    case 'perf':
+                        location.hash = '#performer';
+                        break;
+                }
+            }).fail(function(xhr, status, text) {
+                RootViewModel.PreloaderHide();
+                alert("error: " + text);
+            });
+        },
+        RememberMeClick: function() {
+            this.loginForm.remember_me(!this.loginForm.remember_me());
+            return true;
+        }
+        // UpdateUser: function() {
+        //     RootViewModel.PreloaderShow();
+        //     $.ajax({
+        //         url: "api/users/" + chunckParams['param'],
+        //         type: 'GET'
+        //     }).done(function(resp) {
+        //         console.log(resp);
+        //         UserViewModel.title(resp.name + ' (контактные данные)');
+        //         if (resp.details != null){
+        //             UserViewModel.contact_name(resp.details.contact_name);
+        //             UserViewModel.phone(resp.details.phone);
+        //             UserViewModel.mobile_1(resp.details.mobile_1);
+        //             UserViewModel.mobile_2(resp.details.mobile_2);
+        //             UserViewModel.mobile_3(resp.details.mobile_3);
+        //             UserViewModel.viber(resp.details.viber);
+        //             UserViewModel.whats_up(resp.details.whats_up);
+        //             UserViewModel.telegram(resp.details.telegram);
+        //             UserViewModel.skype(resp.details.skype);
+        //             UserViewModel.vkontakte(resp.details.vkontakte);
+        //             UserViewModel.web_site(resp.details.web_site);
+        //             UserViewModel.instagram(resp.details.instagram);
+        //         }
+        //         else {
+        //             UserViewModel.contact_name('');
+        //             UserViewModel.phone('');
+        //             UserViewModel.mobile_1('');
+        //             UserViewModel.mobile_2('');
+        //             UserViewModel.mobile_3('');
+        //             UserViewModel.viber('');
+        //             UserViewModel.whats_up('');
+        //             UserViewModel.telegram('');
+        //             UserViewModel.skype('');
+        //             UserViewModel.vkontakte('');
+        //             UserViewModel.web_site('');
+        //             UserViewModel.instagram('');
+        //         }
+        //         RootViewModel.PreloaderHide();
+        //     }).fail(function(xhr, status, text) {
+        //         RootViewModel.PreloaderHide();
+        //         alert("error: " + text);
+        //     });
+        // }
+    }
+
+    // object activation
+    ko.applyBindings(LoginViewModel, document.getElementById("login-div"));
+
+</script>
