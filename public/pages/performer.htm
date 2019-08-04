@@ -118,7 +118,7 @@
                 url: "api/user/get",
                 type: 'POST',
                 beforeSend: function (xhr) {
-                    xhr.setRequestHeader("Authorization", 'Bearer '+ localStorage.getItem('wedding_token') /* RootViewModel.token() */);
+                    xhr.setRequestHeader("Authorization", 'Bearer '+ Cookies.get('wedding_token') /* localStorage.getItem('wedding_token') */ );
                 }
             }).done(function(resp) {
                 if (resp.details != null){

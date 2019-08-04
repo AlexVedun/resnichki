@@ -15,6 +15,7 @@
         <script src="{{ asset('js/materialize.min.js') }}"></script>
         <script src="{{ asset('js/sammy-0.7.6.min.js') }}"></script>
         <script src="{{ asset('js/moment.min.js') }}"></script>
+        <script src="{{ asset('js/js.cookie.js') }}"></script>
         <script src="{{ asset('js/global.js') }}"></script>
         {{-- CSS style --}}
         <link href="{{ asset('css/materialize.min.css') }}" rel="stylesheet">
@@ -165,8 +166,7 @@
                         //alert("error: " + text);
                         location.hash = "#main";
                     });
-                    });
-                }); */
+                });
                 this.get('/', function() {
                     location.hash = "#main";
                 });
