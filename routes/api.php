@@ -13,6 +13,10 @@ use Illuminate\Http\Request;
 |
 */
 
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+
 Route::group(['namespace' => 'Api'], function () {
 
     Route::group(['namespace' => 'Auth'], function () {
@@ -20,12 +24,12 @@ Route::group(['namespace' => 'Api'], function () {
         Route::post('login', 'LoginController')->name('login');
         Route::post('logout', 'LogoutController')->middleware('auth:api');
     });
+    Route::post('user/get', 'ManageUserController@getUser')->middleware('auth:api');
 });
 
 Route::resource('categories', 'CategoryController');
 Route::resource('news', 'NewsController');
 Route::resource('offers', 'OfferController');
 Route::resource('users', 'UserController');
-Route::resource('login', 'LoginUserController');
 Route::resource('register', 'RegisterUserController');
 Route::resource('chunck', 'ChunckController');
