@@ -226,6 +226,34 @@
                     document.dispatchEvent(adminVisibleEvent);
                 }
             });
+
+            // check if user is login
+            $.ajax({
+                url: "api/user/checkout",
+                type: 'GET',
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("Authorization", 'Bearer '+ Cookies.get('wedding_token') /* localStorage.getItem('wedding_token') */);
+                }
+            }).done(function (resp) {
+                console.log(resp);
+                RootViewModel.isLogin(true);
+                //AMM_ViewModel.showPreloader(false);
+                // if (resp !== null) {
+                //     AMM_ViewModel.SetLogin(resp);
+                //     location.hash = "#!main";
+                // }
+                // else {
+                //     location.hash = "#!login";
+                // }
+            })
+            .fail(function (xhr, status, text) {
+                //AMM_ViewModel.showPreloader(false);
+                //alert("error: " + text);
+                if(location.hash == '#performer' || location.hash == '#admin') {
+                    RootViewModel.isLogin(false);
+                    location.hash = '#login';
+                }
+            });
         </script>
     </body>
 </html>
