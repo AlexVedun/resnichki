@@ -5,22 +5,20 @@
         </div>
     </div>
     <div class="row">
-        <div class="" data-bind="foreach: categories">
+        <div class="categories-list" data-bind="foreach: categories">
             <a data-bind="attr: { href: '#category/' + $data.id }">
-                <div class="card col s4 hoverable">
+                <div class="category-card card hoverable">
                     <div class="card-image">
                         <img data-bind="attr: { src: cover }" alt="Category">
-                            <span class="card-title" data-bind="text: name"></span>
-                        </div>
-                                <!-- <div class="card-content">
-                                    <p>I am a very simple card. I am good at containing small bits of information.
-                                        I am convenient because I require little markup to use effectively.</p>
-                                </div>
-                                <div class="card-action">
-                                    <a href="#">This is a link</a>
-                                </div> -->
+                        <span class="card-title" data-bind="text: name"></span>
                     </div>
                 </div>
+                <!-- <div class="card col s4 hoverable">
+                    <div class="card-image">
+                        <img data-bind="attr: { src: cover }" alt="Category">
+                        <span class="card-title" data-bind="text: name"></span>
+                    </div>
+                </div> -->
             </a>
         </div>
     </div>
