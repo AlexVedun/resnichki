@@ -27,7 +27,7 @@ class LoginController extends Controller
         }
 
         $token = Auth::user()->createToken(config('app.name'));
-        $token->token->expires_at = $request->remember_me ?
+        $token->token->expires_at = json_decode($request->remember_me) ?
             Carbon::now()->addMonth() :
             Carbon::now()->addDay();
 
