@@ -30,6 +30,7 @@
                         <ul id="nav-mobile" class="right hide-on-med-and-down">
                             <li><a href="#main" data-bind="">Главная</a></li>
                             <li><a href="#categories" data-bind="">Категории</a></li>
+                            <li><a href="#logout" data-bind="visible: isLogin">Выход</a></li>
                         </ul>
                     </div>
                 </nav>
@@ -37,6 +38,7 @@
                 <ul id="slide-out" class="sidenav">
                     <li><a class="waves-effect sidenav-close" href="#main" data-bind="">Главная</a></li>
                     <li><a class="waves-effect sidenav-close" href="#categories" data-bind="">Категории</a></li>
+                    <li><a class="waves-effect sidenav-close" href="#logout" data-bind="visible: isLogin">Выход</a></li>
                 </ul>
             </div>
         </header>
@@ -89,6 +91,7 @@
                     admin: ko.observable(false),
                 },
                 preloader: ko.observable(false),
+                isLogin: ko.observable(false),
                 // methods
                 HideAll: function() {
                     for (const key in this.sections) {
@@ -135,26 +138,33 @@
 
             // routing
             Sammy(function () {
-                /* this.get('#!logout', function () {
-                    AMM_ViewModel.showPreloader(true);
+                this.get('#logout', function () {
+                    //AMM_ViewModel.showPreloader(true);
                     $.ajax({
                         url: "api/logout",
-                        type: 'PUT'
+                        type: 'GET',
+                        beforeSend: function (xhr) {
+                            xhr.setRequestHeader("Authorization", 'Bearer '+ Cookies.get('wedding_token') /* localStorage.getItem('wedding_token') */);
+                        }
                     }).done(function (resp) {
-                        if (resp.error !== null && resp.error !== "") {
-                            AMM_ViewModel.showPreloader(false);
-                            alert(resp.error);
-                        }
-                        else {
-                            AMM_ViewModel.showPreloader(false);
-                            isLogin = false;
-                            userLogin = "";
-                            AMM_ViewModel.SetLogout();
-                            location.hash = "#!login";
-                        }
+                        RootViewModel.isLogin(false);
+                        // if (resp.error !== null && resp.error !== "") {
+                        //     AMM_ViewModel.showPreloader(false);
+                        //     alert(resp.error);
+                        // }
+                        // else {
+                        //     AMM_ViewModel.showPreloader(false);
+                        //     isLogin = false;
+                        //     userLogin = "";
+                        //     AMM_ViewModel.SetLogout();
+
+                        // }
+                        location.hash = "#main";
                     }).fail(function (xhr, status, text) {
-                        AMM_ViewModel.showPreloader(false);
-                        alert("error: " + text);
+                        //AMM_ViewModel.showPreloader(false);
+                        //alert("error: " + text);
+                        location.hash = "#main";
+                    });
                     });
                 }); */
                 this.get('/', function() {
