@@ -122,7 +122,6 @@
                 url: "api/users/" + chunckParams['param'],
                 type: 'GET'
             }).done(function(resp) {
-                console.log(resp);
                 UserViewModel.title(resp.name + ' (контактные данные)');
                 if (resp.details != null){
                     UserViewModel.contact_name(resp.details.contact_name);

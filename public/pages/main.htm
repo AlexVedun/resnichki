@@ -19,15 +19,14 @@
             </div>
             <div class="row">
                 <ul class="collection" data-bind="foreach: news">
-                    <!-- <li class="collection-item" data-bind="text: news"></li> -->
-                    <li class="collection-item">
+                    <a class="collection-item" data-bind="attr: { href: '#offer/' + offer_id }">
                         <div class="row">
                             <!--ko text: date--><!--/ko--> - <!--ko text: user.name--><!--/ko-->
                         </div>
                         <div class="row">
                             <!--ko text: news--><!--/ko-->
                         </div>
-                    </li>
+                    </a>
                 </ul>
             </div>
         </div>
