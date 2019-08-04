@@ -21,6 +21,7 @@
         <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
     </head>
     <body>
+        <header>
         <div class="container">
             {{-- main menu --}}
             <nav>
@@ -37,6 +38,10 @@
                 <li><a class="waves-effect sidenav-close" href="#main" data-bind="">Главная</a></li>
                 <li><a class="waves-effect sidenav-close" href="#categories" data-bind="">Категории</a></li>
             </ul>
+            </div>
+        </header>
+        <main>
+            <div class="container">
             {{-- progress bar --}}
             <div class="progress" data-bind="visible: preloader">
                 <div class="indeterminate"></div>
@@ -47,7 +52,23 @@
             <section id="category" data-bind="visible: sections.category" class="row"></section>
             <section id="offer" data-bind="visible: sections.offer" class="row"></section>
             <section id="user" data-bind="visible: sections.user" class="row"></section>
+            </div>
+        </main>
+        {{-- footer --}}
+        <div class="container">
+            <footer class="page-footer">
+                <div class="container">
+                    <div class="row">
+                        <a class="white-text" href="#login">Служебный вход</a>
+                    </div>
+                </div>
+            </footer>
         </div>
+        {{-- <footer class="page-footer">
+            <div class="container">
+
+        </div>
+        </footer> --}}
 
         {{-- main script --}}
         <script>
