@@ -31,6 +31,7 @@
                         <ul id="nav-mobile" class="right hide-on-med-and-down">
                             <li><a href="#main" data-bind="">Главная</a></li>
                             <li><a href="#categories" data-bind="">Категории</a></li>
+                            <li><a href="#performer" data-bind="visible: isLogin">Личный кабинет</a></li>
                             <li><a href="#logout" data-bind="visible: isLogin">Выход</a></li>
                         </ul>
                     </div>
@@ -39,6 +40,7 @@
                 <ul id="slide-out" class="sidenav">
                     <li><a class="waves-effect sidenav-close" href="#main" data-bind="">Главная</a></li>
                     <li><a class="waves-effect sidenav-close" href="#categories" data-bind="">Категории</a></li>
+                    <li><a class="waves-effect sidenav-close" href="#performer" data-bind="visible: isLogin">Личный кабинет</a></li>
                     <li><a class="waves-effect sidenav-close" href="#logout" data-bind="visible: isLogin">Выход</a></li>
                 </ul>
             </div>
@@ -70,11 +72,19 @@
                 </div>
             </footer>
         </div>
-        {{-- <footer class="page-footer">
-            <div class="container">
+        {{-- Modal window --}}
+        <div id="modal" class="modal">
+            <div class="modal-content">
+                <!-- Место для динамического добавления контента на клиенте -->
+                <span class="center-align"><h4>Ошибка!</h4></span>
+                <div id="modal-message">
 
+                </div>
             </div>
-        </footer> --}}
+            <div class="modal-footer">
+                <a id="modalOk" href="" class="modal-close waves-effect waves-green btn-flat">Ok</a>
+            </div>
+        </div>
 
         {{-- main script --}}
         <script>
@@ -125,7 +135,8 @@
                             }
                         }).fail(function (xhr, status, text) {
                             RootViewModel.PreloaderHide();
-                            alert("error: " + text);
+                            ShowModalError('#main', xhr);
+                            //alert("error: " + text);
                         });
                     } else {
                         this.PreloaderHide();;
@@ -184,6 +195,10 @@
             // side menu activation
             $(document).ready(function () {
                 $('.sidenav').sidenav();
+            });
+
+            $(document).ready(function(){
+                $('.modal').modal();
             });
 
             // events for pages visualisation

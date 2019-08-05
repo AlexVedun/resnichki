@@ -15,3 +15,25 @@ function SetCookie(name, value, expires, path, domain, secure) {
         ((domain) ? "; domain=" + domain : "") +
         ((secure) ? "; secure" : "");
 }
+
+// Function to show modal window with errors
+function ShowModalError(link, xhr) {
+    let message = '';
+    for (const error in xhr.responseJSON.errors) {
+        if (xhr.responseJSON.errors.hasOwnProperty(error)) {
+            const element = xhr.responseJSON.errors[error];
+            if (Array.isArray(element)) {
+                for (const item of element) {
+                    message += '<p>' + item + '</p>';
+                }
+            }
+            else {
+                message += '<p>' + element + '</p>';
+            }
+
+        }
+    }
+    $('.modal').find('.modal-content').find('#modal-message').html(message);
+    $('.modal').find('#modalOk').attr('href', link);
+    $('.modal').modal('open');
+}

@@ -68,7 +68,8 @@
                 }
             }).fail(function(xhr, status, text) {
                 RootViewModel.PreloaderHide();
-                alert("error: " + text);
+                ShowModalError('#login', xhr);
+                //alert("error: " + text);
             });
         },
         RememberMeClick: function() {

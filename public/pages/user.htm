@@ -154,7 +154,8 @@
                 RootViewModel.PreloaderHide();
             }).fail(function(xhr, status, text) {
                 RootViewModel.PreloaderHide();
-                alert("error: " + text);
+                ShowModalError('#user', xhr);
+                //alert("error: " + text);
             });
         }
     }

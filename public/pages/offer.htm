@@ -45,7 +45,8 @@
                 RootViewModel.PreloaderHide();
             }).fail(function(xhr, status, text) {
                 RootViewModel.PreloaderHide();
-                alert("error: " + text);
+                ShowModalError('#offer', xhr);
+                //alert("error: " + text);
             });
         }
     }

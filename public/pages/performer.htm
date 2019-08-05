@@ -78,7 +78,7 @@
                             <label class="active" for="web_site">Web-site</label>
                         </div>
                         <div class="row">
-                            <button class="col s4 offset-s4 btn waves-effect waves-light" data-bind="click: SaveContactsForm">
+                            <button class="col s4 offset-s4 btn waves-effect waves-light" data-bind="click: SaveContacts">
                                 <i class="material-icons left">save</i>
                                 Сохранить
                             </button>
@@ -183,10 +183,11 @@
                 RootViewModel.PreloaderHide();
             }).fail(function(xhr, status, text) {
                 RootViewModel.PreloaderHide();
-                alert("error: " + text);
+                ShowModalError('#performer', xhr);
+                //alert("error: " + text);
             });
         },
-        SaveContactsForm:function() {
+        SaveContacts:function() {
             let formData = ko.toJS(this.contactsForm);
             RootViewModel.PreloaderShow();
             $.ajax({
@@ -201,6 +202,10 @@
                 RootViewModel.PreloaderHide();
             }).fail(function(xhr, status, text) {
                 RootViewModel.PreloaderHide();
+                ShowModalError('#performer', xhr);
+                //alert("error: " + text);
+            });
+        },
         ChangePassword: function() {
             let formData = ko.toJS(this.changePasswordForm);
             RootViewModel.PreloaderShow();

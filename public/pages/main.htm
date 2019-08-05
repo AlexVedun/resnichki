@@ -51,7 +51,8 @@
                 RootViewModel.PreloaderHide();
             }).fail(function(xhr, status, text) {
                 RootViewModel.PreloaderHide();
-                alert("error: " + text);
+                ShowModalError('#main', xhr);
+                //alert("error: " + text);
             });
         }
     }
