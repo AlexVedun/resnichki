@@ -22,7 +22,7 @@ class ManageUserController extends Controller
         return $user;
     }
 
-    public function saveUser($request)
+    public function saveUserContacts(Request $request)
     {
         $user = Auth::user();
         $user->details->contact_name = $request->contact_name;
@@ -38,6 +38,6 @@ class ManageUserController extends Controller
         $user->details->web_site = $request->web_site;
         $user->details->instagram = $request->instagram;
         $user->details->save();
-        $user->save();
+        //$user->save();
     }
 }

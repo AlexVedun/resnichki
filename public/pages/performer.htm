@@ -19,62 +19,62 @@
                     <div class="col s6 offset-s3">
                         <div class="row input-field">
                             <i class="material-icons prefix">face</i>
-                            <input id="contact_name" type="text" data-bind="attr: { value: contactsForm.contact_name }">
+                            <input id="contact_name" type="text" data-bind="value: contactsForm.contact_name">
                             <label class="active" for="contact_name">Контактное лицо</label>
                         </div>
                         <div class="row input-field">
                             <i class="material-icons prefix">phone</i>
-                            <input id="phone" type="text" data-bind="attr: { value: contactsForm.phone }">
+                            <input id="phone" type="text" data-bind="value: contactsForm.phone">
                             <label class="active" for="phone">Рабочий телефон</label>
                         </div>
                         <div class="row input-field">
                             <i class="material-icons prefix">phone_android</i>
-                            <input id="mobile_1" type="text" data-bind="attr: { value: contactsForm.mobile_1 }">
+                            <input id="mobile_1" type="text" data-bind="value: contactsForm.mobile_1">
                             <label class="active" for="mobile_1">Мобильный телефон №1</label>
                         </div>
                         <div class="row input-field">
                             <i class="material-icons prefix">phone_android</i>
-                            <input id="mobile_2" type="text" data-bind="attr: { value: contactsForm.mobile_2 }">
+                            <input id="mobile_2" type="text" data-bind="value: contactsForm.mobile_2">
                             <label class="active" for="mobile_2">Мобильный телефон №2</label>
                         </div>
                         <div class="row input-field">
                             <i class="material-icons prefix">phone_android</i>
-                            <input id="mobile_3" type="text" data-bind="attr: { value: contactsForm.mobile_3 }">
+                            <input id="mobile_3" type="text" data-bind="value: contactsForm.mobile_3">
                             <label class="active" for="mobile_3">Мобильный телефон №3</label>
                         </div>
                         <div class="row input-field">
                             <i class="material-icons prefix">chat</i>
-                            <input id="viber" type="text" data-bind="attr: { value: contactsForm.viber }">
+                            <input id="viber" type="text" data-bind="value: contactsForm.viber">
                             <label class="active" for="viber">Viber</label>
                         </div>
                         <div class="row input-field">
                             <i class="prefix icon ion-logo-whatsapp"></i>
-                            <input id="whats_up" type="text" data-bind="attr: { value: contactsForm.whats_up }">
+                            <input id="whats_up" type="text" data-bind="value: contactsForm.whats_up">
                             <label class="active" for="whats_up">WhatsUp</label>
                         </div>
                         <div class="row input-field">
                             <i class="prefix icon ion-md-paper-plane"></i>
-                            <input id="telegram" type="text" data-bind="attr: { value: contactsForm.telegram }">
+                            <input id="telegram" type="text" data-bind="value: contactsForm.telegram">
                             <label class="active" for="telegram">Telegram</label>
                         </div>
                         <div class="row input-field">
                             <i class="prefix icon ion-logo-skype"></i>
-                            <input id="skype" type="text" data-bind="attr: { value: contactsForm.skype }">
+                            <input id="skype" type="text" data-bind="value: contactsForm.skype">
                             <label class="active" for="skype">Skype</label>
                         </div>
                         <div class="row input-field">
                             <i class="prefix icon ion-logo-vk"></i>
-                            <input id="vkontakte" type="text" data-bind="attr: { value: contactsForm.vkontakte }">
+                            <input id="vkontakte" type="text" data-bind="value: contactsForm.vkontakte">
                             <label class="active" for="vkontakte">ВКонтакте</label>
                         </div>
                         <div class="row input-field">
                             <i class="prefix icon ion-logo-instagram"></i>
-                            <input id="instagram" type="text" data-bind="attr: { value: contactsForm.instagram }">
+                            <input id="instagram" type="text" data-bind="value: contactsForm.instagram">
                             <label class="active" for="instagram">Instagram</label>
                         </div>
                         <div class="row input-field">
                             <i class="material-icons prefix">web</i>
-                            <input id="web_site" type="text" data-bind="attr: { value: contactsForm.web_site }">
+                            <input id="web_site" type="text" data-bind="value: contactsForm.web_site">
                             <label class="active" for="web_site">Web-site</label>
                         </div>
                         <div class="row">
@@ -156,7 +156,21 @@
             });
         },
         SaveContactsForm:function() {
-
+            let formData = ko.toJS(this.contactsForm);
+            RootViewModel.PreloaderShow();
+            $.ajax({
+                url: "api/user/save/contacts",
+                data: formData,
+                type: 'POST',
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("Authorization", 'Bearer '+ Cookies.get('wedding_token') /* localStorage.getItem('wedding_token') */);
+                }
+            }).done(function(resp) {
+                M.toast({html: 'Изменения сохранены!', classes: 'rounded'});
+            }).fail(function(xhr, status, text) {
+                RootViewModel.PreloaderHide();
+                alert("error: " + text);
+            });
         }
     }
 

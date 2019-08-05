@@ -25,6 +25,7 @@ Route::group(['namespace' => 'Api'], function () {
         Route::get('logout', 'LogoutController')->middleware('auth:api');
     });
     Route::post('user/get', 'ManageUserController@getUser')->middleware('auth:api');
+    Route::post('user/save/contacts', 'ManageUserController@saveUserContacts')->middleware('auth:api');
     Route::get('user/checkout', 'ManageUserController@checkout')->middleware('auth:api');
 });
 
