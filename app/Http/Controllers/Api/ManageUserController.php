@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\ChangePasswordRequest;
+use Illuminate\Support\Facades\Hash;
 
 class ManageUserController extends Controller
 {
@@ -39,5 +41,32 @@ class ManageUserController extends Controller
         $user->details->instagram = $request->instagram;
         $user->details->save();
         //$user->save();
+    }
+
+    public function changeUserPassword(ChangePasswordRequest $request)
+    {
+        $user = Auth::user();
+        $current_password = Auth::User()->password;
+        $request_data = $request->all();
+
+        if(Hash::check($request_data['current_password'], $current_password))
+        {
+
+            $user->password = Hash::make($request_data['new_password']);
+            $user->save();
+
+            return response()->json([
+                'message' => 'Пароль изменён',
+            ], 200);
+        }
+        else {
+            return response()->json([
+                'message' => 'Неверно введён текущий пароль!',
+                'errors' => [
+                    'current_password' => 'Неверно введён текущий пароль!',
+                ],
+            ], 400);
+        }
+
     }
 }

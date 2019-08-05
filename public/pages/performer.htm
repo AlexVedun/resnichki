@@ -88,7 +88,33 @@
             </form>
         </div>
         <div id="offers" class="col s12"></div>
-        <div id="change-password" class="col s12"></div>
+        <div id="change-password">
+            <form id="change-password-form" class="card col s6 offset-s3">
+                <div class="card-content">
+                    <div class="row input-field">
+                        <i class="material-icons prefix">mail</i>
+                        <input class="validate" id="current_password" type="password" data-bind="value: changePasswordForm.current_password">
+                        <label for="current_password">Текущий пароль</label>
+                    </div>
+                    <div class="row input-field">
+                        <i class="icon ion-md-key prefix"></i>
+                        <input class="validate" id="new_password" type="password" data-bind="value: changePasswordForm.new_password">
+                        <label for="new_password">Новый пароль</label>
+                    </div>
+                    <div class="row input-field">
+                        <i class="icon ion-md-key prefix"></i>
+                        <input class="validate" id="new_password_confirmation" type="password" data-bind="value: changePasswordForm.new_password_confirmation">
+                        <label for="new_password_confirmation">Подтвердить новый пароль</label>
+                    </div>
+                    <div class="row">
+                        <button class="col s4 offset-s4 btn waves-effect waves-light" data-bind="click: ChangePassword">
+                            <i class="material-icons left">save</i>
+                            Изменить пароль
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
         <!-- <div id="test4" class="col s12">Test 4</div> -->
     </div>
 </div>
@@ -110,6 +136,11 @@
             vkontakte: ko.observable(''),
             web_site: ko.observable(''),
             instagram: ko.observable(''),
+        },
+        changePasswordForm: {
+            current_password: ko.observable(''),
+            new_password: ko.observable(''),
+            new_password_confirmation: ko.observable(''),
         },
         // methods
         UpdatePerformer: function() {
@@ -170,7 +201,24 @@
                 RootViewModel.PreloaderHide();
             }).fail(function(xhr, status, text) {
                 RootViewModel.PreloaderHide();
-                alert("error: " + text);
+        ChangePassword: function() {
+            let formData = ko.toJS(this.changePasswordForm);
+            RootViewModel.PreloaderShow();
+            $.ajax({
+                url: "api/user/password/change",
+                data: formData,
+                type: 'POST',
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("Authorization", 'Bearer '+ Cookies.get('wedding_token') /* localStorage.getItem('wedding_token') */);
+                }
+            }).done(function(resp) {
+                M.toast({html: resp.message, classes: 'rounded'});
+                RootViewModel.PreloaderHide();
+            }).fail(function(xhr, status, text) {
+                console.log(xhr);
+                RootViewModel.PreloaderHide();
+                ShowModalError('#performer', xhr);
+                //alert("error: " + text);
             });
         }
     }
