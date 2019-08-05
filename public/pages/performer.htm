@@ -167,6 +167,7 @@
                 }
             }).done(function(resp) {
                 M.toast({html: 'Изменения сохранены!', classes: 'rounded'});
+                RootViewModel.PreloaderHide();
             }).fail(function(xhr, status, text) {
                 RootViewModel.PreloaderHide();
                 alert("error: " + text);
