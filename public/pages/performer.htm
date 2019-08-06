@@ -87,7 +87,21 @@
                 </div>
             </form>
         </div>
-        <div id="offers" class="col s12"></div>
+        <div id="offers" class="row">
+            <form id="offers-list-form" class="card col s12 m8 offset-m2 l8 offset-l2 xl8 offset-xl2">
+                <dev class="row">
+                    <div class="collection" data-bind="foreach: OffersList">
+                        <a href="" class="collection-item" data-bind="text: $data.title, click: $parent.SelectOffer.bind($data, $data.id)"></a>
+                        <!-- <a href="" class="collection-item active">Alvin</a>
+                        <a href="" class="collection-item">Alvin</a>
+                        <a href="" class="collection-item">Alvin</a> -->
+                    </div>
+                </dev>
+            </form>
+            <!-- <form id="offer-editor-form" class="col s12 m8 l8 xl8">
+
+            </form> -->
+        </div>
         <div id="change-password">
             <form id="change-password-form" class="card col s6 offset-s3">
                 <div class="card-content">
@@ -142,6 +156,7 @@
             new_password: ko.observable(''),
             new_password_confirmation: ko.observable(''),
         },
+        OffersList: ko.observableArray([]),
         // methods
         UpdatePerformer: function() {
             RootViewModel.PreloaderShow();
@@ -225,7 +240,31 @@
                 ShowModalError('#performer', xhr);
                 //alert("error: " + text);
             });
-        }
+        },
+        GetOffersList: function() {
+            RootViewModel.PreloaderShow();
+            $.ajax({
+                url: "api/offers/get",
+                type: 'GET',
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("Authorization", 'Bearer '+ Cookies.get('wedding_token') /* localStorage.getItem('wedding_token') */ );
+                }
+            }).done(function(resp) {
+                console.log(resp);
+                PerformerViewModel.OffersList([]);
+                for (const item of resp) {
+                    PerformerViewModel.OffersList.push(item);
+                }
+                RootViewModel.PreloaderHide();
+            }).fail(function(xhr, status, text) {
+                RootViewModel.PreloaderHide();
+                ShowModalError('#performer', xhr);
+                //alert("error: " + text);
+            });
+        },
+        SelectOffer: function(_data, _id) {
+            console.log(_data);
+        },
     }
 
     // object activation
@@ -234,6 +273,7 @@
     // update news when main page becomes visible
     $(document).on("PerformerVisible", function () {
         PerformerViewModel.UpdatePerformer();
+        PerformerViewModel.GetOffersList();
     });
 
     // activate tabs
