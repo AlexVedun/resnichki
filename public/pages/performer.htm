@@ -88,19 +88,80 @@
             </form>
         </div>
         <div id="offers" class="row">
-            <form id="offers-list-form" class="card col s12 m8 offset-m2 l8 offset-l2 xl8 offset-xl2">
-                <dev class="row">
-                    <div class="collection" data-bind="foreach: OffersList">
-                        <a href="" class="collection-item" data-bind="text: $data.title, click: $parent.SelectOffer.bind($data, $data.id)"></a>
-                        <!-- <a href="" class="collection-item active">Alvin</a>
-                        <a href="" class="collection-item">Alvin</a>
-                        <a href="" class="collection-item">Alvin</a> -->
+            <form id="offers-list-form" class="col s12 m8 offset-m2 l8 offset-l2 xl8 offset-xl2" data-bind="visible: isOfferListForm">
+                <div data-bind="foreach: OffersList">
+                    <div class="row">
+                        <div class="card hoverable horizontal">
+                            <div class="card-image">
+                                <img class="offer-image-preview" data-bind="attr: { src: $data.cover }">
+                            </div>
+                            <div class="card-stacked">
+                                <div class="card-content">
+                                    <h5><!--ko text: title--><!--/ko--></h5>
+                                    <!--ko text: short_descr--><!--/ko-->
+                                </div>
+                                <div class="card-action">
+                                    <button class="btn waves-effect waves-light" data-bind="click: $parent.SelectOffer.bind($data, $data.id)">Открыть</button>
+                                    <button class="btn waves-effect waves-light">Удалить</button>
+                                </div>
+                                <!-- <div class="card-action">
+                                    <a href="#">This is a link</a>
+                                </div> -->
+                            </div>
+                        </div>
                     </div>
-                </dev>
+                    <!-- <ul class="collection" data-bind="foreach: OffersList">
+                        <li class="collection-item avatar">
+                            <img alt="" class="responsive-img" data-bind="attr: { src: $data.cover }">
+                            <span class="title" data-bind="text: $data.title"></span>
+                            <button data-bind="click: $parent.SelectOffer.bind($data, $data.id)">Открыть</button>
+                            <button>Удалить</button>
+                        </li>
+                    </ul> -->
+                    <!-- <div class="collection" data-bind="foreach: OffersList">
+                        <a href="" class="collection-item avatar" data-bind="text: $data.title, click: $parent.SelectOffer.bind($data, $data.id)">
+                            <img alt="" class="" data-bind="attr: { src: $data.cover }">
+                        </a>
+                    </div> -->
+                </div>
             </form>
-            <!-- <form id="offer-editor-form" class="col s12 m8 l8 xl8">
-
-            </form> -->
+            <form id="offer-editor-form" class="col s12 m8 offset-m2 l8 offset-l2 xl8 offset-xl2" data-bind="hidden: isOfferListForm">
+                <div class="row">
+                    <div class="input-field">
+                        <input id="title-input" type="text" data-length="255" data-bind="value: offerEditorForm.title">
+                        <label class="active" for="title-input">Заголовок</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field">
+                        <textarea id="short-descr" class="materialize-textarea" data-length="100" data-bind="text: offerEditorForm.short_descr"></textarea>
+                        <label class="active" for="short-descr">Краткое описание</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="input-field">
+                        <select id="categories-list" data-bind="foreach: categories">
+                            <option data-bind="text: $data.name, value: $data.id"></option>
+                        </select>
+                        <label>Категории</label>
+                    </div>
+                </div>
+                <div class="row">
+                    <img data-bind="attr: { src: offerEditorForm.cover }">
+                </div>
+                <div class="file-field input-field">
+                    <div class="btn">
+                        <span>Загрузить</span>
+                        <input type="file">
+                    </div>
+                    <div class="file-path-wrapper">
+                        <input class="file-path validate" type="text">
+                    </div>
+                </div>
+                <div class="row">
+                    <button class="btn waves-effect waves-light" data-bind="click: function() { PerformerViewModel.isOfferListForm(true); }">Вернуться</button>
+                </div>
+            </form>
         </div>
         <div id="change-password">
             <form id="change-password-form" class="card col s6 offset-s3">
@@ -157,6 +218,14 @@
             new_password_confirmation: ko.observable(''),
         },
         OffersList: ko.observableArray([]),
+        isOfferListForm: ko.observable(true),
+        categories: ko.observableArray([]),
+        offerEditorForm: {
+            title: ko.observable(''),
+            cover: ko.observable(''),
+            short_descr: ko.observable(''),
+            category_id: ko.observable(0),
+        },
         // methods
         UpdatePerformer: function() {
             RootViewModel.PreloaderShow();
@@ -262,8 +331,41 @@
                 //alert("error: " + text);
             });
         },
-        SelectOffer: function(_data, _id) {
-            console.log(_data);
+        GetCategoriesList: function() {
+            RootViewModel.PreloaderShow();
+            $.ajax({
+                url: "api/categories",
+                type: 'GET'
+            }).done(function(resp) {
+                PerformerViewModel.categories([]);
+                resp.forEach(element => {
+                    PerformerViewModel.categories.push(element);
+                });
+                $('#categories-list').formSelect();
+                RootViewModel.PreloaderHide();
+            }).fail(function(xhr, status, text) {
+                RootViewModel.PreloaderHide();
+                ShowModalError('#performer', xhr);
+                //alert("error: " + text);
+            });
+        },
+        SelectOffer: function(_id) {
+            for (const item of PerformerViewModel.OffersList()) {
+                if (item.id == _id) {
+                    offer = item;
+                    break;
+                }
+            }
+            console.log(offer);
+            PerformerViewModel.offerEditorForm.title(offer.title);
+            PerformerViewModel.offerEditorForm.cover(offer.cover);
+            PerformerViewModel.offerEditorForm.short_descr(offer.short_descr);
+            PerformerViewModel.offerEditorForm.category_id(offer.category_id);
+            //$('#categories-list').parent('li').eq($('#categories-list option[value=' + offer.category_id + ']').index()).addClass('selected');
+            $('#categories-list option[value=' + offer.category_id + ']').prop({ selected: true });
+            $('#categories-list').formSelect();
+            console.log($('#categories-list option[value=' + offer.category_id + ']').index());
+            PerformerViewModel.isOfferListForm(false);
         },
     }
 
@@ -274,10 +376,15 @@
     $(document).on("PerformerVisible", function () {
         PerformerViewModel.UpdatePerformer();
         PerformerViewModel.GetOffersList();
+        PerformerViewModel.GetCategoriesList();
     });
 
     // activate tabs
     $(document).ready(function(){
         $('.performer-tabs').tabs();
+    });
+
+    $(document).ready(function() {
+        $('input#title-input, textarea#short-descr').characterCounter();
     });
 </script>
