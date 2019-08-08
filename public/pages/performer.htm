@@ -125,7 +125,7 @@
                     </div> -->
                 </div>
             </form>
-            <form id="offer-editor-form" class="col s12 m8 offset-m2 l8 offset-l2 xl8 offset-xl2" data-bind="hidden: isOfferListForm">
+            <form id="offer-editor-form" class="col s12 m8 offset-m2 l8 offset-l2 xl8 offset-xl2" enctype="multipart/form-data" data-bind="hidden: isOfferListForm">
                 <div class="row">
                     <div class="input-field">
                         <input id="title-input" type="text" data-length="255" data-bind="value: offerEditorForm.title">
@@ -160,6 +160,7 @@
                 </div>
                 <div class="row">
                     <button class="btn waves-effect waves-light" data-bind="click: function() { PerformerViewModel.isOfferListForm(true); }">Вернуться</button>
+                    <button class="btn waves-effect waves-light" data-bind="click: SaveChanges">Сохранить</button>
                 </div>
             </form>
         </div>
@@ -225,6 +226,7 @@
             cover: ko.observable(''),
             short_descr: ko.observable(''),
             category_id: ko.observable(0),
+            cover_file: ko.observable(),
         },
         // methods
         UpdatePerformer: function() {
@@ -366,6 +368,28 @@
             $('#categories-list').formSelect();
             console.log($('#categories-list option[value=' + offer.category_id + ']').index());
             PerformerViewModel.isOfferListForm(false);
+        },
+        SaveChanges: function() {
+            this.offerEditorForm.cover_file = $('#cover-file').prop('files')[0];
+            let formData = ko.toJS(this.offerEditorForm);
+            console.log(formData);
+            RootViewModel.PreloaderShow();
+            $.ajax({
+                url: "api/offers/save",
+                data: formData,
+                type: 'POST',
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("Authorization", 'Bearer '+ Cookies.get('wedding_token') /* localStorage.getItem('wedding_token') */);
+    }
+            }).done(function(resp) {
+                console.log(resp);
+                M.toast({html: 'Изменения сохранены!', classes: 'rounded'});
+                RootViewModel.PreloaderHide();
+            }).fail(function(xhr, status, text) {
+                RootViewModel.PreloaderHide();
+                ShowModalError('#performer', xhr);
+                //alert("error: " + text);
+            });
         },
     }
 

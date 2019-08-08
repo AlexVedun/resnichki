@@ -20,4 +20,10 @@ class ManageOffersController extends Controller
         }
         return $offers;
     }
+
+    public function saveOffer(Request $request)
+    {
+        $path = $request->file('cover_file')->store('media/covers');
+        return $path;
+    }
 }
