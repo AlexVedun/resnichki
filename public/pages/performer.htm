@@ -125,16 +125,16 @@
                     </div> -->
                 </div>
             </form>
-            <form id="offer-editor-form" class="col s12 m8 offset-m2 l8 offset-l2 xl8 offset-xl2" enctype="multipart/form-data" data-bind="hidden: isOfferListForm">
+            <form method="post" id="offer-editor-form" class="col s12 m8 offset-m2 l8 offset-l2 xl8 offset-xl2" enctype="multipart/form-data" data-bind="hidden: isOfferListForm, submit: SaveChanges">
                 <div class="row">
                     <div class="input-field">
-                        <input id="title-input" type="text" data-length="255" data-bind="value: offerEditorForm.title">
+                        <input name="title" id="title-input" type="text" data-length="255" data-bind="value: offerEditorForm.title">
                         <label class="active" for="title-input">Заголовок</label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="input-field">
-                        <textarea id="short-descr" class="materialize-textarea" data-length="100" data-bind="text: offerEditorForm.short_descr"></textarea>
+                        <textarea name="short_descr" id="short-descr" class="materialize-textarea" data-length="100" data-bind="text: offerEditorForm.short_descr"></textarea>
                         <label class="active" for="short-descr">Краткое описание</label>
                     </div>
                 </div>
@@ -152,7 +152,7 @@
                 <div class="file-field input-field">
                     <div class="btn">
                         <span>Загрузить</span>
-                        <input type="file">
+                        <input name="cover_file" id="cover-file" type="file" data-bind="event: { change: function() { PerformerViewModel.offerEditorForm.is_cover_change(true); } }">
                     </div>
                     <div class="file-path-wrapper">
                         <input class="file-path validate" type="text">
@@ -160,7 +160,7 @@
                 </div>
                 <div class="row">
                     <button class="btn waves-effect waves-light" data-bind="click: function() { PerformerViewModel.isOfferListForm(true); }">Вернуться</button>
-                    <button class="btn waves-effect waves-light" data-bind="click: SaveChanges">Сохранить</button>
+                    <button class="btn waves-effect waves-light" type="submit">Сохранить</button>
                 </div>
             </form>
         </div>
@@ -225,8 +225,8 @@
             title: ko.observable(''),
             cover: ko.observable(''),
             short_descr: ko.observable(''),
-            category_id: ko.observable(0),
-            cover_file: ko.observable(),
+            offer_id: ko.observable(0),
+            is_cover_change: ko.observable(false),
         },
         // methods
         UpdatePerformer: function() {
@@ -370,17 +370,33 @@
             PerformerViewModel.isOfferListForm(false);
         },
         SaveChanges: function() {
-            this.offerEditorForm.cover_file = $('#cover-file').prop('files')[0];
-            let formData = ko.toJS(this.offerEditorForm);
-            console.log(formData);
+            //var files = $("#cover-file").get(0).files;
+            //var data = new FormData($('#offer-editor-form').get(0));
+            var formData = new FormData();
+            //formData.append('cover_file', $('input[type=file]')[0].files[0]);
+            formData.append("cover_file", $('#cover-file').prop('files')[0]);
+            formData.append("title", this.offerEditorForm.title());
+            formData.append("short_descr", this.offerEditorForm.short_descr());
+            formData.append("category_id", GetSelectedItemId('categories-list'));
+            formData.append("offer_id", this.offerEditorForm.offer_id());
+            formData.append("is_cover_change", this.offerEditorForm.is_cover_change());
+            //console.log(files);
+
+            //this.offerEditorForm.cover_file = $('#cover-file').prop('files')[0];
+            // var formData0 = new FormData($('#offer-editor-form')[0]);
+            // console.log(formData0);
+            // let formData = ko.toJS(this.offerEditorForm);
+            // console.log(formData);
             RootViewModel.PreloaderShow();
             $.ajax({
                 url: "api/offers/save",
                 data: formData,
                 type: 'POST',
+                contentType: false,
+                processData: false,
                 beforeSend: function (xhr) {
                     xhr.setRequestHeader("Authorization", 'Bearer '+ Cookies.get('wedding_token') /* localStorage.getItem('wedding_token') */);
-    }
+                }
             }).done(function(resp) {
                 console.log(resp);
                 M.toast({html: 'Изменения сохранены!', classes: 'rounded'});
