@@ -362,11 +362,11 @@
             PerformerViewModel.offerEditorForm.title(offer.title);
             PerformerViewModel.offerEditorForm.cover(offer.cover);
             PerformerViewModel.offerEditorForm.short_descr(offer.short_descr);
-            PerformerViewModel.offerEditorForm.category_id(offer.category_id);
+            PerformerViewModel.offerEditorForm.offer_id(offer.id);
+            SetSelectedItem('categories-list', offer.category_id);
             //$('#categories-list').parent('li').eq($('#categories-list option[value=' + offer.category_id + ']').index()).addClass('selected');
-            $('#categories-list option[value=' + offer.category_id + ']').prop({ selected: true });
-            $('#categories-list').formSelect();
-            console.log($('#categories-list option[value=' + offer.category_id + ']').index());
+            // $('#categories-list option[value=' + offer.category_id + ']').prop({ selected: true });
+            // $('#categories-list').formSelect();
             PerformerViewModel.isOfferListForm(false);
         },
         SaveChanges: function() {

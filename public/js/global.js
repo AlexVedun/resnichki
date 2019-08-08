@@ -7,6 +7,13 @@ function GetSelectedItemId(_element) {
     return $(element + " option:selected").eq($(element).parent('li.selected').index()).val();
 }
 
+// Функция для установки элемента выпадающего списка
+function SetSelectedItem(_element, _value) {
+    let element = "#" + _element;
+    $(element + ' option[value=' + _value + ']').prop({ selected: true });
+    $(element).formSelect();
+}
+
 // Function to set cookie
 function SetCookie(name, value, expires, path, domain, secure) {
     document.cookie = name + "=" + escape(value) +
