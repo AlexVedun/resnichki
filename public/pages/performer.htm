@@ -134,22 +134,35 @@
                 </div>
                 <div class="row">
                     <div class="input-field">
-                        <textarea name="short_descr" id="short-descr" class="materialize-textarea" data-length="100" data-bind="text: offerEditorForm.short_descr"></textarea>
+                        <textarea name="short_descr" id="short-descr" class="materialize-textarea" data-length="100" data-bind="value: offerEditorForm.short_descr"></textarea>
                         <label class="active" for="short-descr">Краткое описание</label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="input-field">
+                        <textarea name="description" id="description" class="materialize-textarea" data-bind="value: offerEditorForm.description"></textarea>
+                        <label class="active" for="description">Подробное описание</label>
+                    </div>
+                </div>
+                <div class="row divider"></div>
+                <div class="row">
+                    <div class="input-field">
                         <select id="categories-list" data-bind="foreach: categories">
                             <option data-bind="text: $data.name, value: $data.id"></option>
                         </select>
-                        <label>Категории</label>
+                        <label>Категория</label>
                     </div>
                 </div>
                 <div class="row">
-                    <img data-bind="attr: { src: offerEditorForm.cover }">
+                    <label>Обложка</label>
                 </div>
-                <div class="file-field input-field">
+                <div class="row">
+                    <img class="responsive-img" data-bind="attr: { src: offerEditorForm.cover }">
+                </div>
+                <div class="row">
+                    <label>Загрузить обложку</label>
+                </div>
+                <div class="row file-field input-field">
                     <div class="btn">
                         <span>Загрузить</span>
                         <input name="cover_file" id="cover-file" type="file" data-bind="event: { change: function() { PerformerViewModel.offerEditorForm.is_cover_change(true); } }">
@@ -158,6 +171,23 @@
                         <input class="file-path validate" type="text">
                     </div>
                 </div>
+                <div class="row divider"></div>
+                <div class="row">
+                    <label>Фотографии</label>
+                </div>
+                <div class="row" data-bind="foreach: offerEditorForm.photos">
+
+                </div>
+                <div class="row file-field input-field">
+                    <div class="btn">
+                        <span>Загрузить</span>
+                        <input multiple name="photos" id="photos" type="file" data-bind="event: { change: function() { PerformerViewModel.offerEditorForm.is_photos_add(true); } }">
+                    </div>
+                    <div class="file-path-wrapper">
+                        <input class="file-path validate" type="text" placeholder="Загрузить несколько фото">
+                    </div>
+                </div>
+                <div class="row divider"></div>
                 <div class="row">
                     <button class="btn waves-effect waves-light" data-bind="click: function() { PerformerViewModel.isOfferListForm(true); }">Вернуться</button>
                     <button class="btn waves-effect waves-light" type="submit">Сохранить</button>
@@ -227,6 +257,12 @@
             short_descr: ko.observable(''),
             offer_id: ko.observable(0),
             is_cover_change: ko.observable(false),
+            description: ko.observable(''),
+            is_photo: ko.observable(),
+            is_video: ko.observable(),
+            is_audio: ko.observable(),
+            photos: ko.observableArray([]),
+            is_photos_add: ko.observable(false),
         },
         // methods
         UpdatePerformer: function() {
@@ -358,10 +394,15 @@
                     break;
                 }
             }
-            console.log(offer);
             PerformerViewModel.offerEditorForm.title(offer.title);
             PerformerViewModel.offerEditorForm.cover(offer.cover);
             PerformerViewModel.offerEditorForm.short_descr(offer.short_descr);
+            PerformerViewModel.offerEditorForm.description(offer.details.description);
+            M.textareaAutoResize($('#short-descr'));
+            M.textareaAutoResize($('#description'));
+            PerformerViewModel.offerEditorForm.is_photo(offer.details.is_photo);
+            PerformerViewModel.offerEditorForm.is_video(offer.details.is_video);
+            PerformerViewModel.offerEditorForm.is_audio(offer.details.is_audio);
             PerformerViewModel.offerEditorForm.offer_id(offer.id);
             SetSelectedItem('categories-list', offer.category_id);
             //$('#categories-list').parent('li').eq($('#categories-list option[value=' + offer.category_id + ']').index()).addClass('selected');
@@ -380,7 +421,7 @@
             formData.append("category_id", GetSelectedItemId('categories-list'));
             formData.append("offer_id", this.offerEditorForm.offer_id());
             formData.append("is_cover_change", this.offerEditorForm.is_cover_change());
-            //console.log(files);
+            console.log($('#photos').prop('files'));
 
             //this.offerEditorForm.cover_file = $('#cover-file').prop('files')[0];
             // var formData0 = new FormData($('#offer-editor-form')[0]);
@@ -401,6 +442,7 @@
                 console.log(resp);
                 M.toast({html: 'Изменения сохранены!', classes: 'rounded'});
                 RootViewModel.PreloaderHide();
+                PerformerViewModel.GetOffersList();
             }).fail(function(xhr, status, text) {
                 RootViewModel.PreloaderHide();
                 ShowModalError('#performer', xhr);

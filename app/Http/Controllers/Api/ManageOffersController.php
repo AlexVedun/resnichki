@@ -19,7 +19,8 @@ class ManageOffersController extends Controller
         foreach ($offers as $offer)
         {
             //$offer->cover = GlobalFunctions::ConvertImage2base64('//covers//'.$offer->cover);
-            $offer->cover = env('APP_URL', false).Storage::url($offer->cover);
+            //$offer->cover = env('APP_URL', false).Storage::url($offer->cover);
+            $offer->cover = asset(Storage::url($offer->cover));
         }
         return $offers;
     }
