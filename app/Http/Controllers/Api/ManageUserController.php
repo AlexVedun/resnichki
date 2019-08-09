@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\ChangePasswordRequest;
 use Illuminate\Support\Facades\Hash;
+use App\Models\UserDetails;
 
 class ManageUserController extends Controller
 {
@@ -27,20 +28,20 @@ class ManageUserController extends Controller
     public function saveUserContacts(Request $request)
     {
         $user = Auth::user();
-        $user->details->contact_name = $request->contact_name;
-        $user->details->phone = $request->phone;
-        $user->details->mobile_1 = $request->mobile_1;
-        $user->details->mobile_2 = $request->mobile_2;
-        $user->details->mobile_3 = $request->mobile_3;
-        $user->details->viber = $request->viber;
-        $user->details->whats_up = $request->whats_up;
-        $user->details->telegram = $request->telegram;
-        $user->details->skype = $request->skype;
-        $user->details->vkontakte = $request->vkontakte;
-        $user->details->web_site = $request->web_site;
-        $user->details->instagram = $request->instagram;
-        $user->details->save();
-        //$user->save();
+        $userDetails = $user->details != null ? $user->details : new UserDetails();
+        $userDetails->contact_name = $request->contact_name;
+        $userDetails->phone = $request->phone;
+        $userDetails->mobile_1 = $request->mobile_1;
+        $userDetails->mobile_2 = $request->mobile_2;
+        $userDetails->mobile_3 = $request->mobile_3;
+        $userDetails->viber = $request->viber;
+        $userDetails->whats_up = $request->whats_up;
+        $userDetails->telegram = $request->telegram;
+        $userDetails->skype = $request->skype;
+        $userDetails->vkontakte = $request->vkontakte;
+        $userDetails->web_site = $request->web_site;
+        $userDetails->instagram = $request->instagram;
+        $user->details()->save($userDetails);
     }
 
     public function changeUserPassword(ChangePasswordRequest $request)
