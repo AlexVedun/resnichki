@@ -15,10 +15,11 @@ class CreateOffersTable extends Migration
     {
         Schema::create('offers', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('title');
-            $table->string('short_descr', 100)->nullable(); //короткое описание услуги
-            $table->bigInteger('category_id')->unsigned();
-            $table->bigInteger('user_id')->unsigned();
+            $table->string('title')->default('Заголовок');
+            $table->string('short_descr', 100)->default(''); //короткое описание услуги
+            $table->bigInteger('category_id')->unsigned()->nullable();
+            $table->bigInteger('user_id')->unsigned()->nullable();
+            $table->boolean('is_cover')->default(false);
             $table->string('cover')->nullable();
             $table->timestamps();
 

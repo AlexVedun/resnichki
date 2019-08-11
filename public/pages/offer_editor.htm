@@ -1,0 +1,400 @@
+<div id="offer-editor-div" >
+    <div class="row">
+        <div class="col s12">
+            <span class="center-align"><h2>Редактор предложения</h2></span>
+        </div>
+    </div>
+    <div class="row">
+    <!-- Add, modify, remove offers -->
+        <div id="offers" class="row">
+            <form method="post" id="offer-editor-form" class="col s12 m8 offset-m2 l8 offset-l2 xl8 offset-xl2" enctype="multipart/form-data" data-bind="submit: SaveChanges">
+                <div class="row card">
+                    <div class="card-content">
+                        <span class="card-title center-align">Описание</span>
+                        <div class="row">
+                            <div class="input-field">
+                                <i class="material-icons prefix">mode_edit</i>
+                                <input name="title" id="title-input" type="text" data-length="255" data-bind="value: offerEditorForm.title">
+                                <label for="title-input">Заголовок</label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="input-field">
+                                <i class="material-icons prefix">mode_edit</i>
+                                <textarea name="short-descr" id="short-descr" class="materialize-textarea" data-length="100" data-bind="value: offerEditorForm.short_descr"></textarea>
+                                <label for="short-descr">Краткое описание</label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="input-field">
+                                <i class="material-icons prefix">mode_edit</i>
+                                <textarea name="description" id="description" class="materialize-textarea" data-bind="value: offerEditorForm.description"></textarea>
+                                <label for="description">Подробное описание</label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="input-field">
+                                <i class="material-icons prefix">list</i>
+                                <select id="categories-list" data-bind="foreach: offerEditorForm.categories">
+                                    <option data-bind="text: $data.name, value: $data.id"></option>
+                                </select>
+                                <label>Категория</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row card">
+                    <div class="card-content">
+                        <span class="card-title center-align">Обложка</span>
+                        <div class="row">
+                            <img class="responsive-img" data-bind="attr: { src: offerEditorForm.cover }">
+                        </div>
+
+                        <div class="row file-field input-field">
+                            <div class="btn">
+                                <span>Загрузить</span>
+                                <input name="cover_file" id="cover-file" type="file" data-bind="event: { change: function() { $root.offerEditorForm.is_cover_change(true); } }">
+                            </div>
+                            <div class="file-path-wrapper">
+                                <input class="file-path validate" type="text" placeholder="Загрузить обложку">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row card">
+                    <div class="card-content">
+                        <span class="card-title center-align">Фотографии</span>
+                        <div class="row">
+                            <table data-bind="foreach: offerEditorForm.photo">
+                                <tr>
+                                    <td>
+                                        <img class="responsive-img" data-bind="attr: { src: path_to_file }">
+                                    </td>
+                                    <td>
+                                        <button class="btn waves-effect waves-light" data-bind="click: function(data) { $root.DeleteMedia(data) }">Удалить</button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div class="row file-field input-field">
+                            <div class="btn">
+                                <span>Загрузить</span>
+                                <input multiple name="photo" id="photo" type="file" data-bind="event: { change: function() { $root.offerEditorForm.is_photo_add(true); } }">
+                            </div>
+                            <div class="file-path-wrapper">
+                                <input id="photo-file-path" class="file-path validate" type="text" placeholder="Загрузить несколько фото">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row card">
+                    <div class="card-content">
+                        <span class="card-title center-align">Видео</span>
+                        <div class="row">
+                            <table data-bind="foreach: offerEditorForm.video">
+                                <tr>
+                                    <td>
+                                        <video class="responsive-video" controls>
+                                            <source data-bind="attr: { src: path_to_file }">
+                                        </video>
+                                    </td>
+                                    <td>
+                                        <button class="btn waves-effect waves-light" data-bind="click: function(data) { $root.DeleteMedia(data) }">Удалить</button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div class="row file-field input-field">
+                            <div class="btn">
+                                <span>Загрузить</span>
+                                <input multiple name="video" id="video" type="file" data-bind="event: { change: function() { $root.offerEditorForm.is_video_add(true); } }">
+                            </div>
+                            <div class="file-path-wrapper">
+                                <input id="video-file-path" class="file-path validate" type="text" placeholder="Загрузить несколько видео">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row card">
+                    <div class="card-content">
+                        <span class="card-title center-align">Аудио</span>
+                        <div class="row">
+                            <table data-bind="foreach: offerEditorForm.audio">
+                                <tr>
+                                    <td>
+                                        <audio controls>
+                                            <source data-bind="attr: { src: path_to_file }">
+                                        </audio>
+                                    </td>
+                                    <td>
+                                        <button class="btn waves-effect waves-light" data-bind="click: function(data) { $root.DeleteMedia(data) }">Удалить</button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div class="row file-field input-field">
+                            <div class="btn">
+                                <span>Загрузить</span>
+                                <input multiple name="audio" id="audio" type="file" data-bind="event: { change: function() { $root.offerEditorForm.is_audio_add(true); } }">
+                            </div>
+                            <div class="file-path-wrapper">
+                                <input id="audio-file-path" class="file-path validate" type="text" placeholder="Загрузить несколько аудиофайлов">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <!-- <button class="btn waves-effect waves-light" data-bind="click: function() { OfferEditorViewModel.isOfferListForm(true); }"><i class="material-icons left">arrow_back</i>Вернуться</button> -->
+                    <button class="col s12 m4 offset-m4 l4 offset-l4 xl4 offset-xl4 btn waves-effect waves-light" type="submit"><i class="material-icons left">save</i>Сохранить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    let OfferEditorViewModel = {
+        // properties
+        //title: ko.observable(''),
+        offerEditorForm: {
+            title: ko.observable(''),
+            cover: ko.observable(''),
+            short_descr: ko.observable(''),
+            offer_id: ko.observable(0),
+            categories: ko.observableArray([]),
+            is_cover_change: ko.observable(false),
+            description: ko.observable(''),
+            is_photo: ko.observable(),
+            is_video: ko.observable(),
+            is_audio: ko.observable(),
+            photo: ko.observableArray([]),
+            video: ko.observableArray([]),
+            audio: ko.observableArray([]),
+            is_photo_add: ko.observable(false),
+            is_video_add: ko.observable(false),
+            is_audio_add: ko.observable(false),
+            photoFiles: ko.observable(''),
+        },
+        // methods
+        LoadOffer: function(_id) {
+            RootViewModel.PreloaderShow();
+            let offer = {};
+            $.ajax({
+                url: "api/offers/get/" + _id,
+                type: 'GET',
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("Authorization", 'Bearer '+ Cookies.get('wedding_token') /* localStorage.getItem('wedding_token') */ );
+                }
+            }).done(function(resp) {
+                console.log(resp);
+                RootViewModel.PreloaderHide();
+                offer = resp;
+            }).fail(function(xhr, status, text) {
+                RootViewModel.PreloaderHide();
+                ShowModalError('#offer_editor', xhr);
+                //alert("error: " + text);
+            });
+            return offer;
+        },
+        GetCategoriesList: function() {
+            RootViewModel.PreloaderShow();
+            $.ajax({
+                url: "api/categories",
+                type: 'GET'
+            }).done(function(resp) {
+                OfferEditorViewModel.offerEditorForm.categories([]);
+                resp.forEach(element => {
+                    OfferEditorViewModel.offerEditorForm.categories.push(element);
+                });
+                $('#categories-list').formSelect();
+                RootViewModel.PreloaderHide();
+            }).fail(function(xhr, status, text) {
+                RootViewModel.PreloaderHide();
+                ShowModalError('#offer_editor', xhr);
+                //alert("error: " + text);
+            });
+        },
+        ClearOfferEditor: function() {
+            OfferEditorViewModel.offerEditorForm.title('');
+            OfferEditorViewModel.offerEditorForm.cover('');
+            OfferEditorViewModel.offerEditorForm.short_descr('');
+            OfferEditorViewModel.offerEditorForm.description('');
+            M.textareaAutoResize($('#short-descr'));
+            M.textareaAutoResize($('#description'));
+            OfferEditorViewModel.offerEditorForm.offer_id(0);
+            SetSelectedItem('categories-list', 1);
+            OfferEditorViewModel.offerEditorForm.photo([]);
+            OfferEditorViewModel.offerEditorForm.video([]);
+            OfferEditorViewModel.offerEditorForm.audio([]);
+            OfferEditorViewModel.offerEditorForm.is_photo_add(false);
+            OfferEditorViewModel.offerEditorForm.is_video_add(false);
+            OfferEditorViewModel.offerEditorForm.is_audio_add(false);
+            $('#photo-file-path').val('');
+            $('#video-file-path').val('');
+            $('#audio-file-path').val('');
+            M.updateTextFields();
+        },
+        UpdateOffer: function(_id) {
+            if (_id != 0) {
+                $.ajax({
+                    url: "api/offers/get/" + _id,
+                    type: 'GET',
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader("Authorization", 'Bearer '+ Cookies.get('wedding_token') /* localStorage.getItem('wedding_token') */ );
+                    }
+                }).done(function(resp) {
+                    console.log(resp);
+                    OfferEditorViewModel.offerEditorForm.title(resp.title);
+                    OfferEditorViewModel.offerEditorForm.cover(resp.cover);
+                    OfferEditorViewModel.offerEditorForm.short_descr(resp.short_descr);
+                    OfferEditorViewModel.offerEditorForm.description(resp.details.description);
+                    M.textareaAutoResize($('#short-descr'));
+                    M.textareaAutoResize($('#description'));
+                    OfferEditorViewModel.offerEditorForm.is_photo(resp.details.is_photo);
+                    OfferEditorViewModel.offerEditorForm.is_video(resp.details.is_video);
+                    OfferEditorViewModel.offerEditorForm.is_audio(resp.details.is_audio);
+                    OfferEditorViewModel.offerEditorForm.offer_id(resp.id);
+                    SetSelectedItem('categories-list', resp.category_id);
+                    OfferEditorViewModel.offerEditorForm.photo([]);
+                    OfferEditorViewModel.offerEditorForm.video([]);
+                    OfferEditorViewModel.offerEditorForm.audio([]);
+                    for (const item of resp.details.offer_media) {
+                        switch (item.type) {
+                            case 'photo':
+                                OfferEditorViewModel.offerEditorForm.photo.push(item);
+                                break;
+                            case 'video':
+                                OfferEditorViewModel.offerEditorForm.video.push(item);
+                                break;
+                            case 'audio':
+                                OfferEditorViewModel.offerEditorForm.audio.push(item);
+                                break;
+                        }
+                    }
+                    M.updateTextFields();
+                    RootViewModel.PreloaderHide();
+                }).fail(function(xhr, status, text) {
+                    RootViewModel.PreloaderHide();
+                    ShowModalError('#offer_editor', xhr);
+                    //alert("error: " + text);
+                });
+
+            }
+        },
+        SaveChanges: function() {
+            let formData = new FormData();
+            let photoCount = $('#photo').prop('files').length;
+            let videoCount = $('#video').prop('files').length;
+            let audioCount = $('#audio').prop('files').length;
+            formData.append("cover_file", $('#cover-file').prop('files')[0]);
+            formData.append("title", this.offerEditorForm.title());
+            formData.append("short_descr", this.offerEditorForm.short_descr());
+            formData.append("description", this.offerEditorForm.description());
+            formData.append("category_id", GetSelectedItemId('categories-list'));
+            formData.append("offer_id", this.offerEditorForm.offer_id());
+            formData.append("is_cover_change", this.offerEditorForm.is_cover_change());
+            formData.append("is_photo_add", this.offerEditorForm.is_photo_add());
+            formData.append("is_video_add", this.offerEditorForm.is_video_add());
+            formData.append("is_audio_add", this.offerEditorForm.is_audio_add());
+            formData.append("photo_count", photoCount);
+            formData.append("video_count", videoCount);
+            formData.append("audio_count", audioCount);
+            if (this.offerEditorForm.is_photo_add()) {
+                for (let i = 0; i < photoCount; i++) {
+                    const item = $('#photo').prop('files')[i];
+                    formData.append("photo" + i, item);
+                }
+            }
+            if (this.offerEditorForm.is_video_add()) {
+                for (let i = 0; i < videoCount; i++) {
+                    const item = $('#video').prop('files')[i];
+                    formData.append("video" + i, item);
+                }
+            }
+            if (this.offerEditorForm.is_audio_add()) {
+                for (let i = 0; i < audioCount; i++) {
+                    const item = $('#audio').prop('files')[i];
+                    formData.append("audio" + i, item);
+                }
+            }
+            RootViewModel.PreloaderShow();
+            $.ajax({
+                url: "api/offers/save",
+                data: formData,
+                type: 'POST',
+                contentType: false,
+                processData: false,
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("Authorization", 'Bearer '+ Cookies.get('wedding_token') /* localStorage.getItem('wedding_token') */);
+                }
+            }).done(function(resp) {
+                M.toast({html: 'Изменения сохранены!', classes: 'rounded'});
+                RootViewModel.PreloaderHide();
+                location.hash = '#performer';
+            }).fail(function(xhr, status, text) {
+                RootViewModel.PreloaderHide();
+                ShowModalError('#offer_editor', xhr);
+                //alert("error: " + text);
+            });
+        },
+        DeleteMedia: function(_media) {
+            RootViewModel.PreloaderShow();
+            $.ajax({
+                url: "api/offers/media/" + _media.id,
+                type: 'DELETE',
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("Authorization", 'Bearer '+ Cookies.get('wedding_token') /* localStorage.getItem('wedding_token') */ );
+                }
+            }).done(function(resp) {
+                switch (_media.type)
+                {
+                    case 'photo':
+                        OfferEditorViewModel.offerEditorForm.photo.remove(_media);
+                        break;
+                    case 'video':
+                        OfferEditorViewModel.offerEditorForm.video.remove(_media);
+                        break;
+                    case 'audio':
+                        OfferEditorViewModel.offerEditorForm.audio.remove(_media);
+                        break;
+                }
+                RootViewModel.PreloaderHide();
+            }).fail(function(xhr, status, text) {
+                RootViewModel.PreloaderHide();
+                ShowModalError('#offer_editor', xhr);
+                //alert("error: " + text);
+            });
+        },
+    }
+
+    // object activation
+    ko.applyBindings(OfferEditorViewModel, document.getElementById("offer-editor-div"));
+
+    // update news when main page becomes visible
+    $(document).on("OfferEditorVisible", function () {
+        //PerformerViewModel.UpdatePerformer();
+        //PerformerViewModel.GetOffersList();
+        OfferEditorViewModel.GetCategoriesList();
+        OfferEditorViewModel.ClearOfferEditor();
+        OfferEditorViewModel.UpdateOffer(chunckParams['param']);
+    });
+
+    $(document).ready(function() {
+        $('input#title-input, textarea#short-descr').characterCounter();
+    });
+
+    $(document).ready(function(){
+        $('.fixed-action-btn').floatingActionButton();
+    });
+</script>

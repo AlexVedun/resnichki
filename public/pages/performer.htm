@@ -7,88 +7,92 @@
     <div class="row">
         <div class="col s12">
             <ul class="performer-tabs tabs">
-            <li class="tab col s3"><a class="active" href="#contacts">Контактные данные</a></li>
-            <li class="tab col s3"><a href="#offers">Предложения</a></li>
-            <li class="tab col s3"><a href="#change-password">Изменить пароль</a></li>
-            <!-- <li class="tab col s3"><a href="#test4">Test 4</a></li> -->
+            <li class="tab col s4"><a class="active" href="#contacts">Контактные данные</a></li>
+            <li class="tab col s4"><a href="#offers">Предложения</a></li>
+            <li class="tab col s4"><a href="#change-password">Изменить пароль</a></li>
             </ul>
         </div>
-        <div id="contacts" class="col s12">
-            <form id="contacts-form">
-                <div class="row">
-                    <div class="col s6 offset-s3">
-                        <div class="row input-field">
-                            <i class="material-icons prefix">face</i>
-                            <input id="contact_name" type="text" data-bind="value: contactsForm.contact_name">
-                            <label class="active" for="contact_name">Контактное лицо</label>
-                        </div>
-                        <div class="row input-field">
-                            <i class="material-icons prefix">phone</i>
-                            <input id="phone" type="text" data-bind="value: contactsForm.phone">
-                            <label class="active" for="phone">Рабочий телефон</label>
-                        </div>
-                        <div class="row input-field">
-                            <i class="material-icons prefix">phone_android</i>
-                            <input id="mobile_1" type="text" data-bind="value: contactsForm.mobile_1">
-                            <label class="active" for="mobile_1">Мобильный телефон №1</label>
-                        </div>
-                        <div class="row input-field">
-                            <i class="material-icons prefix">phone_android</i>
-                            <input id="mobile_2" type="text" data-bind="value: contactsForm.mobile_2">
-                            <label class="active" for="mobile_2">Мобильный телефон №2</label>
-                        </div>
-                        <div class="row input-field">
-                            <i class="material-icons prefix">phone_android</i>
-                            <input id="mobile_3" type="text" data-bind="value: contactsForm.mobile_3">
-                            <label class="active" for="mobile_3">Мобильный телефон №3</label>
-                        </div>
-                        <div class="row input-field">
-                            <i class="material-icons prefix">chat</i>
-                            <input id="viber" type="text" data-bind="value: contactsForm.viber">
-                            <label class="active" for="viber">Viber</label>
-                        </div>
-                        <div class="row input-field">
-                            <i class="prefix icon ion-logo-whatsapp"></i>
-                            <input id="whats_up" type="text" data-bind="value: contactsForm.whats_up">
-                            <label class="active" for="whats_up">WhatsUp</label>
-                        </div>
-                        <div class="row input-field">
-                            <i class="prefix icon ion-md-paper-plane"></i>
-                            <input id="telegram" type="text" data-bind="value: contactsForm.telegram">
-                            <label class="active" for="telegram">Telegram</label>
-                        </div>
-                        <div class="row input-field">
-                            <i class="prefix icon ion-logo-skype"></i>
-                            <input id="skype" type="text" data-bind="value: contactsForm.skype">
-                            <label class="active" for="skype">Skype</label>
-                        </div>
-                        <div class="row input-field">
-                            <i class="prefix icon ion-logo-vk"></i>
-                            <input id="vkontakte" type="text" data-bind="value: contactsForm.vkontakte">
-                            <label class="active" for="vkontakte">ВКонтакте</label>
-                        </div>
-                        <div class="row input-field">
-                            <i class="prefix icon ion-logo-instagram"></i>
-                            <input id="instagram" type="text" data-bind="value: contactsForm.instagram">
-                            <label class="active" for="instagram">Instagram</label>
-                        </div>
-                        <div class="row input-field">
-                            <i class="material-icons prefix">web</i>
-                            <input id="web_site" type="text" data-bind="value: contactsForm.web_site">
-                            <label class="active" for="web_site">Web-site</label>
-                        </div>
-                        <div class="row">
-                            <button class="col s4 offset-s4 btn waves-effect waves-light" data-bind="click: SaveContacts">
-                                <i class="material-icons left">save</i>
-                                Сохранить
-                            </button>
-                        </div>
+    <!-- Change user contacts -->
+        <div id="contacts">
+            <div class="row"></div>
+            <form method="POST" id="contacts-form" class="card col s12 m8 offset-m2 l8 offset-l2 xl6 offset-xl3" data-bind="submit: SaveContacts">
+                <div class="card-content">
+                    <div class="row input-field">
+                        <i class="material-icons prefix">face</i>
+                        <input id="contact_name" type="text" data-bind="value: contactsForm.contact_name">
+                        <label class="active" for="contact_name">Контактное лицо</label>
+                    </div>
+                    <div class="row input-field">
+                        <i class="material-icons prefix">phone</i>
+                        <input id="phone" type="text" data-bind="value: contactsForm.phone">
+                        <label class="active" for="phone">Рабочий телефон</label>
+                    </div>
+                    <div class="row input-field">
+                        <i class="material-icons prefix">phone_android</i>
+                        <input id="mobile_1" type="text" data-bind="value: contactsForm.mobile_1">
+                        <label class="active" for="mobile_1">Мобильный телефон №1</label>
+                    </div>
+                    <div class="row input-field">
+                        <i class="material-icons prefix">phone_android</i>
+                        <input id="mobile_2" type="text" data-bind="value: contactsForm.mobile_2">
+                        <label class="active" for="mobile_2">Мобильный телефон №2</label>
+                    </div>
+                    <div class="row input-field">
+                        <i class="material-icons prefix">phone_android</i>
+                        <input id="mobile_3" type="text" data-bind="value: contactsForm.mobile_3">
+                        <label class="active" for="mobile_3">Мобильный телефон №3</label>
+                    </div>
+                    <div class="row input-field">
+                        <i class="material-icons prefix">chat</i>
+                        <input id="viber" type="text" data-bind="value: contactsForm.viber">
+                        <label class="active" for="viber">Viber</label>
+                    </div>
+                    <div class="row input-field">
+                        <i class="prefix icon ion-logo-whatsapp"></i>
+                        <input id="whats_up" type="text" data-bind="value: contactsForm.whats_up">
+                        <label class="active" for="whats_up">WhatsUp</label>
+                    </div>
+                    <div class="row input-field">
+                        <i class="prefix icon ion-md-paper-plane"></i>
+                        <input id="telegram" type="text" data-bind="value: contactsForm.telegram">
+                        <label class="active" for="telegram">Telegram</label>
+                    </div>
+                    <div class="row input-field">
+                        <i class="prefix icon ion-logo-skype"></i>
+                        <input id="skype" type="text" data-bind="value: contactsForm.skype">
+                        <label class="active" for="skype">Skype</label>
+                    </div>
+                    <div class="row input-field">
+                        <i class="prefix icon ion-logo-vk"></i>
+                        <input id="vkontakte" type="text" data-bind="value: contactsForm.vkontakte">
+                        <label class="active" for="vkontakte">ВКонтакте</label>
+                    </div>
+                    <div class="row input-field">
+                        <i class="prefix icon ion-logo-instagram"></i>
+                        <input id="instagram" type="text" data-bind="value: contactsForm.instagram">
+                        <label class="active" for="instagram">Instagram</label>
+                    </div>
+                    <div class="row input-field">
+                        <i class="material-icons prefix">web</i>
+                        <input id="web_site" type="text" data-bind="value: contactsForm.web_site">
+                        <label class="active" for="web_site">Web-site</label>
+                    </div>
+                    <div class="row">
+                        <button class="col s12 m8 offset-m2 l6 offset-l3 xl6 offset-xl3 btn waves-effect waves-light" type="submit">
+                            <i class="material-icons left">save</i>
+                            Сохранить
+                        </button>
                     </div>
                 </div>
             </form>
         </div>
+    <!-- Add, modify, remove offers -->
         <div id="offers" class="row">
-            <form id="offers-list-form" class="col s12 m8 offset-m2 l8 offset-l2 xl8 offset-xl2" data-bind="visible: isOfferListForm">
+            <div class="row"></div>
+            <form id="offers-list-form" class="col s12 m8 offset-m2 l8 offset-l2 xl8 offset-xl2">
+                <div class="row">
+                    <a class="col s12 m8 offset-m2 l6 offset-l3 xl4 offset-xl4 btn waves-effect waves-light" href="#offer_editor/0"><i class="material-icons left">add</i>Создать предложение</a>
+                </div>
                 <div data-bind="foreach: OffersList">
                     <div class="row">
                         <div class="card hoverable horizontal">
@@ -101,8 +105,9 @@
                                     <!--ko text: short_descr--><!--/ko-->
                                 </div>
                                 <div class="card-action">
-                                    <button class="btn waves-effect waves-light" data-bind="click: $parent.SelectOffer.bind($data, $data.id)">Открыть</button>
-                                    <button class="btn waves-effect waves-light">Удалить</button>
+                                    <a class="btn waves-effect waves-light" data-bind="attr: { href: '#offer_editor/' + $data.id }">Открыть</a>
+                                    <!-- <button class="btn waves-effect waves-light" data-bind="click: $parent.SelectOffer.bind($data, $data.id)">Открыть</button> -->
+                                    <button class="btn waves-effect waves-light" data-bind="click: function (data) { $root.DeleteOffer (data); }">Удалить</button>
                                 </div>
                                 <!-- <div class="card-action">
                                     <a href="#">This is a link</a>
@@ -125,77 +130,11 @@
                     </div> -->
                 </div>
             </form>
-            <form method="post" id="offer-editor-form" class="col s12 m8 offset-m2 l8 offset-l2 xl8 offset-xl2" enctype="multipart/form-data" data-bind="hidden: isOfferListForm, submit: SaveChanges">
-                <div class="row">
-                    <div class="input-field">
-                        <input name="title" id="title-input" type="text" data-length="255" data-bind="value: offerEditorForm.title">
-                        <label class="active" for="title-input">Заголовок</label>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="input-field">
-                        <textarea name="short_descr" id="short-descr" class="materialize-textarea" data-length="100" data-bind="value: offerEditorForm.short_descr"></textarea>
-                        <label class="active" for="short-descr">Краткое описание</label>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="input-field">
-                        <textarea name="description" id="description" class="materialize-textarea" data-bind="value: offerEditorForm.description"></textarea>
-                        <label class="active" for="description">Подробное описание</label>
-                    </div>
-                </div>
-                <div class="row divider"></div>
-                <div class="row">
-                    <div class="input-field">
-                        <select id="categories-list" data-bind="foreach: categories">
-                            <option data-bind="text: $data.name, value: $data.id"></option>
-                        </select>
-                        <label>Категория</label>
-                    </div>
-                </div>
-                <div class="row">
-                    <label>Обложка</label>
-                </div>
-                <div class="row">
-                    <img class="responsive-img" data-bind="attr: { src: offerEditorForm.cover }">
-                </div>
-                <div class="row">
-                    <label>Загрузить обложку</label>
-                </div>
-                <div class="row file-field input-field">
-                    <div class="btn">
-                        <span>Загрузить</span>
-                        <input name="cover_file" id="cover-file" type="file" data-bind="event: { change: function() { PerformerViewModel.offerEditorForm.is_cover_change(true); } }">
-                    </div>
-                    <div class="file-path-wrapper">
-                        <input class="file-path validate" type="text">
-                    </div>
-                </div>
-                <div class="row divider"></div>
-                <div class="row">
-                    <label>Фотографии</label>
-                </div>
-                <div class="row" data-bind="foreach: offerEditorForm.photos">
-
-                </div>
-                <div class="row file-field input-field">
-                    <div class="btn">
-                        <span>Загрузить</span>
-                        <input multiple name="photos" id="photos" type="file" data-bind="event: { change: function() { PerformerViewModel.offerEditorForm.is_photos_add(true); } }">
-                    </div>
-                    <div class="file-path-wrapper">
-                        <input class="file-path validate" type="text" placeholder="Загрузить несколько фото">
-                    </div>
-                </div>
-                <div class="row divider"></div>
-                <div class="row">
-                    <button class="btn waves-effect waves-light" data-bind="click: function() { PerformerViewModel.isOfferListForm(true); }">Вернуться</button>
-                    <button class="btn waves-effect waves-light" type="submit">Сохранить</button>
-                </div>
-            </form>
         </div>
+    <!-- Change password section -->
         <div id="change-password">
-            <form id="change-password-form" class="card col s6 offset-s3">
+            <div class="row"></div>
+            <form method="POST" id="change-password-form" class="card col s12 m8 offset-m2 l8 offset-l2 xl6 offset-xl3" data-bind="submit: ChangePassword">
                 <div class="card-content">
                     <div class="row input-field">
                         <i class="icon ion-md-key prefix"></i>
@@ -213,7 +152,7 @@
                         <label for="new_password_confirmation">Подтвердить новый пароль</label>
                     </div>
                     <div class="row">
-                        <button class="col s4 offset-s4 btn waves-effect waves-light" data-bind="click: ChangePassword">
+                        <button class="col s12 m8 offset-m2 l8 offset-l2 xl8 offset-xl2 btn waves-effect waves-light" type="submit">
                             <i class="material-icons left">save</i>
                             Изменить пароль
                         </button>
@@ -221,7 +160,6 @@
                 </div>
             </form>
         </div>
-        <!-- <div id="test4" class="col s12">Test 4</div> -->
     </div>
 </div>
 
@@ -249,21 +187,6 @@
             new_password_confirmation: ko.observable(''),
         },
         OffersList: ko.observableArray([]),
-        isOfferListForm: ko.observable(true),
-        categories: ko.observableArray([]),
-        offerEditorForm: {
-            title: ko.observable(''),
-            cover: ko.observable(''),
-            short_descr: ko.observable(''),
-            offer_id: ko.observable(0),
-            is_cover_change: ko.observable(false),
-            description: ko.observable(''),
-            is_photo: ko.observable(),
-            is_video: ko.observable(),
-            is_audio: ko.observable(),
-            photos: ko.observableArray([]),
-            is_photos_add: ko.observable(false),
-        },
         // methods
         UpdatePerformer: function() {
             RootViewModel.PreloaderShow();
@@ -302,6 +225,7 @@
                     PerformerViewModel.contactsForm.web_site('');
                     PerformerViewModel.contactsForm.instagram('');
                 }
+                M.updateTextFields();
                 RootViewModel.PreloaderHide();
             }).fail(function(xhr, status, text) {
                 RootViewModel.PreloaderHide();
@@ -340,6 +264,12 @@
                 }
             }).done(function(resp) {
                 M.toast({html: resp.message, classes: 'rounded'});
+                for (const key in PerformerViewModel.changePasswordForm) {
+                    if (PerformerViewModel.changePasswordForm.hasOwnProperty(key)) {
+                        const element = PerformerViewModel.changePasswordForm[key];
+                        element('');
+                    }
+                }
                 RootViewModel.PreloaderHide();
             }).fail(function(xhr, status, text) {
                 console.log(xhr);
@@ -369,86 +299,24 @@
                 //alert("error: " + text);
             });
         },
-        GetCategoriesList: function() {
+        DeleteOffer: function(_offer) {
             RootViewModel.PreloaderShow();
             $.ajax({
-                url: "api/categories",
-                type: 'GET'
-            }).done(function(resp) {
-                PerformerViewModel.categories([]);
-                resp.forEach(element => {
-                    PerformerViewModel.categories.push(element);
-                });
-                $('#categories-list').formSelect();
-                RootViewModel.PreloaderHide();
-            }).fail(function(xhr, status, text) {
-                RootViewModel.PreloaderHide();
-                ShowModalError('#performer', xhr);
-                //alert("error: " + text);
-            });
-        },
-        SelectOffer: function(_id) {
-            for (const item of PerformerViewModel.OffersList()) {
-                if (item.id == _id) {
-                    offer = item;
-                    break;
-                }
-            }
-            PerformerViewModel.offerEditorForm.title(offer.title);
-            PerformerViewModel.offerEditorForm.cover(offer.cover);
-            PerformerViewModel.offerEditorForm.short_descr(offer.short_descr);
-            PerformerViewModel.offerEditorForm.description(offer.details.description);
-            M.textareaAutoResize($('#short-descr'));
-            M.textareaAutoResize($('#description'));
-            PerformerViewModel.offerEditorForm.is_photo(offer.details.is_photo);
-            PerformerViewModel.offerEditorForm.is_video(offer.details.is_video);
-            PerformerViewModel.offerEditorForm.is_audio(offer.details.is_audio);
-            PerformerViewModel.offerEditorForm.offer_id(offer.id);
-            SetSelectedItem('categories-list', offer.category_id);
-            //$('#categories-list').parent('li').eq($('#categories-list option[value=' + offer.category_id + ']').index()).addClass('selected');
-            // $('#categories-list option[value=' + offer.category_id + ']').prop({ selected: true });
-            // $('#categories-list').formSelect();
-            PerformerViewModel.isOfferListForm(false);
-        },
-        SaveChanges: function() {
-            //var files = $("#cover-file").get(0).files;
-            //var data = new FormData($('#offer-editor-form').get(0));
-            var formData = new FormData();
-            //formData.append('cover_file', $('input[type=file]')[0].files[0]);
-            formData.append("cover_file", $('#cover-file').prop('files')[0]);
-            formData.append("title", this.offerEditorForm.title());
-            formData.append("short_descr", this.offerEditorForm.short_descr());
-            formData.append("category_id", GetSelectedItemId('categories-list'));
-            formData.append("offer_id", this.offerEditorForm.offer_id());
-            formData.append("is_cover_change", this.offerEditorForm.is_cover_change());
-            console.log($('#photos').prop('files'));
-
-            //this.offerEditorForm.cover_file = $('#cover-file').prop('files')[0];
-            // var formData0 = new FormData($('#offer-editor-form')[0]);
-            // console.log(formData0);
-            // let formData = ko.toJS(this.offerEditorForm);
-            // console.log(formData);
-            RootViewModel.PreloaderShow();
-            $.ajax({
-                url: "api/offers/save",
-                data: formData,
-                type: 'POST',
-                contentType: false,
-                processData: false,
+                url: "api/offers/" + _offer.id,
+                type: 'DELETE',
                 beforeSend: function (xhr) {
-                    xhr.setRequestHeader("Authorization", 'Bearer '+ Cookies.get('wedding_token') /* localStorage.getItem('wedding_token') */);
+                    xhr.setRequestHeader("Authorization", 'Bearer '+ Cookies.get('wedding_token') /* localStorage.getItem('wedding_token') */ );
                 }
             }).done(function(resp) {
-                console.log(resp);
-                M.toast({html: 'Изменения сохранены!', classes: 'rounded'});
+                PerformerViewModel.OffersList.remove(_offer);
+                M.toast({html: 'Успешно удалено!', classes: 'rounded'});
                 RootViewModel.PreloaderHide();
-                PerformerViewModel.GetOffersList();
             }).fail(function(xhr, status, text) {
                 RootViewModel.PreloaderHide();
                 ShowModalError('#performer', xhr);
                 //alert("error: " + text);
             });
-        },
+        }
     }
 
     // object activation
@@ -458,7 +326,6 @@
     $(document).on("PerformerVisible", function () {
         PerformerViewModel.UpdatePerformer();
         PerformerViewModel.GetOffersList();
-        PerformerViewModel.GetCategoriesList();
     });
 
     // activate tabs
@@ -468,5 +335,9 @@
 
     $(document).ready(function() {
         $('input#title-input, textarea#short-descr').characterCounter();
+    });
+
+    $(document).ready(function(){
+        $('.fixed-action-btn').floatingActionButton();
     });
 </script>

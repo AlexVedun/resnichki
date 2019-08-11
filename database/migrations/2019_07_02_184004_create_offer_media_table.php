@@ -15,7 +15,7 @@ class CreateOfferMediaTable extends Migration
     {
         Schema::create('offer_media', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('offer_details_id')->unsigned();
+            $table->bigInteger('offer_details_id')->unsigned()->nullable();
             $table->enum('type', ['photo', 'video', 'audio']);
             $table->string('path_to_file');
             $table->timestamps();
