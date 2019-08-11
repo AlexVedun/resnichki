@@ -1,5 +1,6 @@
 // Global variables
 let chunckParams = [];
+let userRole = '';
 
 // Функция для получения выбранного элемента выпадающего списка
 function GetSelectedItemId(_element) {

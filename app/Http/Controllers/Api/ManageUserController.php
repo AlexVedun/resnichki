@@ -13,9 +13,7 @@ class ManageUserController extends Controller
 {
     public function checkout()
     {
-        return response()->json([
-            'isLogin' => Auth::check(),
-        ]);
+        return Auth::user();
     }
 
     public function getUser()

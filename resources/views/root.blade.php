@@ -31,7 +31,7 @@
                         <ul id="nav-mobile" class="right hide-on-med-and-down">
                             <li><a href="#main" data-bind="">Главная</a></li>
                             <li><a href="#categories" data-bind="">Категории</a></li>
-                            <li><a href="#performer" data-bind="visible: isLogin">Личный кабинет</a></li>
+                            <li><a href="#account" data-bind="visible: isLogin">Личный кабинет</a></li>
                             <li><a href="#logout" data-bind="visible: isLogin">Выход</a></li>
                         </ul>
                     </div>
@@ -40,7 +40,7 @@
                 <ul id="slide-out" class="sidenav">
                     <li><a class="waves-effect sidenav-close" href="#main" data-bind="">Главная</a></li>
                     <li><a class="waves-effect sidenav-close" href="#categories" data-bind="">Категории</a></li>
-                    <li><a class="waves-effect sidenav-close" href="#performer" data-bind="visible: isLogin">Личный кабинет</a></li>
+                    <li><a class="waves-effect sidenav-close" href="#account" data-bind="visible: isLogin">Личный кабинет</a></li>
                     <li><a class="waves-effect sidenav-close" href="#logout" data-bind="visible: isLogin">Выход</a></li>
                 </ul>
             </div>
@@ -153,7 +153,7 @@
             // routing
             Sammy(function () {
                 this.get('#logout', function () {
-                    //AMM_ViewModel.showPreloader(true);
+                    RootViewModel.PreloaderShow();
                     $.ajax({
                         url: "api/logout",
                         type: 'GET',
@@ -162,23 +162,23 @@
                         }
                     }).done(function (resp) {
                         RootViewModel.isLogin(false);
-                        // if (resp.error !== null && resp.error !== "") {
-                        //     AMM_ViewModel.showPreloader(false);
-                        //     alert(resp.error);
-                        // }
-                        // else {
-                        //     AMM_ViewModel.showPreloader(false);
-                        //     isLogin = false;
-                        //     userLogin = "";
-                        //     AMM_ViewModel.SetLogout();
-
-                        // }
+                        RootViewModel.PreloaderHide();
                         location.hash = "#main";
                     }).fail(function (xhr, status, text) {
-                        //AMM_ViewModel.showPreloader(false);
+                        RootViewModel.PreloaderHide();
                         //alert("error: " + text);
                         location.hash = "#main";
                     });
+                });
+                this.get('#account', function(){
+                    switch (userRole) {
+                        case 'admin':
+                            location.hash = '#admin';
+                            break;
+                        case 'perf':
+                            location.hash = '#performer';
+                            break;
+                    }
                 });
                 this.get('/', function() {
                     location.hash = "#main";
@@ -269,20 +269,10 @@
                     xhr.setRequestHeader("Authorization", 'Bearer '+ Cookies.get('wedding_token') /* localStorage.getItem('wedding_token') */);
                 }
             }).done(function (resp) {
-                console.log(resp);
                 RootViewModel.isLogin(true);
-                //AMM_ViewModel.showPreloader(false);
-                // if (resp !== null) {
-                //     AMM_ViewModel.SetLogin(resp);
-                //     location.hash = "#!main";
-                // }
-                // else {
-                //     location.hash = "#!login";
-                // }
+                userRole = resp.role;
             })
             .fail(function (xhr, status, text) {
-                //AMM_ViewModel.showPreloader(false);
-                //alert("error: " + text);
                 if(location.hash == '#performer' || location.hash == '#admin') {
                     RootViewModel.isLogin(false);
                     location.hash = '#login';
