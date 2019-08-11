@@ -22,7 +22,7 @@ class ManageOffersController extends Controller
         }
         else
         {
-            $offer->cover = GlobalFunctions::ConvertImage2base64('/covers/no_category_cover.png');
+            $offer->cover = GlobalFunctions::ConvertImage2base64('/covers/no_cover.png');
         }
         if ($offer->details != null)
         {

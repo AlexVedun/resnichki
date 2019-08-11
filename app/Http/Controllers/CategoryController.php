@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Category;
 use Illuminate\Support\Facades\File;
 use App\Helpers\GlobalFunctions;
+use Illuminate\Support\Facades\Storage;
 
 class CategoryController extends Controller
 {
@@ -20,7 +21,7 @@ class CategoryController extends Controller
         $result = collect();
         foreach ($categories as $category) {
             $item = $category;
-            $item->cover = GlobalFunctions::ConvertImage2base64('//covers//'.$category->cover);
+            $item->cover = GlobalFunctions::ConvertImage2base64($category->cover);
             /* $image = public_path().'//covers//'.$category->cover;
             $imageData = base64_encode(file_get_contents($image));
             $item->cover = 'data: '.mime_content_type($image).';base64,'.$imageData; */
@@ -66,7 +67,15 @@ class CategoryController extends Controller
         $categoryName = Category::find($id)->name;
         $categoryOffers = Category::find($id)->offers;
         foreach ($categoryOffers as $offer) {
-            $offer->cover = GlobalFunctions::ConvertImage2base64('//media//covers//'.$offer->cover);
+            if ($offer->is_cover)
+            {
+                $offer->cover = asset(Storage::url($offer->cover));
+            }
+            else
+            {
+                $offer->cover = GlobalFunctions::ConvertImage2base64('/covers/no_cover.png');
+            }
+            //$offer->cover = GlobalFunctions::ConvertImage2base64('//media//covers//'.$offer->cover);
         }
         return response()->json([
             'name' => $categoryName,

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Offer;
 use App\Helpers\GlobalFunctions;
+use Illuminate\Support\Facades\Storage;
+
 
 class OfferController extends Controller
 {
@@ -67,7 +69,15 @@ class OfferController extends Controller
         $offer = Offer::find($id);
         $offer->details->load('offerMedia');
         $offer->load('user');
-        $offer->cover = GlobalFunctions::ConvertImage2base64('//media//covers//'.$offer->cover);
+        //$offer->cover = GlobalFunctions::ConvertImage2base64('//media//covers//'.$offer->cover);
+        if ($offer->is_cover)
+        {
+            $offer->cover = asset(Storage::url($offer->cover));
+        }
+        else
+        {
+            $offer->cover = GlobalFunctions::ConvertImage2base64('/covers/no_cover.png');
+        }
         $offer['details'] = $offer->details;
         return $offer;
     }
