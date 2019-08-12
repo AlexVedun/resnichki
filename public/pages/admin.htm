@@ -1,0 +1,345 @@
+<div id="admin-div" >
+    <div class="row">
+        <div class="card col s12">
+            <div class="card-content">
+                <span class="center-align"><h2>Панель администратора</h2></span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s12">
+            <ul class="admin-tabs tabs">
+            <li class="tab col s4"><a class="active" href="#manage-users">Пользователи</a></li>
+            <li class="tab col s4"><a href="#manage-categories">Категории</a></li>
+            <li class="tab col s4"><a href="#manage-offers">Предложения</a></li>
+            </ul>
+        </div>
+    <!-- Change user contacts -->
+        <div id="manage-users">
+            <div class="row"></div>
+            <form method="POST" id="contacts-form" class="card col s12 m8 offset-m2 l8 offset-l2 xl6 offset-xl3" data-bind="submit: SaveContacts">
+                <div class="card-content">
+                    <!-- <div class="row input-field">
+                        <i class="material-icons prefix">face</i>
+                        <input id="contact_name" type="text" data-bind="value: contactsForm.contact_name">
+                        <label class="active" for="contact_name">Контактное лицо</label>
+                    </div>
+                    <div class="row input-field">
+                        <i class="material-icons prefix">phone</i>
+                        <input id="phone" type="text" data-bind="value: contactsForm.phone">
+                        <label class="active" for="phone">Рабочий телефон</label>
+                    </div>
+                    <div class="row input-field">
+                        <i class="material-icons prefix">phone_android</i>
+                        <input id="mobile_1" type="text" data-bind="value: contactsForm.mobile_1">
+                        <label class="active" for="mobile_1">Мобильный телефон №1</label>
+                    </div>
+                    <div class="row input-field">
+                        <i class="material-icons prefix">phone_android</i>
+                        <input id="mobile_2" type="text" data-bind="value: contactsForm.mobile_2">
+                        <label class="active" for="mobile_2">Мобильный телефон №2</label>
+                    </div>
+                    <div class="row input-field">
+                        <i class="material-icons prefix">phone_android</i>
+                        <input id="mobile_3" type="text" data-bind="value: contactsForm.mobile_3">
+                        <label class="active" for="mobile_3">Мобильный телефон №3</label>
+                    </div>
+                    <div class="row input-field">
+                        <i class="material-icons prefix">chat</i>
+                        <input id="viber" type="text" data-bind="value: contactsForm.viber">
+                        <label class="active" for="viber">Viber</label>
+                    </div>
+                    <div class="row input-field">
+                        <i class="prefix icon ion-logo-whatsapp"></i>
+                        <input id="whats_up" type="text" data-bind="value: contactsForm.whats_up">
+                        <label class="active" for="whats_up">WhatsUp</label>
+                    </div>
+                    <div class="row input-field">
+                        <i class="prefix icon ion-md-paper-plane"></i>
+                        <input id="telegram" type="text" data-bind="value: contactsForm.telegram">
+                        <label class="active" for="telegram">Telegram</label>
+                    </div>
+                    <div class="row input-field">
+                        <i class="prefix icon ion-logo-skype"></i>
+                        <input id="skype" type="text" data-bind="value: contactsForm.skype">
+                        <label class="active" for="skype">Skype</label>
+                    </div>
+                    <div class="row input-field">
+                        <i class="prefix icon ion-logo-vk"></i>
+                        <input id="vkontakte" type="text" data-bind="value: contactsForm.vkontakte">
+                        <label class="active" for="vkontakte">ВКонтакте</label>
+                    </div>
+                    <div class="row input-field">
+                        <i class="prefix icon ion-logo-instagram"></i>
+                        <input id="instagram" type="text" data-bind="value: contactsForm.instagram">
+                        <label class="active" for="instagram">Instagram</label>
+                    </div>
+                    <div class="row input-field">
+                        <i class="material-icons prefix">web</i>
+                        <input id="web_site" type="text" data-bind="value: contactsForm.web_site">
+                        <label class="active" for="web_site">Web-site</label>
+                    </div> -->
+                    <div class="row">
+                        <button class="col s12 m8 offset-m2 l6 offset-l3 xl6 offset-xl3 btn waves-effect waves-light" type="submit">
+                            <i class="material-icons left">save</i>
+                            Сохранить
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    <!-- Add, modify, remove offers -->
+        <div id="manage-categories" class="row">
+            <div class="row"></div>
+            <form id="offers-list-form" class="col s12 m8 offset-m2 l8 offset-l2 xl8 offset-xl2">
+                <div class="row">
+                    <a class="col s12 m8 offset-m2 l6 offset-l3 xl4 offset-xl4 btn waves-effect waves-light" href="#offer_editor/0"><i class="material-icons left">add</i>Создать предложение</a>
+                </div>
+                <div data-bind="foreach: OffersList">
+                    <div class="row">
+                        <div class="card hoverable horizontal">
+                            <div class="card-image">
+                                <img class="offer-image-preview" data-bind="attr: { src: $data.cover }">
+                            </div>
+                            <div class="card-stacked">
+                                <div class="card-content">
+                                    <h5><!--ko text: title--><!--/ko--></h5>
+                                    <!--ko text: short_descr--><!--/ko-->
+                                </div>
+                                <div class="card-action">
+                                    <a class="btn waves-effect waves-light" data-bind="attr: { href: '#offer_editor/' + $data.id }">Открыть</a>
+                                    <!-- <button class="btn waves-effect waves-light" data-bind="click: $parent.SelectOffer.bind($data, $data.id)">Открыть</button> -->
+                                    <button class="btn waves-effect waves-light" data-bind="click: function (data) { $root.DeleteOffer (data); }">Удалить</button>
+                                </div>
+                                <!-- <div class="card-action">
+                                    <a href="#">This is a link</a>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <ul class="collection" data-bind="foreach: OffersList">
+                        <li class="collection-item avatar">
+                            <img alt="" class="responsive-img" data-bind="attr: { src: $data.cover }">
+                            <span class="title" data-bind="text: $data.title"></span>
+                            <button data-bind="click: $parent.SelectOffer.bind($data, $data.id)">Открыть</button>
+                            <button>Удалить</button>
+                        </li>
+                    </ul> -->
+                    <!-- <div class="collection" data-bind="foreach: OffersList">
+                        <a href="" class="collection-item avatar" data-bind="text: $data.title, click: $parent.SelectOffer.bind($data, $data.id)">
+                            <img alt="" class="" data-bind="attr: { src: $data.cover }">
+                        </a>
+                    </div> -->
+                </div>
+            </form>
+        </div>
+    <!-- Change password section -->
+        <div id="manage-offers">
+            <div class="row"></div>
+            <form method="POST" id="change-password-form" class="card col s12 m8 offset-m2 l8 offset-l2 xl6 offset-xl3" data-bind="submit: ChangePassword">
+                <div class="card-content">
+                    <div class="row input-field">
+                        <i class="icon ion-md-key prefix"></i>
+                        <input class="validate" id="current_password" type="password" data-bind="value: changePasswordForm.current_password">
+                        <label for="current_password">Текущий пароль</label>
+                    </div>
+                    <div class="row input-field">
+                        <i class="material-icons prefix">done</i>
+                        <input class="validate" id="new_password" type="password" data-bind="value: changePasswordForm.new_password">
+                        <label for="new_password">Новый пароль</label>
+                    </div>
+                    <div class="row input-field">
+                        <i class="material-icons prefix">done_all</i>
+                        <input class="validate" id="new_password_confirmation" type="password" data-bind="value: changePasswordForm.new_password_confirmation">
+                        <label for="new_password_confirmation">Подтвердить новый пароль</label>
+                    </div>
+                    <div class="row">
+                        <button class="col s12 m8 offset-m2 l8 offset-l2 xl8 offset-xl2 btn waves-effect waves-light" type="submit">
+                            <i class="material-icons left">save</i>
+                            Изменить пароль
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    let AdminViewModel = {
+        // properties
+        title: ko.observable(''),
+        contactsForm: {
+            contact_name: ko.observable(''),
+            phone: ko.observable(''),
+            mobile_1: ko.observable(''),
+            mobile_2: ko.observable(''),
+            mobile_3: ko.observable(''),
+            viber: ko.observable(''),
+            whats_up: ko.observable(''),
+            telegram: ko.observable(''),
+            skype: ko.observable(''),
+            vkontakte: ko.observable(''),
+            web_site: ko.observable(''),
+            instagram: ko.observable(''),
+        },
+        changePasswordForm: {
+            current_password: ko.observable(''),
+            new_password: ko.observable(''),
+            new_password_confirmation: ko.observable(''),
+        },
+        OffersList: ko.observableArray([]),
+        // methods
+        UpdatePerformer: function() {
+            RootViewModel.PreloaderShow();
+            $.ajax({
+                url: "api/user/get",
+                type: 'GET',
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("Authorization", 'Bearer '+ Cookies.get('wedding_token') /* localStorage.getItem('wedding_token') */ );
+                }
+            }).done(function(resp) {
+                if (resp.details != null){
+                    PerformerViewModel.contactsForm.contact_name(resp.details.contact_name);
+                    PerformerViewModel.contactsForm.phone(resp.details.phone);
+                    PerformerViewModel.contactsForm.mobile_1(resp.details.mobile_1);
+                    PerformerViewModel.contactsForm.mobile_2(resp.details.mobile_2);
+                    PerformerViewModel.contactsForm.mobile_3(resp.details.mobile_3);
+                    PerformerViewModel.contactsForm.viber(resp.details.viber);
+                    PerformerViewModel.contactsForm.whats_up(resp.details.whats_up);
+                    PerformerViewModel.contactsForm.telegram(resp.details.telegram);
+                    PerformerViewModel.contactsForm.skype(resp.details.skype);
+                    PerformerViewModel.contactsForm.vkontakte(resp.details.vkontakte);
+                    PerformerViewModel.contactsForm.web_site(resp.details.web_site);
+                    PerformerViewModel.contactsForm.instagram(resp.details.instagram);
+                }
+                else {
+                    PerformerViewModel.contactsForm.contact_name('');
+                    PerformerViewModel.contactsForm.phone('');
+                    PerformerViewModel.contactsForm.mobile_1('');
+                    PerformerViewModel.contactsForm.mobile_2('');
+                    PerformerViewModel.contactsForm.mobile_3('');
+                    PerformerViewModel.contactsForm.viber('');
+                    PerformerViewModel.contactsForm.whats_up('');
+                    PerformerViewModel.contactsForm.telegram('');
+                    PerformerViewModel.contactsForm.skype('');
+                    PerformerViewModel.contactsForm.vkontakte('');
+                    PerformerViewModel.contactsForm.web_site('');
+                    PerformerViewModel.contactsForm.instagram('');
+                }
+                M.updateTextFields();
+                RootViewModel.PreloaderHide();
+            }).fail(function(xhr, status, text) {
+                RootViewModel.PreloaderHide();
+                ShowModalError('#performer', xhr);
+                //alert("error: " + text);
+            });
+        },
+        SaveContacts:function() {
+            let formData = ko.toJS(this.contactsForm);
+            RootViewModel.PreloaderShow();
+            $.ajax({
+                url: "api/user/save/contacts",
+                data: formData,
+                type: 'POST',
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("Authorization", 'Bearer '+ Cookies.get('wedding_token') /* localStorage.getItem('wedding_token') */);
+                }
+            }).done(function(resp) {
+                M.toast({html: 'Изменения сохранены!', classes: 'rounded'});
+                RootViewModel.PreloaderHide();
+            }).fail(function(xhr, status, text) {
+                RootViewModel.PreloaderHide();
+                ShowModalError('#performer', xhr);
+                //alert("error: " + text);
+            });
+        },
+        ChangePassword: function() {
+            let formData = ko.toJS(this.changePasswordForm);
+            RootViewModel.PreloaderShow();
+            $.ajax({
+                url: "api/user/password/change",
+                data: formData,
+                type: 'POST',
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("Authorization", 'Bearer '+ Cookies.get('wedding_token') /* localStorage.getItem('wedding_token') */);
+                }
+            }).done(function(resp) {
+                M.toast({html: resp.message, classes: 'rounded'});
+                for (const key in PerformerViewModel.changePasswordForm) {
+                    if (PerformerViewModel.changePasswordForm.hasOwnProperty(key)) {
+                        const element = PerformerViewModel.changePasswordForm[key];
+                        element('');
+                    }
+                }
+                RootViewModel.PreloaderHide();
+            }).fail(function(xhr, status, text) {
+                console.log(xhr);
+                RootViewModel.PreloaderHide();
+                ShowModalError('#performer', xhr);
+                //alert("error: " + text);
+            });
+        },
+        GetOffersList: function() {
+            RootViewModel.PreloaderShow();
+            $.ajax({
+                url: "api/offers/get",
+                type: 'GET',
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("Authorization", 'Bearer '+ Cookies.get('wedding_token') /* localStorage.getItem('wedding_token') */ );
+                }
+            }).done(function(resp) {
+                console.log(resp);
+                PerformerViewModel.OffersList([]);
+                for (const item of resp) {
+                    PerformerViewModel.OffersList.push(item);
+                }
+                RootViewModel.PreloaderHide();
+            }).fail(function(xhr, status, text) {
+                RootViewModel.PreloaderHide();
+                ShowModalError('#performer', xhr);
+                //alert("error: " + text);
+            });
+        },
+        DeleteOffer: function(_offer) {
+            RootViewModel.PreloaderShow();
+            $.ajax({
+                url: "api/offers/" + _offer.id,
+                type: 'DELETE',
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("Authorization", 'Bearer '+ Cookies.get('wedding_token') /* localStorage.getItem('wedding_token') */ );
+                }
+            }).done(function(resp) {
+                PerformerViewModel.OffersList.remove(_offer);
+                M.toast({html: 'Успешно удалено!', classes: 'rounded'});
+                RootViewModel.PreloaderHide();
+            }).fail(function(xhr, status, text) {
+                RootViewModel.PreloaderHide();
+                ShowModalError('#performer', xhr);
+                //alert("error: " + text);
+            });
+        }
+    }
+
+    // object activation
+    ko.applyBindings(PerformerViewModel, document.getElementById("performer-div"));
+
+    // update news when main page becomes visible
+    $(document).on("PerformerVisible", function () {
+        PerformerViewModel.UpdatePerformer();
+        PerformerViewModel.GetOffersList();
+    });
+
+    // activate tabs
+    $(document).ready(function(){
+        $('.performer-tabs').tabs();
+    });
+
+    $(document).ready(function() {
+        $('input#title-input, textarea#short-descr').characterCounter();
+    });
+
+    $(document).ready(function(){
+        $('.fixed-action-btn').floatingActionButton();
+    });
+</script>
