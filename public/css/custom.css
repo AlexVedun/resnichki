@@ -2,6 +2,10 @@
     display: flex;
     min-height: 100vh;
     flex-direction: column;
+    background-position: 0 0;
+    background-repeat: repeat;
+    background-image: url('../images/pattern.png');
+    background-color: #e6d1f2;
   }
 
   main {
@@ -14,6 +18,15 @@
     left: calc(50% - 32px);
     /*display: none;*/
     z-index: 1000;
+}
+
+nav {
+    border-radius: 0px 0px 20px 20px;
+    background-color: #d3b0ea;
+}
+
+.card {
+    border-radius: 20px;
 }
 
 .offer-image-preview {

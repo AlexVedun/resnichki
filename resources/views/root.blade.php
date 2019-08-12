@@ -27,6 +27,12 @@
                 {{-- main menu --}}
                 <nav>
                     <div class="nav-wrapper">
+                        <div class="brand-logo">
+                            <img class="responsive-img" src="{{url('images/logo.png')}}">
+                        </div>
+                        {{-- <a href="#" class="brand-logo">
+
+                        </a> --}}
                         <a href="#" data-target="slide-out" class="sidenav-trigger show-on-med-and-down"><i class="material-icons">menu</i></a>
                         <ul id="nav-mobile" class="right hide-on-med-and-down">
                             <li><a href="#main" data-bind="">Главная</a></li>
