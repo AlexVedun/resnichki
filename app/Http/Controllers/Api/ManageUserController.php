@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\ChangePasswordRequest;
 use Illuminate\Support\Facades\Hash;
 use App\Models\UserDetails;
+use App\User;
 
 class ManageUserController extends Controller
 {
@@ -21,6 +22,12 @@ class ManageUserController extends Controller
         $user = Auth::user();
         $user['details'] = $user->details;
         return $user;
+    }
+
+    public function getUsers()
+    {
+        $users = User::with('details')->get();
+        return $users;
     }
 
     public function saveUserContacts(Request $request)

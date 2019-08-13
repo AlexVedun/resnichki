@@ -61,6 +61,7 @@
                 RootViewModel.isLogin(true);
                 switch (resp.user.role) {
                     case 'admin':
+                        location.hash = '#admin';
                         break;
                     case 'perf':
                         location.hash = '#performer';
