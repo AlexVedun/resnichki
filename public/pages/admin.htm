@@ -17,6 +17,9 @@
     <!-- Change user contacts -->
         <div id="manage-users">
             <div class="row"></div>
+            <div class="row">
+                <a class="col s12 m8 offset-m2 l6 offset-l3 xl4 offset-xl4 btn waves-effect waves-light" href="#add_user"><i class="material-icons left">add</i>Создать пользователя</a>
+            </div>
             <form method="POST" id="manage-users-form" class="card col s12 m12 l12 xl12" data-bind="submit: SaveContacts">
                 <div class="card-content">
                     <table class="highlight responsive-table">
@@ -31,7 +34,8 @@
                         </thead>
                         <tbody data-bind="foreach: usersList">
                             <tr>
-                                <td data-bind="text: name"></td>
+                                <!-- <td data-bind="text: name"></td> -->
+                                <td><a data-bind="attr: { href: '#user/' + id }, text: name"></a></td>
                                 <td data-bind="text: email"></td>
                                 <td data-bind="text: type"></td>
                                 <td data-bind="text: role"></td>
@@ -164,6 +168,25 @@
                 console.log(resp);
                 AdminViewModel.usersList([]);
                 for (const item of resp) {
+                    switch(item.type) {
+                        case 'ind':
+                            item.type = 'Физическое лицо';
+                            break;
+                        case 'ent':
+                            item.type = 'ФЛП';
+                            break;
+                        case 'firm':
+                            item.type = 'Фирма';
+                            break;
+                    }
+                    switch(item.role) {
+                        case 'admin':
+                            item.role = 'Администратор';
+                            break;
+                        case 'perf':
+                            item.role = 'Исполнитель';
+                            break;
+                    }
                     AdminViewModel.usersList.push(item);
                 }
                 M.updateTextFields();

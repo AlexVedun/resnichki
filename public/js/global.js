@@ -8,6 +8,12 @@ function GetSelectedItemId(_element) {
     return $(element + " option:selected").eq($(element).parent('li.selected').index()).val();
 }
 
+// Get the value of selected item of the <select>
+function GetSelectedItemValue(_element) {
+    let element = "#" + _element;
+    return $(element + " option:selected").val();
+}
+
 // Функция для установки элемента выпадающего списка
 function SetSelectedItem(_element, _value) {
     let element = "#" + _element;
