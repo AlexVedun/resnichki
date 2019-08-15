@@ -29,6 +29,7 @@ Route::group(['namespace' => 'Api'], function () {
     Route::post('user/save/contacts', 'ManageUserController@saveUserContacts')->middleware('auth:api');
     Route::post('user/password/change', 'ManageUserController@changeUserPassword')->middleware('auth:api');
     Route::get('user/checkout', 'ManageUserController@checkout')->middleware('auth:api');
+    Route::delete('user/{id}', 'ManageUserController@deleteUser')->middleware('auth:api');
 
     Route::get('offers/get', 'ManageOffersController@getOffers')->middleware('auth:api');
     Route::get('offers/get/{id}', 'ManageOffersController@getOffer')->middleware('auth:api');

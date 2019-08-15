@@ -75,4 +75,13 @@ class ManageUserController extends Controller
         }
 
     }
+
+    public function deleteUser($id)
+    {
+        if(Auth::user()->role == 'admin')
+        {
+            $user = User::find($id);
+            $user->delete();
+        }
+    }
 }

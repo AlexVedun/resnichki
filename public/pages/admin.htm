@@ -30,6 +30,7 @@
                                 <th>Тип</th>
                                 <th>Роль</th>
                                 <!-- <th>Категория</th>                                 -->
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody data-bind="foreach: usersList">
@@ -39,6 +40,7 @@
                                 <td data-bind="text: email"></td>
                                 <td data-bind="text: type"></td>
                                 <td data-bind="text: role"></td>
+                                <td><button class="btn waves-effect waves-light red" data-bind="click: function(data) { $root.DeleteUser(data) }"><i class="material-icons">delete</i></button></td>
                             </tr>
                         </tbody>
                     </table>
@@ -102,12 +104,12 @@
                         <input id="web_site" type="text" data-bind="value: contactsForm.web_site">
                         <label class="active" for="web_site">Web-site</label>
                     </div> -->
-                    <div class="row">
+                    <!-- <div class="row">
                         <button class="col s12 m8 offset-m2 l6 offset-l3 xl6 offset-xl3 btn waves-effect waves-light" type="submit">
                             <i class="material-icons left">save</i>
                             Сохранить
                         </button>
-                    </div>
+                    </div> -->
                 </div>
             </form>
         </div>
@@ -198,8 +200,25 @@
                 //alert("error: " + text);
             });
         },
-                //alert("error: " + text);
-            });
+        DeleteUser: function(_user) {
+            ShowYesNoModal('Внимание!', 'Эта операция необратима! Вы уверены?', '#admin', function() {
+                RootViewModel.PreloaderShow();
+                $.ajax({
+                    url: "api/user/" + _user.id,
+                    type: 'DELETE',
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader("Authorization", 'Bearer '+ Cookies.get('wedding_token') /* localStorage.getItem('wedding_token') */ );
+                    }
+                }).done(function(resp) {
+                    AdminViewModel.usersList.remove(_user);
+                    M.toast({html: 'Успешно удалено!', classes: 'rounded'});
+                    RootViewModel.PreloaderHide();
+                }).fail(function(xhr, status, text) {
+                    RootViewModel.PreloaderHide();
+                    HandleError(xhr, '#admin');
+                    //alert("error: " + text);
+                });
+            })
         },
         SaveContacts:function() {
             // let formData = ko.toJS(this.contactsForm);

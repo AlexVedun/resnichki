@@ -83,10 +83,6 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        if(Auth::user()->role == 'admin')
-        {
-            $user = User::find($id);
-            $user->delete();
-        }
+
     }
 }
