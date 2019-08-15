@@ -33,6 +33,7 @@ function SetCookie(name, value, expires, path, domain, secure) {
 // Function to show modal window with errors
 function ShowModalError(link, xhr) {
     let message = '';
+    if (xhr.responseJSON.errors) {
     for (const error in xhr.responseJSON.errors) {
         if (xhr.responseJSON.errors.hasOwnProperty(error)) {
             const element = xhr.responseJSON.errors[error];
@@ -47,7 +48,21 @@ function ShowModalError(link, xhr) {
 
         }
     }
-    $('.modal').find('.modal-content').find('#modal-message').html(message);
-    $('.modal').find('#modalOk').attr('href', link);
-    $('.modal').modal('open');
+    }
+    else {
+        message = xhr.responseJSON.message;
+    }
+    $('#message-modal').find('.modal-content').find('#modal-message').html(message);
+    $('#message-modal').find('#modalOk').attr('href', link);
+    $('#message-modal').modal('open');
+}
+
+function HandleError(_xhr, _chunck) {
+    if (_xhr.status == 401) {
+        location.hash = '#login';
+    }
+    else {
+        ShowModalError(_chunck, xhr);
+    }
+
 }

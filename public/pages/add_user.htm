@@ -96,7 +96,8 @@
                 //location.hash = '#admin';
             }).fail(function(xhr, status, text) {
                 RootViewModel.PreloaderHide();
-                ShowModalError('#admin', xhr);
+                HandleError(xhr, '#admin');
+                //ShowModalError('#admin', xhr);
                 //alert("error: " + text);
             });
         },

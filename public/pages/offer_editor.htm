@@ -202,7 +202,8 @@
                 offer = resp;
             }).fail(function(xhr, status, text) {
                 RootViewModel.PreloaderHide();
-                ShowModalError('#offer_editor', xhr);
+                HandleError(xhr, '#offer_editor');
+                //ShowModalError('#offer_editor', xhr);
                 //alert("error: " + text);
             });
             return offer;
@@ -221,7 +222,8 @@
                 RootViewModel.PreloaderHide();
             }).fail(function(xhr, status, text) {
                 RootViewModel.PreloaderHide();
-                ShowModalError('#offer_editor', xhr);
+                HandleError(xhr, '#offer_editor');
+                //ShowModalError('#offer_editor', xhr);
                 //alert("error: " + text);
             });
         },
@@ -286,7 +288,8 @@
                     RootViewModel.PreloaderHide();
                 }).fail(function(xhr, status, text) {
                     RootViewModel.PreloaderHide();
-                    ShowModalError('#offer_editor', xhr);
+                    HandleError(xhr, '#offer_editor');
+                    //ShowModalError('#offer_editor', xhr);
                     //alert("error: " + text);
                 });
 
@@ -344,7 +347,8 @@
                 location.hash = '#performer';
             }).fail(function(xhr, status, text) {
                 RootViewModel.PreloaderHide();
-                ShowModalError('#offer_editor', xhr);
+                HandleError(xhr, '#offer_editor');
+                //ShowModalError('#offer_editor', xhr);
                 //alert("error: " + text);
             });
         },
@@ -372,7 +376,8 @@
                 RootViewModel.PreloaderHide();
             }).fail(function(xhr, status, text) {
                 RootViewModel.PreloaderHide();
-                ShowModalError('#offer_editor', xhr);
+                HandleError(xhr, '#offer_editor');
+                //ShowModalError('#offer_editor', xhr);
                 //alert("error: " + text);
             });
         },

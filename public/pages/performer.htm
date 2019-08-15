@@ -229,7 +229,8 @@
                 RootViewModel.PreloaderHide();
             }).fail(function(xhr, status, text) {
                 RootViewModel.PreloaderHide();
-                ShowModalError('#performer', xhr);
+                HandleError(xhr, '#performer');
+                //ShowModalError('#performer', xhr);
                 //alert("error: " + text);
             });
         },
@@ -248,7 +249,8 @@
                 RootViewModel.PreloaderHide();
             }).fail(function(xhr, status, text) {
                 RootViewModel.PreloaderHide();
-                ShowModalError('#performer', xhr);
+                HandleError(xhr, '#performer');
+                //ShowModalError('#performer', xhr);
                 //alert("error: " + text);
             });
         },
@@ -274,7 +276,8 @@
             }).fail(function(xhr, status, text) {
                 console.log(xhr);
                 RootViewModel.PreloaderHide();
-                ShowModalError('#performer', xhr);
+                HandleError(xhr, '#performer');
+                //ShowModalError('#performer', xhr);
                 //alert("error: " + text);
             });
         },
@@ -295,7 +298,8 @@
                 RootViewModel.PreloaderHide();
             }).fail(function(xhr, status, text) {
                 RootViewModel.PreloaderHide();
-                ShowModalError('#performer', xhr);
+                HandleError(xhr, '#performer');
+                //ShowModalError('#performer', xhr);
                 //alert("error: " + text);
             });
         },
@@ -313,7 +317,8 @@
                 RootViewModel.PreloaderHide();
             }).fail(function(xhr, status, text) {
                 RootViewModel.PreloaderHide();
-                ShowModalError('#performer', xhr);
+                HandleError(xhr, '#performer');
+                //ShowModalError('#performer', xhr);
                 //alert("error: " + text);
             });
         }

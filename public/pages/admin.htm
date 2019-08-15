@@ -193,7 +193,11 @@
                 RootViewModel.PreloaderHide();
             }).fail(function(xhr, status, text) {
                 RootViewModel.PreloaderHide();
-                ShowModalError('#performer', xhr);
+                HandleError(xhr, '#admin');
+                //ShowModalError('#admin', xhr);
+                //alert("error: " + text);
+            });
+        },
                 //alert("error: " + text);
             });
         },

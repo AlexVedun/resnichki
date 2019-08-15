@@ -43,7 +43,8 @@
                 RootViewModel.PreloaderHide();
             }).fail(function(xhr, status, text) {
                 RootViewModel.PreloaderHide();
-                ShowModalError('#categories', xhr);
+                HandleError(xhr, '#categories');
+                //ShowModalError('#categories', xhr);
                 //alert("error: " + text);
             });
         }

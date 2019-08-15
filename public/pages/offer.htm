@@ -45,7 +45,8 @@
                 RootViewModel.PreloaderHide();
             }).fail(function(xhr, status, text) {
                 RootViewModel.PreloaderHide();
-                ShowModalError('#offer', xhr);
+                HandleError(xhr, '#offer');
+                //ShowModalError('#offer', xhr);
                 //alert("error: " + text);
             });
         }
