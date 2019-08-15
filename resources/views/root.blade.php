@@ -200,6 +200,21 @@
                         case 'perf':
                             location.hash = '#performer';
                             break;
+                        default:
+                            location.hash = '/';
+                    }
+                });
+                this.get('#admin', function() {
+                    switch (userRole) {
+                        case 'admin':
+                            RootViewModel.HideAll();
+                            RootViewModel.ShowChunck('admin');
+                            break;
+                        case 'perf':
+                            ShowMessageBox('Ошибка!', 'Вы не авторизованы для выполнения этой операции!', '#main');
+                            break;
+                        default:
+                            location.hash = '/';
                     }
                 });
                 this.get('/', function() {
