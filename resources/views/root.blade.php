@@ -81,15 +81,29 @@
             </footer>
         </div>
         {{-- Modal window --}}
-        <div id="modal" class="modal">
+        <div id="message-modal" class="modal">
             <div class="modal-content">
                 <!-- Место для динамического добавления контента на клиенте -->
-                <span class="center-align"><h4>Ошибка!</h4></span>
+                <span class="center-align"><h4></h4></span>
                 <div id="modal-message">
 
                 </div>
             </div>
             <div class="modal-footer">
+                <a id="modalOk" href="" class="modal-close waves-effect waves-green btn-flat">Ok</a>
+            </div>
+        </div>
+
+        <div id="yesno-modal" class="modal">
+            <div class="modal-content">
+                <!-- Место для динамического добавления контента на клиенте -->
+                <span class="center-align"><h4></h4></span>
+                <div id="modal-message">
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a id="modalNo" href="" class="modal-close waves-effect waves-red btn-flat">Отмена</a>
                 <a id="modalOk" href="" class="modal-close waves-effect waves-green btn-flat">Ok</a>
             </div>
         </div>

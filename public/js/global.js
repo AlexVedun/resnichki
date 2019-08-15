@@ -34,27 +34,45 @@ function SetCookie(name, value, expires, path, domain, secure) {
 function ShowModalError(link, xhr) {
     let message = '';
     if (xhr.responseJSON.errors) {
-    for (const error in xhr.responseJSON.errors) {
-        if (xhr.responseJSON.errors.hasOwnProperty(error)) {
-            const element = xhr.responseJSON.errors[error];
-            if (Array.isArray(element)) {
-                for (const item of element) {
-                    message += '<p>' + item + '</p>';
+        for (const error in xhr.responseJSON.errors) {
+            if (xhr.responseJSON.errors.hasOwnProperty(error)) {
+                const element = xhr.responseJSON.errors[error];
+                if (Array.isArray(element)) {
+                    for (const item of element) {
+                        message += '<p>' + item + '</p>';
+                    }
                 }
-            }
-            else {
-                message += '<p>' + element + '</p>';
-            }
+                else {
+                    message += '<p>' + element + '</p>';
+                }
 
+            }
         }
-    }
     }
     else {
         message = xhr.responseJSON.message;
     }
+    $('#message-modal').find('.modal-content').find('h4').html('Ошибка!');
     $('#message-modal').find('.modal-content').find('#modal-message').html(message);
     $('#message-modal').find('#modalOk').attr('href', link);
     $('#message-modal').modal('open');
+}
+
+function ShowMessageBox(_title, _message, _link) {
+    $('#message-modal').find('.modal-content').find('h4').html(_title);
+    $('#message-modal').find('.modal-content').find('#modal-message').html(_message);
+    $('#message-modal').find('#modalOk').attr('href', _link);
+    $('#message-modal').modal('open');
+}
+
+function ShowYesNoModal (_title, _message, _link, _yesFunc) {
+    $('#yesno-modal').find('.modal-content').find('h4').html(_title);
+    $('#yesno-modal').find('.modal-content').find('#modal-message').html(_message);
+    $('#yesno-modal').find('#modalNo').attr('href', _link);
+    $('#yesno-modal').find('#modalOk').attr('href', _link);
+    $('#yesno-modal').find('#modalOk').unbind("click");
+    $('#yesno-modal').find('#modalOk').on("click", _yesFunc);
+    $('#yesno-modal').modal('open');
 }
 
 function HandleError(_xhr, _chunck) {
