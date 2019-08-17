@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Wedding</title>
+        <title>Resnichki</title>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
@@ -27,12 +27,12 @@
                 {{-- main menu --}}
                 <nav>
                     <div class="nav-wrapper">
-                        <div class="brand-logo">
+                        {{-- <div class="brand-logo">
                             <img class="responsive-img" src="{{url('images/logo.png')}}">
-                        </div>
-                        {{-- <a href="#" class="brand-logo">
-
-                        </a> --}}
+                        </div> --}}
+                        <a href="/" class="brand-logo">
+                            <img class="responsive-img" src="{{url('images/logo.png')}}">
+                        </a>
                         <a href="#" data-target="slide-out" class="sidenav-trigger show-on-med-and-down"><i class="material-icons">menu</i></a>
                         <ul id="nav-mobile" class="right hide-on-med-and-down">
                             <li><a href="#main" data-bind="">Главная</a></li>
