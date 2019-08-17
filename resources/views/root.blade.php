@@ -184,6 +184,7 @@
                         }
                     }).done(function (resp) {
                         RootViewModel.isLogin(false);
+                        localStorage.removeItem('user_role');
                         RootViewModel.PreloaderHide();
                         location.hash = "#main";
                     }).fail(function (xhr, status, text) {
@@ -193,7 +194,7 @@
                     });
                 });
                 this.get('#account', function(){
-                    switch (userRole) {
+                    switch (localStorage.getItem('user_role')/* userRole */) {
                         case 'admin':
                             location.hash = '#admin';
                             break;
@@ -205,7 +206,7 @@
                     }
                 });
                 this.get('#admin', function() {
-                    switch (userRole) {
+                    switch (localStorage.getItem('user_role')/* userRole */) {
                         case 'admin':
                             RootViewModel.HideAll();
                             RootViewModel.ShowChunck('admin');
@@ -314,7 +315,8 @@
                 }
             }).done(function (resp) {
                 RootViewModel.isLogin(true);
-                userRole = resp.role;
+                localStorage.setItem('user_role', resp.role);
+                //userRole = resp.role;
             })
             .fail(function (xhr, status, text) {
                 if(location.hash == '#performer' || location.hash == '#admin') {

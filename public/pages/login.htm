@@ -59,11 +59,14 @@
                 SetCookie('wedding_token', resp.token, expires.toUTCString());
                 RootViewModel.PreloaderHide();
                 RootViewModel.isLogin(true);
+                localStorage.setItem('user_role', resp.user.role);
                 switch (resp.user.role) {
                     case 'admin':
+                        //userRole = resp.user.role;
                         location.hash = '#admin';
                         break;
                     case 'perf':
+                        //userRole = resp.user.role;
                         location.hash = '#performer';
                         break;
                 }
