@@ -9,9 +9,9 @@
     <div class="row">
         <div class="col s12">
             <ul class="admin-tabs tabs">
-            <li class="tab col s4"><a class="active" href="#manage-users">Пользователи</a></li>
-            <li class="tab col s4"><a href="#manage-categories">Категории</a></li>
-            <li class="tab col s4"><a href="#manage-offers">Предложения</a></li>
+                <li class="tab col s4"><a class="active" href="#manage-users">Пользователи</a></li>
+                <li class="tab col s4"><a href="#manage-offers">Предложения</a></li>
+                <li class="tab col s4"><a href="#manage-categories">Категории</a></li>
             </ul>
         </div>
     <!-- Change user contacts -->
@@ -113,22 +113,33 @@
                 </div>
             </form>
         </div>
-    <!-- Add, modify, remove offers -->
-        <div id="manage-categories" class="row">
-            <div class="row"></div>
-            <form id="offers-list-form" class="col s12 m8 offset-m2 l8 offset-l2 xl8 offset-xl2">
-                <div class="row">
-                    <a class="col s12 m8 offset-m2 l6 offset-l3 xl4 offset-xl4 btn waves-effect waves-light" href="#offer_editor/0"><i class="material-icons left">add</i>Создать предложение</a>
-                </div>
-
-            </form>
-        </div>
     <!-- Change password section -->
         <div id="manage-offers">
             <div class="row"></div>
-            <form method="POST" id="change-password-form" class="card col s12 m8 offset-m2 l8 offset-l2 xl6 offset-xl3" data-bind="submit: ChangePassword">
+            <form method="POST" id="manage-offers-form" class="card col s12 m8 offset-m2 l8 offset-l2 xl6 offset-xl3" data-bind="submit: ChangePassword">
 
             </form>
+        </div>
+    <!-- Add, modify, remove offers -->
+        <div id="manage-categories" class="row">
+            <div class="row"></div>
+            <div class="row">
+                <a class="col s12 m8 offset-m2 l6 offset-l3 xl4 offset-xl4 btn waves-effect waves-light" href="#category_editor/0"><i class="material-icons left">add</i>Создать категорию</a>
+            </div>
+            <div class="col s12 m8 offset-m2 l8 offset-l2 xl8 offset-xl2 card">
+                <div class="card-content">
+                    <table class="highlight responsive-table">
+                        <tbody data-bind="foreach: categoriesList">
+                            <tr>
+                                <td><img class="materialboxed" data-bind="attr: { src: cover }" style="width: 200px"></td>
+                                <td><a data-bind="attr: { href: '#category_editor/' + id }, text: name"></a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- <form id="offers-list-form" class="col s12 m8 offset-m2 l8 offset-l2 xl8 offset-xl2">
+            </form> -->
         </div>
     </div>
 </div>
@@ -137,26 +148,7 @@
     let AdminViewModel = {
         // properties
         usersList: ko.observableArray([]),
-        contactsForm: {
-            contact_name: ko.observable(''),
-            phone: ko.observable(''),
-            mobile_1: ko.observable(''),
-            mobile_2: ko.observable(''),
-            mobile_3: ko.observable(''),
-            viber: ko.observable(''),
-            whats_up: ko.observable(''),
-            telegram: ko.observable(''),
-            skype: ko.observable(''),
-            vkontakte: ko.observable(''),
-            web_site: ko.observable(''),
-            instagram: ko.observable(''),
-        },
-        changePasswordForm: {
-            current_password: ko.observable(''),
-            new_password: ko.observable(''),
-            new_password_confirmation: ko.observable(''),
-        },
-        //OffersList: ko.observableArray([]),
+        categoriesList: ko.observableArray([]),
         // methods
         UpdateUsers: function() {
             RootViewModel.PreloaderShow();
@@ -167,7 +159,6 @@
                     xhr.setRequestHeader("Authorization", 'Bearer '+ Cookies.get('wedding_token') /* localStorage.getItem('wedding_token') */ );
                 }
             }).done(function(resp) {
-                console.log(resp);
                 AdminViewModel.usersList([]);
                 for (const item of resp) {
                     switch(item.type) {
@@ -218,7 +209,27 @@
                     HandleError(xhr, '#admin');
                     //alert("error: " + text);
                 });
-            })
+            });
+        },
+        UpdateCategories: function() {
+            RootViewModel.PreloaderShow();
+            $.ajax({
+                url: "api/categories",
+                type: 'GET'
+            }).done(function(resp) {
+                console.log(resp);
+                AdminViewModel.categoriesList([]);
+                for (const item of resp) {
+                    AdminViewModel.categoriesList.push(item);
+                }
+                $('.materialboxed').materialbox();
+                RootViewModel.PreloaderHide();
+            }).fail(function(xhr, status, text) {
+                RootViewModel.PreloaderHide();
+                HandleError(xhr, '#admin');
+                //ShowModalError('#categories', xhr);
+                //alert("error: " + text);
+            });
         },
         SaveContacts:function() {
             // let formData = ko.toJS(this.contactsForm);
@@ -312,11 +323,16 @@
     // update news when main page becomes visible
     $(document).on("AdminVisible", function () {
         AdminViewModel.UpdateUsers();
+        AdminViewModel.UpdateCategories();
     });
 
     // activate tabs
     $(document).ready(function(){
         $('.admin-tabs').tabs();
+    });
+
+    $(document).ready(function(){
+        $('.materialboxed').materialbox();
     });
 
     // $(document).ready(function() {

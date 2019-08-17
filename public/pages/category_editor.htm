@@ -1,0 +1,133 @@
+<div id="category-editor-div" >
+    <div class="row">
+        <div class="card col s12">
+            <div class="card-content" style="padding: 0px">
+                <span class="center-align"><h3 class="truncate">Редактор категорий</h3></span>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+    <!-- Add, modify, remove offers -->
+        <div class="row">
+            <form method="post" id="category-editor-form" class="col s12 m8 offset-m2 l8 offset-l2 xl8 offset-xl2" enctype="multipart/form-data" data-bind="submit: SaveChanges">
+                <div class="row card">
+                    <div class="card-content">
+                        <span class="card-title center-align">Категория</span>
+                        <div class="row">
+                            <div class="input-field">
+                                <i class="material-icons prefix">mode_edit</i>
+                                <input id="name-input" type="text" data-bind="value: categoryEditorForm.name, disable: isEdit">
+                                <label for="name-input">Название</label>
+                            </div>
+                        </div>
+
+                        <span class="card-title center-align">Обложка</span>
+                        <div class="row">
+                            <img class="responsive-img" data-bind="attr: { src: categoryEditorForm.cover }">
+                        </div>
+
+                        <div class="row file-field input-field">
+                            <div class="btn">
+                                <span>Загрузить</span>
+                                <input id="category-cover-file" type="file" data-bind="event: { change: function() { $root.categoryEditorForm.is_cover_change(true); } }">
+                            </div>
+                            <div class="file-path-wrapper">
+                                <input id="cover-file-path" class="file-path validate" type="text" placeholder="Загрузить обложку">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <button class="col s12 m4 offset-m4 l4 offset-l4 xl4 offset-xl4 btn waves-effect waves-light" type="submit"><i class="material-icons left">save</i>Сохранить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    let CategoryEditorViewModel = {
+        // properties
+        //title: ko.observable(''),
+        categoryEditorForm: {
+            name: ko.observable(''),
+            cover: ko.observable(''),
+            is_cover_change: ko.observable(false),
+            category_id: ko.observable(0),
+        },
+        isEdit: ko.observable(false),
+        // methods
+        ClearCategoryEditor: function() {
+            CategoryEditorViewModel.categoryEditorForm.name('');
+            CategoryEditorViewModel.categoryEditorForm.cover('');
+            CategoryEditorViewModel.categoryEditorForm.category_id(0);
+            CategoryEditorViewModel.categoryEditorForm.is_cover_change(false);
+            CategoryEditorViewModel.isEdit(false);
+            $('#cover-file-path').val('');
+            M.updateTextFields();
+        },
+        UpdateCategory: function(_id) {
+            if (_id != 0) {
+                CategoryEditorViewModel.isEdit(true);
+                $.ajax({
+                    url: "api/category/get/" + _id,
+                    type: 'GET',
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader("Authorization", 'Bearer '+ Cookies.get('wedding_token') /* localStorage.getItem('wedding_token') */ );
+                    }
+                }).done(function(resp) {
+                    console.log(resp);
+                    CategoryEditorViewModel.categoryEditorForm.name(resp.name);
+                    CategoryEditorViewModel.categoryEditorForm.cover(resp.cover);
+                    CategoryEditorViewModel.categoryEditorForm.category_id(resp.id);
+                    M.updateTextFields();
+                    RootViewModel.PreloaderHide();
+                }).fail(function(xhr, status, text) {
+                    RootViewModel.PreloaderHide();
+                    HandleError(xhr, '#category_editor');
+                    //ShowModalError('#offer_editor', xhr);
+                    //alert("error: " + text);
+                });
+
+            }
+        },
+        SaveChanges: function() {
+            let formData = new FormData();
+            formData.append("cover_file", $('#category-cover-file').prop('files')[0]);
+            formData.append("name", CategoryEditorViewModel.categoryEditorForm.name());
+            formData.append("category_id", CategoryEditorViewModel.categoryEditorForm.category_id());
+            formData.append("is_cover_change", CategoryEditorViewModel.categoryEditorForm.is_cover_change());
+            RootViewModel.PreloaderShow();
+            $.ajax({
+                url: "api/category/save",
+                data: formData,
+                type: 'POST',
+                contentType: false,
+                processData: false,
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("Authorization", 'Bearer '+ Cookies.get('wedding_token') /* localStorage.getItem('wedding_token') */);
+                }
+            }).done(function(resp) {
+                M.toast({html: 'Изменения сохранены!', classes: 'rounded'});
+                RootViewModel.PreloaderHide();
+                location.hash = '#admin';
+            }).fail(function(xhr, status, text) {
+                RootViewModel.PreloaderHide();
+                HandleError(xhr, '#category_editor');
+                //ShowModalError('#offer_editor', xhr);
+                //alert("error: " + text);
+            });
+        },
+    }
+
+    // object activation
+    ko.applyBindings(CategoryEditorViewModel, document.getElementById("category-editor-div"));
+
+    // update news when main page becomes visible
+    $(document).on("CategoryEditorVisible", function () {
+        CategoryEditorViewModel.ClearCategoryEditor();
+        CategoryEditorViewModel.UpdateCategory(chunckParams['param']);
+    });
+
+</script>

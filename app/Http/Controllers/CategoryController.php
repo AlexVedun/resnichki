@@ -21,7 +21,15 @@ class CategoryController extends Controller
         $result = collect();
         foreach ($categories as $category) {
             $item = $category;
-            $item->cover = GlobalFunctions::ConvertImage2base64($category->cover);
+            if ($item->is_cover)
+            {
+                $item->cover = asset(Storage::url($item->cover));
+            }
+            else
+            {
+                $item->cover = GlobalFunctions::ConvertImage2base64($item->cover);
+            }
+            //$item->cover = GlobalFunctions::ConvertImage2base64($category->cover);
             /* $image = public_path().'//covers//'.$category->cover;
             $imageData = base64_encode(file_get_contents($image));
             $item->cover = 'data: '.mime_content_type($image).';base64,'.$imageData; */

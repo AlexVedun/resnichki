@@ -36,11 +36,13 @@ Route::group(['namespace' => 'Api'], function () {
     Route::post('offers/save', 'ManageOffersController@saveOffers')->middleware('auth:api');
     Route::delete('offers/media/{id}', 'ManageOffersController@deleteMedia')->middleware('auth:api');
     Route::delete('offers/{id}', 'ManageOffersController@deleteOffer')->middleware('auth:api');
+
+    Route::get('category/get/{id}', 'ManageCategoriesController@getCategory')->middleware('auth:api');
+    Route::post('category/save', 'ManageCategoriesController@saveCategory')->middleware('auth:api');
 });
 
 Route::resource('categories', 'CategoryController');
 Route::resource('news', 'NewsController');
 Route::resource('offers', 'OfferController');
 Route::resource('users', 'UserController');
-//Route::resource('register', 'RegisterUserController');
 Route::resource('chunck', 'ChunckController');

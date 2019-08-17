@@ -68,6 +68,7 @@
                 <section id="admin" data-bind="visible: sections.admin" class="row"></section>
                 <section id="offer_editor" data-bind="visible: sections.offer_editor" class="row"></section>
                 <section id="add_user" data-bind="visible: sections.add_user" class="row"></section>
+                <section id="category_editor" data-bind="visible: sections.category_editor" class="row"></section>
             </div>
         </main>
         {{-- footer --}}
@@ -123,7 +124,8 @@
                     login: ko.observable(false),
                     admin: ko.observable(false),
                     offer_editor: ko.observable(false),
-                    add_user:ko.observable(false),
+                    add_user: ko.observable(false),
+                    category_editor: ko.observable(false),
                 },
                 preloader: ko.observable(false),
                 isLogin: ko.observable(false),
@@ -251,6 +253,7 @@
             let adminVisibleEvent = new Event("AdminVisible");
             let offerEditorVisibleEvent = new Event("OfferEditorVisible");
             let addUserVisibleEvent = new Event("AddUserVisible");
+            let categoryEditorVisibleEvent = new Event("CategoryEditorVisible");
 
             RootViewModel.sections.main.subscribe(function (newValue) {
                 if (newValue) {
@@ -303,6 +306,12 @@
             RootViewModel.sections.add_user.subscribe(function (newValue) {
                 if (newValue) {
                     document.dispatchEvent(addUserVisibleEvent);
+                }
+            });
+
+            RootViewModel.sections.category_editor.subscribe(function (newValue) {
+                if (newValue) {
+                    document.dispatchEvent(categoryEditorVisibleEvent);
                 }
             });
 
