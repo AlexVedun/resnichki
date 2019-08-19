@@ -25,23 +25,26 @@
         <header>
             <div class="container">
                 {{-- main menu --}}
-                <nav>
-                    <div class="nav-wrapper">
-                        {{-- <div class="brand-logo">
-                            <img class="responsive-img" src="{{url('images/logo.png')}}">
-                        </div> --}}
-                        <a href="/" class="brand-logo">
-                            <img class="responsive-img" src="{{url('images/logo.png')}}">
-                        </a>
-                        <a href="#" data-target="slide-out" class="sidenav-trigger show-on-med-and-down"><i class="material-icons">menu</i></a>
-                        <ul id="nav-mobile" class="right hide-on-med-and-down">
-                            <li><a href="#main" data-bind="">Главная</a></li>
-                            <li><a href="#categories" data-bind="">Категории</a></li>
-                            <li><a href="#account" data-bind="visible: isLogin">Личный кабинет</a></li>
-                            <li><a href="#logout" data-bind="visible: isLogin">Выход</a></li>
-                        </ul>
-                    </div>
-                </nav>
+                <div class="custom-nav">
+                    <nav class="">
+                        <div class="nav-wrapper">
+                            {{-- <div class="brand-logo">
+                                <img class="responsive-img" src="{{url('images/logo.png')}}">
+                            </div> --}}
+                            <a href="/" class="brand-logo">
+                                <img style="border-radius: 6px;" class="z-depth-1" src="{{url('images/logo3.svg')}}">
+                            </a>
+                            <a href="#" data-target="slide-out" class="sidenav-trigger show-on-med-and-down"><i class="material-icons">menu</i></a>
+                            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                                <li><a href="#main" data-bind="">Главная</a></li>
+                                <li><a href="#categories" data-bind="">Категории</a></li>
+                                <li><a href="#account" data-bind="visible: isLogin">Личный кабинет</a></li>
+                                <li><a href="#logout" data-bind="visible: isLogin">Выход</a></li>
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+
                 {{-- side menu --}}
                 <ul id="slide-out" class="sidenav">
                     <li><a class="waves-effect sidenav-close" href="#main" data-bind="">Главная</a></li>
