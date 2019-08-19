@@ -27,7 +27,8 @@ class CategoryController extends Controller
             }
             else
             {
-                $item->cover = GlobalFunctions::ConvertImage2base64($item->cover);
+                //$item->cover = GlobalFunctions::ConvertImage2base64($item->cover);
+                $item->cover = asset($item->cover);
             }
             //$item->cover = GlobalFunctions::ConvertImage2base64($category->cover);
             /* $image = public_path().'//covers//'.$category->cover;
