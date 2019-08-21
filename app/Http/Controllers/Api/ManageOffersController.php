@@ -52,6 +52,11 @@ class ManageOffersController extends Controller
         return $offer;
     }
 
+    public function getAllOffers()
+    {
+        return Offer::with('category', 'user')->get()->all();
+    }
+
     public function saveOffers(Request $request)
     {
         $offer = $request->offer_id != 0 ? Offer::find($request->offer_id) : Offer::create();
