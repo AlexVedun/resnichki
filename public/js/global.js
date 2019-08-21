@@ -80,7 +80,7 @@ function HandleError(_xhr, _chunck) {
         location.hash = '#login';
     }
     else {
-        ShowModalError(_chunck, xhr);
+        ShowModalError(_chunck, _xhr);
     }
 
 }
