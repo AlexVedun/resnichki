@@ -20,6 +20,6 @@ class OfferMedia extends Model
 
     public function offerDetails()
     {
-        return $this->belongsTo(OfferDetails::class, 'id', 'offer_details_id');
+        return $this->belongsTo(OfferDetails::class, 'offer_details_id', 'id');
     }
 }
