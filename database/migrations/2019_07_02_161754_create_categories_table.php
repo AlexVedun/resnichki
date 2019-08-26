@@ -17,6 +17,7 @@ class CreateCategoriesTable extends Migration
             $table->bigIncrements('id');
             $table->string('name')->default('Новая категория');
             $table->string('cover')->nullable();
+            $table->string('icon')->nullable();
             $table->boolean('is_cover')->default(false);
             $table->timestamps();
         });

@@ -32,7 +32,7 @@
                                 <img class="responsive-img" src="{{url('images/logo.png')}}">
                             </div> --}}
                             <a href="/" class="brand-logo">
-                                <img style="border-radius: 6px;" class="z-depth-1" src="{{url('images/logo3.svg')}}">
+                                <img style="border-radius: 0px;" class="z-depth-0" src="{{url('images/logo4.svg')}}">
                             </a>
                             <a href="#" data-target="slide-out" class="sidenav-trigger show-on-med-and-down"><i class="material-icons">menu</i></a>
                             <ul id="nav-mobile" class="right hide-on-med-and-down">

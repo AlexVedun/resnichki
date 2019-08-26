@@ -24,11 +24,13 @@ class CategoryController extends Controller
             if ($item->is_cover)
             {
                 $item->cover = asset(Storage::url($item->cover));
+                $item->icon = asset(Storage::url($item->icon));
             }
             else
             {
                 //$item->cover = GlobalFunctions::ConvertImage2base64($item->cover);
                 $item->cover = asset($item->cover);
+                $item->icon = asset($item->icon);
             }
             //$item->cover = GlobalFunctions::ConvertImage2base64($category->cover);
             /* $image = public_path().'//covers//'.$category->cover;

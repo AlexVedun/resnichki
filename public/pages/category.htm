@@ -1,7 +1,28 @@
 <div id="category-div" >
     <div class="row"></div>
-    <div class="row">
-        <div class="col s12">
+    <div class="row" data-bind="foreach: categories">
+            <a class="hoverable" data-bind="attr: { href: link }"><img style="width: 48px;" data-bind="attr: { src: icon }"></a>
+        <!-- <div>
+            <a target="_self" href="#category/2"><img style="width: 48px;" src="http://localhost/wedding/public/covers/tabicon.svg"></a>
+            <a target="_self" href="#category/3"><img style="width: 48px;" src="http://localhost/wedding/public/covers/tabicon.svg"></a>
+            <a target="_self" href="#category/4"><img style="width: 48px;" src="http://localhost/wedding/public/covers/tabicon.svg"></a>
+            <a target="_self" href="#category/5"><img style="width: 48px;" src="http://localhost/wedding/public/covers/tabicon.svg"></a>
+            <a target="_self" href="#category/6"><img style="width: 48px;" src="http://localhost/wedding/public/covers/tabicon.svg"></a>
+            <a target="_self" href="#category/7"><img style="width: 48px;" src="http://localhost/wedding/public/covers/tabicon.svg"></a>
+            <a target="_self" href="#category/8"><img style="width: 48px;" src="http://localhost/wedding/public/covers/tabicon.svg"></a>
+            <a target="_self" href="#category/9"><img style="width: 48px;" src="http://localhost/wedding/public/covers/tabicon.svg"></a>
+            <a target="_self" href="#category/10"><img style="width: 48px;" src="http://localhost/wedding/public/covers/tabicon.svg"></a>
+            <a target="_self" href="#category/11"><img style="width: 48px;" src="http://localhost/wedding/public/covers/tabicon.svg"></a>
+            <a target="_self" href="#category/12"><img style="width: 48px;" src="http://localhost/wedding/public/covers/tabicon.svg"></a>
+            <a target="_self" href="#category/13"><img style="width: 48px;" src="http://localhost/wedding/public/covers/tabicon.svg"></a>
+            <a target="_self" href="#category/14"><img style="width: 48px;" src="http://localhost/wedding/public/covers/tabicon.svg"></a>
+            <a target="_self" href="#category/15"><img style="width: 48px;" src="http://localhost/wedding/public/covers/tabicon.svg"></a>
+            <a target="_self" href="#category/16"><img style="width: 48px;" src="http://localhost/wedding/public/covers/tabicon.svg"></a>
+            <a target="_self" href="#category/17"><img style="width: 48px;" src="http://localhost/wedding/public/covers/tabicon.svg"></a>
+            <a target="_self" href="#category/18"><img style="width: 48px;" src="http://localhost/wedding/public/covers/tabicon.svg"></a>
+            <a target="_self" href="#category/19"><img style="width: 48px;" src="http://localhost/wedding/public/covers/tabicon.svg"></a>
+        </div> -->
+        <!-- <div class="col s12">
             <ul class="custom-tabs tabs">
                 <li class="tab"><a target="_self" href="#category/1"><img style="width: 48px;" src="http://localhost/wedding/public/covers/tabicon.svg"></a></li>
                 <li class="tab"><a target="_self" href="#category/2"><img style="width: 48px;" src="http://localhost/wedding/public/covers/tabicon.svg"></a></li>
@@ -23,7 +44,7 @@
                 <li class="tab"><a target="_self" href="#category/14"><img style="width: 48px;" src="http://localhost/wedding/public/covers/tabicon.svg"></a></li>
                 <li class="tab"><a target="_self" href="#category/14"><img style="width: 48px;" src="http://localhost/wedding/public/covers/tabicon.svg"></a></li>
             </ul>
-        </div>
+        </div> -->
     </div>
     <div class="row">
         <div class="card col s12">
@@ -62,9 +83,29 @@
 <script>
     let CategoryViewModel = {
         // properties
+        categories: ko.observableArray([]),
         offers: ko.observableArray([]),
         name: ko.observable(''),
         // methods
+        UpdateCategories: function() {
+            RootViewModel.PreloaderShow();
+            $.ajax({
+                url: "api/categories",
+                type: 'GET'
+            }).done(function(resp) {
+                CategoryViewModel.categories([]);
+                resp.forEach(element => {
+                    element.link = '#category/' + element.id;
+                    CategoryViewModel.categories.push(element);
+                });
+                RootViewModel.PreloaderHide();
+            }).fail(function(xhr, status, text) {
+                RootViewModel.PreloaderHide();
+                HandleError(xhr, '#category');
+                //ShowModalError('#categories', xhr);
+                //alert("error: " + text);
+            });
+        },
         UpdateCategory: function() {
             RootViewModel.PreloaderShow();
             $.ajax({
@@ -91,6 +132,7 @@
 
     // update news when main page becomes visible
     $(document).on("CategoryVisible", function () {
+        CategoryViewModel.UpdateCategories();
         CategoryViewModel.UpdateCategory();
     });
 
