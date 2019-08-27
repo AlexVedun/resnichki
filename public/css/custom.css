@@ -54,7 +54,7 @@ h3.truncate {
 .offer-image-preview {
     height: 200px;
 }
-.categories-list {
+.cards-list {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -69,6 +69,10 @@ h3.truncate {
     /* flex: 1 300px;
     padding: 0rem;
     margin: 0.75rem; */
+}
+
+.offer-media-card {
+    width: 400px;
 }
 
 /*section {

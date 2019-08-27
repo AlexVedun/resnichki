@@ -78,6 +78,9 @@ class OfferController extends Controller
         {
             $offer->cover = GlobalFunctions::ConvertImage2base64('/covers/no_cover.png');
         }
+        foreach ($offer->details->offerMedia as $item) {
+            $item->path_to_file = asset(Storage::url($item->path_to_file));
+        }
         $offer['details'] = $offer->details;
         return $offer;
     }
