@@ -9,6 +9,9 @@
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
         <link href="https://unpkg.com/ionicons@4.5.10-0/dist/css/ionicons.min.css" rel="stylesheet">
+        {{-- CSS style --}}
+        <link href="{{ asset('css/materialize.min.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
         {{-- Scripts --}}
         <script src="{{ asset('js/jquery-3.4.1.min.js') }}"></script>
         <script src="{{ asset('js/knockout-3.5.0.js') }}"></script>
@@ -17,9 +20,6 @@
         <script src="{{ asset('js/moment.min.js') }}"></script>
         <script src="{{ asset('js/js.cookie.js') }}"></script>
         <script src="{{ asset('js/global.js') }}"></script>
-        {{-- CSS style --}}
-        <link href="{{ asset('css/materialize.min.css') }}" rel="stylesheet">
-        <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
     </head>
     <body>
         <header>
@@ -38,6 +38,7 @@
                             <ul id="nav-mobile" class="right hide-on-med-and-down">
                                 <li><a href="#main" data-bind="">Главная</a></li>
                                 <li><a href="#categories" data-bind="">Категории</a></li>
+                                <li><a href="#login" data-bind="hidden: isLogin">Вход</a></li>
                                 <li><a href="#account" data-bind="visible: isLogin">Личный кабинет</a></li>
                                 <li><a href="#logout" data-bind="visible: isLogin">Выход</a></li>
                             </ul>
@@ -49,6 +50,7 @@
                 <ul id="slide-out" class="sidenav">
                     <li><a class="waves-effect sidenav-close" href="#main" data-bind="">Главная</a></li>
                     <li><a class="waves-effect sidenav-close" href="#categories" data-bind="">Категории</a></li>
+                    <li><a class="waves-effect sidenav-close" href="#login" data-bind="hidden: isLogin">Вход</a></li>
                     <li><a class="waves-effect sidenav-close" href="#account" data-bind="visible: isLogin">Личный кабинет</a></li>
                     <li><a class="waves-effect sidenav-close" href="#logout" data-bind="visible: isLogin">Выход</a></li>
                 </ul>
@@ -75,7 +77,7 @@
             </div>
         </main>
         {{-- footer --}}
-        <div class="container">
+        {{-- <div class="container">
             <footer class="page-footer">
                 <div class="container">
                     <div class="row">
@@ -83,7 +85,7 @@
                     </div>
                 </div>
             </footer>
-        </div>
+        </div> --}}
         {{-- Modal window --}}
         <div id="message-modal" class="modal">
             <div class="modal-content">

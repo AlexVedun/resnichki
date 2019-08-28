@@ -77,13 +77,11 @@
         </div>
         <div class="row">
             <div data-bind="foreach: audio">
-                <div class="row">
-                    <div class="col card s12 m6 l5 xl4 hoverable">
-                        <div class="card-content">
-                            <audio controls>
-                                <source data-bind="attr: { src: path_to_file }">
-                            </audio>
-                        </div>
+                <div class="offer-media-card card hoverable">
+                    <div class="card-content">
+                        <audio controls>
+                            <source data-bind="attr: { src: path_to_file }">
+                        </audio>
                     </div>
                 </div>
             </div>

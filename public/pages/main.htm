@@ -1,33 +1,41 @@
 <div id="main-div" >
+    <div class="row"></div>
+    <div class="row"></div>
     <div class="row">
-        <div class="col s12">
+        <!-- <div class="col s12">
             <span class="center-align"><h2>Название сайта</h2></span>
+        </div> -->
+        <div class="col s12 m6 l6 xl6">
+            <img class="big-logo" class="responsive-img" src="">
+        </div>
+        <div class="col s12 m5 offset-m1 l5 offset-l1 xl5 offset-xl1 card">
+            <div class="card-content">
+                <p><h6>Добро пожаловать на Реснички.</h6></p>
+                <p><h6>Это сайт, который призван ознакомить Вас с обширным и многообразным миром шоу бизнеса Мариуполя.
+                        Реснички - не рынок, и не торговый центр.
+                            Реснички - выставочный зал.</h6></p>
+                <p><h6>Смотрите и выбирайте, а мы Вам поможем.</h6></p>
+
+            </div>
         </div>
     </div>
     <div class="row">
-        <div class="col s6 card-panel">
-            <div class="row">
-                <span class="center-align"><h4>О проекте</h4></span>
-            </div>
-            <div class="row">
-                <span>Этот проект задуман для ...</span>
+        <div class="card col s12">
+            <div class="card-content" style="padding: 0px">
+                <span class="center-align"><h3 class="truncate">Новости</h3></span>
             </div>
         </div>
-        <div class="col s6 card-panel">
-            <div class="row">
-                <span class="center-align"><h4>Новости</h4></span>
-            </div>
-            <div class="row">
-                <ul class="collection" data-bind="foreach: news">
-                    <a class="collection-item" data-bind="attr: { href: '#offer/' + offer_id }">
-                        <div class="row">
-                            <!--ko text: date--><!--/ko--> - <!--ko text: user.name--><!--/ko-->
-                        </div>
-                        <div class="row">
-                            <!--ko text: news--><!--/ko-->
-                        </div>
-                    </a>
-                </ul>
+    </div>
+    <div class="row">
+        <div class="cards-list" data-bind="foreach: news">
+            <div class="news-card card hoverable">
+                <div class="card-content">
+                    <span class="card-title" data-bind="text: user.name"></span>
+                    <p data-bind="text: news"></p>
+                </div>
+                <div class="card-action">
+                    <a data-bind="attr: { href: '#offer/' + offer_id }">Перейти</a>
+                </div>
             </div>
         </div>
     </div>
@@ -43,6 +51,7 @@
                 url: "api/news",
                 type: 'GET'
             }).done(function(resp) {
+                MainViewModel.news([]);
                 resp.forEach(element => {
                     element.date = moment(element.created_at).format('DD.MM.YYYY');
                     //console.log(element.date);
@@ -63,6 +72,7 @@
 
     // update news when main page becomes visible
     $(document).on("MainVisible", function () {
+        $('.big-logo').attr('src', $('a.brand-logo').find('img').attr('src'));  // копируем адрес файла с логотипом
         MainViewModel.UpdateNews();
     });
 

@@ -39,8 +39,9 @@ nav {
     margin-right: 20px;
 }
 
-.card,/* .tabs, */.btn {
-    border-radius: 20px;
+.card,/* .tabs, */.btn,.card-action {
+    border-radius: 20px
+    !important
 }
 
 .custom-tabs {
@@ -73,6 +74,13 @@ h3.truncate {
 
 .offer-media-card {
     width: 400px;
+}
+.news-card {
+    width: 300px;
+}
+
+.big-logo {
+    padding: 5px;
 }
 
 /*section {
