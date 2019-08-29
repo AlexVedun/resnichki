@@ -22,7 +22,14 @@ class UsersTableSeeder extends Seeder
             'role' => 'admin',
             'created_at' => now(),
         ]);
-
-        factory(User::class, 10)->create();
+        $user_id = DB::table('users')->get()->last()->id;
+        DB::table('user_details')->insert([
+            'user_id' => $user_id,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+        factory(User::class, 10)->create()->each(function ($u) {
+            $u->details()->create();
+        });
     }
 }

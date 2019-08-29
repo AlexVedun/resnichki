@@ -21,7 +21,7 @@ class ManageUserController extends Controller
     {
         $user = Auth::user();
         $user['details'] = $user->details;
-        if($user->details->is_avatar)
+        if($user->details !=null && $user->details->is_avatar)
         {
             $user->details->avatar = asset(Storage::url($user->details->avatar));
         }

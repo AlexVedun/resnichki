@@ -24,6 +24,7 @@ class RegisterController extends Controller
             $request->only('name', 'email', 'type', 'role'),
             ['password' => bcrypt($password)],
         ));
+        $user->details()->create();
 
         Mail::to($request->email)->send(new NewUserLogin($request->email, $password));
 

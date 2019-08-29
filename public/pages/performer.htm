@@ -209,11 +209,8 @@
                     xhr.setRequestHeader("Authorization", 'Bearer '+ Cookies.get('wedding_token') /* localStorage.getItem('wedding_token') */ );
                 }
             }).done(function(resp) {
-                if (resp.details != null){
-                    if (resp.details.is_avatar)
-                    {
-                        PerformerViewModel.avatar(resp.details.avatar);
-                    }
+                if (resp.details != null) {
+                    PerformerViewModel.avatar(resp.details.avatar);
                     PerformerViewModel.is_avatar_change(false);
                     PerformerViewModel.contactsForm.contact_name(resp.details.contact_name);
                     PerformerViewModel.contactsForm.phone(resp.details.phone);
