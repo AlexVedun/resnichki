@@ -7,7 +7,7 @@
     <div class="row">
         <div class="col s12">
             <ul class="performer-tabs tabs">
-            <li class="tab col s4"><a class="active" href="#contacts">Контактные данные</a></li>
+            <li class="tab col s4"><a class="active" href="#contacts">Данные исполнителя</a></li>
             <li class="tab col s4"><a href="#offers">Предложения</a></li>
             <li class="tab col s4"><a href="#change-password">Изменить пароль</a></li>
             </ul>
@@ -15,7 +15,30 @@
     <!-- Change user contacts -->
         <div id="contacts">
             <div class="row"></div>
-            <form method="POST" id="contacts-form" class="card col s12 m8 offset-m2 l8 offset-l2 xl6 offset-xl3" data-bind="submit: SaveContacts">
+            <form method="POST" id="avatar-form" class="card col s12 m4 l4 xl4" data-bind="submit: SaveAvatar">
+                <div class="card-content">
+                    <div class="row">
+                        <img class="responsive-img" data-bind="attr: { src: avatar }">
+                    </div>
+
+                    <div class="row file-field input-field">
+                        <div class="btn">
+                            <span>Загрузить</span>
+                            <input name="avatar_file" id="avatar-file" type="file" data-bind="event: { change: function() { $root.is_avatar_change(true); } }">
+                        </div>
+                        <div class="file-path-wrapper">
+                            <input class="file-path validate" type="text" placeholder="Загрузить фото">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <button class="col s12 btn waves-effect waves-light" type="submit">
+                            <i class="material-icons left">save</i>
+                            Сохранить
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <form method="POST" id="contacts-form" class="card col s12 m7 offset-m1 l7 offset-l1 xl7 offset-xl1" data-bind="submit: SaveContacts">
                 <div class="card-content">
                     <div class="row input-field">
                         <i class="material-icons prefix">face</i>
@@ -115,19 +138,6 @@
                             </div>
                         </div>
                     </div>
-                    <!-- <ul class="collection" data-bind="foreach: OffersList">
-                        <li class="collection-item avatar">
-                            <img alt="" class="responsive-img" data-bind="attr: { src: $data.cover }">
-                            <span class="title" data-bind="text: $data.title"></span>
-                            <button data-bind="click: $parent.SelectOffer.bind($data, $data.id)">Открыть</button>
-                            <button>Удалить</button>
-                        </li>
-                    </ul> -->
-                    <!-- <div class="collection" data-bind="foreach: OffersList">
-                        <a href="" class="collection-item avatar" data-bind="text: $data.title, click: $parent.SelectOffer.bind($data, $data.id)">
-                            <img alt="" class="" data-bind="attr: { src: $data.cover }">
-                        </a>
-                    </div> -->
                 </div>
             </form>
         </div>
@@ -167,6 +177,8 @@
     let PerformerViewModel = {
         // properties
         title: ko.observable(''),
+        avatar: ko.observable(''),
+        is_avatar_change: ko.observable(false),
         contactsForm: {
             contact_name: ko.observable(''),
             phone: ko.observable(''),
@@ -198,6 +210,11 @@
                 }
             }).done(function(resp) {
                 if (resp.details != null){
+                    if (resp.details.is_avatar)
+                    {
+                        PerformerViewModel.avatar(resp.details.avatar);
+                    }
+                    PerformerViewModel.is_avatar_change(false);
                     PerformerViewModel.contactsForm.contact_name(resp.details.contact_name);
                     PerformerViewModel.contactsForm.phone(resp.details.phone);
                     PerformerViewModel.contactsForm.mobile_1(resp.details.mobile_1);
@@ -212,6 +229,8 @@
                     PerformerViewModel.contactsForm.instagram(resp.details.instagram);
                 }
                 else {
+                    PerformerViewModel.avatar('');
+                    PerformerViewModel.is_avatar_change(false);
                     PerformerViewModel.contactsForm.contact_name('');
                     PerformerViewModel.contactsForm.phone('');
                     PerformerViewModel.contactsForm.mobile_1('');
@@ -253,6 +272,26 @@
                 //ShowModalError('#performer', xhr);
                 //alert("error: " + text);
             });
+        },
+        SaveAvatar:function() {
+            // let formData = ko.toJS(this.contactsForm);
+            // RootViewModel.PreloaderShow();
+            // $.ajax({
+            //     url: "api/user/save/contacts",
+            //     data: formData,
+            //     type: 'POST',
+            //     beforeSend: function (xhr) {
+            //         xhr.setRequestHeader("Authorization", 'Bearer '+ Cookies.get('wedding_token') /* localStorage.getItem('wedding_token') */);
+            //     }
+            // }).done(function(resp) {
+            //     M.toast({html: 'Изменения сохранены!', classes: 'rounded'});
+            //     RootViewModel.PreloaderHide();
+            // }).fail(function(xhr, status, text) {
+            //     RootViewModel.PreloaderHide();
+            //     HandleError(xhr, '#performer');
+            //     //ShowModalError('#performer', xhr);
+            //     //alert("error: " + text);
+            // });
         },
         ChangePassword: function() {
             let formData = ko.toJS(this.changePasswordForm);

@@ -21,6 +21,14 @@ class ManageUserController extends Controller
     {
         $user = Auth::user();
         $user['details'] = $user->details;
+        if($user->details->is_avatar)
+        {
+            $user->details->avatar = asset(Storage::url($user->details->avatar));
+        }
+        else
+        {
+            $user->details->avatar = asset('/images/no_avatar.png');
+        }
         return $user;
     }
 
