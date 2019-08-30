@@ -32,15 +32,15 @@
                                 <img class="responsive-img" src="{{url('images/logo.png')}}">
                             </div> --}}
                             <a href="/" class="brand-logo">
-                                <img style="border-radius: 0px;" class="z-depth-0" src="{{url('images/logo4.svg')}}">
+                                <img style="border-radius: 0px;" class="z-depth-0" src="{{url('images/logo10.svg')}}">
                             </a>
                             <a href="#" data-target="slide-out" class="sidenav-trigger show-on-med-and-down"><i class="material-icons">menu</i></a>
                             <ul id="nav-mobile" class="right hide-on-med-and-down">
-                                <li><a href="#main" data-bind="">Главная</a></li>
-                                <li><a href="#categories" data-bind="">Категории</a></li>
-                                <li><a href="#login" data-bind="hidden: isLogin">Вход</a></li>
-                                <li><a href="#account" data-bind="visible: isLogin">Личный кабинет</a></li>
-                                <li><a href="#logout" data-bind="visible: isLogin">Выход</a></li>
+                                <li><a href="#main" data-bind=""><i class="material-icons black-text">home</i></a></li>
+                                <li><a href="#categories" data-bind=""><i class="material-icons black-text">view_comfy</i></a></li>
+                                <li><a href="#login" data-bind="hidden: isLogin"><i class="icon ion-md-log-in black-text"></i></a></li>
+                                <li><a href="#account" data-bind="visible: isLogin"><i class="material-icons black-text">account_circle</i></a></li>
+                                <li><a href="#logout" data-bind="visible: isLogin"><i class="icon ion-md-log-out black-text"></i></a></li>
                             </ul>
                         </div>
                     </nav>
@@ -48,11 +48,17 @@
 
                 {{-- side menu --}}
                 <ul id="slide-out" class="sidenav">
-                    <li><a class="waves-effect sidenav-close" href="#main" data-bind="">Главная</a></li>
-                    <li><a class="waves-effect sidenav-close" href="#categories" data-bind="">Категории</a></li>
-                    <li><a class="waves-effect sidenav-close" href="#login" data-bind="hidden: isLogin">Вход</a></li>
-                    <li><a class="waves-effect sidenav-close" href="#account" data-bind="visible: isLogin">Личный кабинет</a></li>
-                    <li><a class="waves-effect sidenav-close" href="#logout" data-bind="visible: isLogin">Выход</a></li>
+                    <li>
+                        <div class="background center-align">
+                            <img class="z-depth-0 logo-image" src="{{url('images/logo10.svg')}}">
+                        </div>
+                    </li>
+                    <li><div class="divider"></div></li>
+                    <li><a class="waves-effect sidenav-close" href="#main" data-bind=""><i class="material-icons black-text">home</i>Главная</a></li>
+                    <li><a class="waves-effect sidenav-close" href="#categories" data-bind=""><i class="material-icons black-text">view_comfy</i>Категории</a></li>
+                    <li><a class="waves-effect sidenav-close" href="#login" data-bind="hidden: isLogin"><i class="small icon ion-md-log-in black-text"></i>Вход</a></li>
+                    <li><a class="waves-effect sidenav-close" href="#account" data-bind="visible: isLogin"><i class="material-icons black-text">account_circle</i>Личный кабинет</a></li>
+                    <li><a class="waves-effect sidenav-close" href="#logout" data-bind="visible: isLogin"><i class="small icon ion-md-log-out black-text"></i>Выход</a></li>
                 </ul>
             </div>
         </header>

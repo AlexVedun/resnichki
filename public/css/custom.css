@@ -64,12 +64,6 @@ h3.truncate {
 
 .category-card {
     width: 200px;
-    /* margin-left: 5px;
-    margin-right: 5px; */
-    /* max-width: 400px; */
-    /* flex: 1 300px;
-    padding: 0rem;
-    margin: 0.75rem; */
 }
 
 .offer-media-card {
@@ -81,6 +75,11 @@ h3.truncate {
 
 .big-logo {
     padding: 5px;
+}
+
+.logo-image {
+    height: 70px;
+    border-radius: 0px;
 }
 
 /*section {
