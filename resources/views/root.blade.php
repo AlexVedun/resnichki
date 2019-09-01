@@ -36,11 +36,11 @@
                             </a>
                             <a href="#" data-target="slide-out" class="sidenav-trigger show-on-med-and-down"><i class="material-icons">menu</i></a>
                             <ul id="nav-mobile" class="right hide-on-med-and-down">
-                                <li><a href="#main" data-bind=""><i class="material-icons black-text">home</i></a></li>
-                                <li><a href="#categories" data-bind=""><i class="material-icons black-text">view_comfy</i></a></li>
-                                <li><a href="#login" data-bind="hidden: isLogin"><i class="icon ion-md-log-in black-text"></i></a></li>
-                                <li><a href="#account" data-bind="visible: isLogin"><i class="material-icons black-text">account_circle</i></a></li>
-                                <li><a href="#logout" data-bind="visible: isLogin"><i class="icon ion-md-log-out black-text"></i></a></li>
+                                <li><a href="#main" data-bind="" class="tooltipped" data-position="bottom" data-tooltip="Главная"><i class="material-icons black-text">home</i></a></li>
+                                <li><a href="#categories" data-bind="" class="tooltipped" data-position="bottom" data-tooltip="Категории"><i class="material-icons black-text">view_comfy</i></a></li>
+                                <li><a href="#login" data-bind="hidden: isLogin" class="tooltipped" data-position="bottom" data-tooltip="Вход"><i class="icon ion-md-log-in black-text"></i></a></li>
+                                <li><a href="#account" data-bind="visible: isLogin" class="tooltipped" data-position="bottom" data-tooltip="Личный кабинет"><i class="material-icons black-text">account_circle</i></a></li>
+                                <li><a href="#logout" data-bind="visible: isLogin" class="tooltipped" data-position="bottom" data-tooltip="Выход"><i class="icon ion-md-log-out black-text"></i></a></li>
                             </ul>
                         </div>
                     </nav>
@@ -252,6 +252,10 @@
 
             $(document).ready(function(){
                 $('.modal').modal();
+            });
+
+            $(document).ready(function(){
+                $('.tooltipped').tooltip();
             });
 
             // events for pages visualisation

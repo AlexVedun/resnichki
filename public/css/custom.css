@@ -1,4 +1,4 @@
-﻿body {
+body {
     display: flex;
     min-height: 100vh;
     flex-direction: column;
@@ -39,7 +39,7 @@ nav {
     margin-right: 20px;
 }
 
-.card,/* .tabs, */.btn,.card-action {
+.card,/* .tabs, */.btn,.card-action,.material-tooltip {
     border-radius: 20px
     !important
 }
