@@ -65,6 +65,9 @@
                 $(document).ready(function(){
                     $('.tooltipped').tooltip();
                 });
+                $(document).ready(function(){
+                    $('.tabs').tabs();
+                });
                 RootViewModel.PreloaderHide();
             }).fail(function(xhr, status, text) {
                 RootViewModel.PreloaderHide();
@@ -101,9 +104,5 @@
     $(document).on("CategoryVisible", function () {
         CategoryViewModel.UpdateCategories();
         CategoryViewModel.UpdateCategory();
-    });
-
-    $(document).ready(function(){
-        $('.tabs').tabs();
     });
 </script>
