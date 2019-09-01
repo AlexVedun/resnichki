@@ -9,6 +9,7 @@ use App\Http\Requests\ChangePasswordRequest;
 use Illuminate\Support\Facades\Hash;
 use App\Models\UserDetails;
 use App\User;
+use Illuminate\Support\Facades\Storage;
 
 class ManageUserController extends Controller
 {
@@ -21,7 +22,7 @@ class ManageUserController extends Controller
     {
         $user = Auth::user();
         $user['details'] = $user->details;
-        if($user->details !=null && $user->details->is_avatar)
+        if($user->details->is_avatar)
         {
             $user->details->avatar = asset(Storage::url($user->details->avatar));
         }
@@ -55,6 +56,23 @@ class ManageUserController extends Controller
         $userDetails->web_site = $request->web_site;
         $userDetails->instagram = $request->instagram;
         $user->details()->save($userDetails);
+    }
+
+    public function saveUserAvatar(Request $request)
+    {
+        $user = Auth::user();
+        if (json_decode($request->is_avatar_change))
+        {
+            if ($user->details->is_avatar)
+            {
+                Storage::delete($user->details->avatar);
+            }
+            $user->details->avatar = $request->file('avatar_file')->store('public/media/avatars');
+            $user->details->is_avatar = true;
+            $user->details->save();
+        }
+        $avatar = asset(Storage::url($user->details->avatar));
+        return $avatar;
     }
 
     public function changeUserPassword(ChangePasswordRequest $request)

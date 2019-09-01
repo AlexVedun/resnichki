@@ -15,10 +15,10 @@
     <!-- Change user contacts -->
         <div id="contacts">
             <div class="row"></div>
-            <form method="POST" id="avatar-form" class="card col s12 m4 l4 xl4" data-bind="submit: SaveAvatar">
+            <form method="POST" id="avatar-form" class="card col s12 m4 l4 xl4" enctype="multipart/form-data" data-bind="submit: SaveAvatar">
                 <div class="card-content">
-                    <div class="row">
-                        <img class="responsive-img" data-bind="attr: { src: avatar }">
+                    <div class="row center-align">
+                        <img class="responsive-img avatar-image" data-bind="attr: { src: avatar }">
                     </div>
 
                     <div class="row file-field input-field">
@@ -27,7 +27,7 @@
                             <input name="avatar_file" id="avatar-file" type="file" data-bind="event: { change: function() { $root.is_avatar_change(true); } }">
                         </div>
                         <div class="file-path-wrapper">
-                            <input class="file-path validate" type="text" placeholder="Загрузить фото">
+                            <input id="avatar-file-path" class="file-path validate" type="text" placeholder="Загрузить фото">
                         </div>
                     </div>
                     <div class="row">
@@ -271,24 +271,30 @@
             });
         },
         SaveAvatar:function() {
-            // let formData = ko.toJS(this.contactsForm);
-            // RootViewModel.PreloaderShow();
-            // $.ajax({
-            //     url: "api/user/save/contacts",
-            //     data: formData,
-            //     type: 'POST',
-            //     beforeSend: function (xhr) {
-            //         xhr.setRequestHeader("Authorization", 'Bearer '+ Cookies.get('wedding_token') /* localStorage.getItem('wedding_token') */);
-            //     }
-            // }).done(function(resp) {
-            //     M.toast({html: 'Изменения сохранены!', classes: 'rounded'});
-            //     RootViewModel.PreloaderHide();
-            // }).fail(function(xhr, status, text) {
-            //     RootViewModel.PreloaderHide();
-            //     HandleError(xhr, '#performer');
-            //     //ShowModalError('#performer', xhr);
-            //     //alert("error: " + text);
-            // });
+            let formData = new FormData();
+            formData.append("avatar_file", $('#avatar-file').prop('files')[0]);
+            formData.append("is_avatar_change", this.is_avatar_change());
+            RootViewModel.PreloaderShow();
+            $.ajax({
+                url: "api/user/save/avatar",
+                data: formData,
+                type: 'POST',
+                contentType: false,
+                processData: false,
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("Authorization", 'Bearer '+ Cookies.get('wedding_token') /* localStorage.getItem('wedding_token') */);
+                }
+            }).done(function(resp) {
+                M.toast({html: 'Изменения сохранены!', classes: 'rounded'});
+                PerformerViewModel.avatar(resp);
+                $('#avatar-file-path').val('');
+                RootViewModel.PreloaderHide();
+            }).fail(function(xhr, status, text) {
+                RootViewModel.PreloaderHide();
+                HandleError(xhr, '#performer');
+                //ShowModalError('#performer', xhr);
+                //alert("error: " + text);
+            });
         },
         ChangePassword: function() {
             let formData = ko.toJS(this.changePasswordForm);

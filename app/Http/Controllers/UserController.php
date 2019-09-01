@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -49,6 +50,14 @@ class UserController extends Controller
     {
         $user = User::find($id);
         $user['details'] = $user->details;
+        if($user->details->is_avatar)
+        {
+            $user->details->avatar = asset(Storage::url($user->details->avatar));
+        }
+        else
+        {
+            $user->details->avatar = asset('/images/no_avatar.png');
+        }
         return $user;
     }
 

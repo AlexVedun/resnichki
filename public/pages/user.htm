@@ -1,12 +1,32 @@
 <div id="user-div" >
-    <div class="row">
-        <div class="col s12">
-            <span class="center-align"><h3 data-bind="text: title"></h3></span>
+    <div class="row"></div>
+    <!-- <div class="row">
+        <div class="card col s12">
+            <div class="card-content" style="padding: 0px">
+                <span class="center-align"><h3 class="truncate" data-bind="text: title"></h3></span>
+            </div>
         </div>
-    </div>
+    </div> -->
     <div class="row">
-        <div class="card col s12 m8 offset-m2 l8 offset-l2 xl6 offset-xl3">
+        <div class="card col s12 m4 l4 xl4">
             <div class="card-content">
+                <div class="row center-align">
+                    <img class="responsive-img avatar-image" data-bind="attr: { src: avatar }">
+                </div>
+            </div>
+        </div>
+        <div class="card col s12 m7 offset-m1 l7 offset-l1 xl7 offset-xl1">
+            <div class="card-content">
+                <div class="row input-field">
+                    <i class="material-icons prefix">sentiment_satisfied</i>
+                    <input id="name" type="text" data-bind="attr: { value: name }" disabled>
+                    <label class="active" for="name">ФИО / Название фирмы</label>
+                </div>
+                <div class="row input-field">
+                    <i class="material-icons prefix">work</i>
+                    <input id="perf_type" type="text" data-bind="attr: { value: perf_type }" disabled>
+                    <label class="active" for="perf_type">Исполнитель</label>
+                </div>
                 <div data-bind="if: contact_name ">
                     <div class="row input-field">
                         <i class="material-icons prefix">face</i>
@@ -104,7 +124,8 @@
 <script>
     let UserViewModel = {
         // properties
-        title: ko.observable(''),
+        name: ko.observable(''),
+        perf_type: ko.observable(''),
         contact_name: ko.observable(''),
         phone: ko.observable(''),
         mobile_1: ko.observable(''),
@@ -117,6 +138,7 @@
         vkontakte: ko.observable(''),
         web_site: ko.observable(''),
         instagram: ko.observable(''),
+        avatar: ko.observable(''),
         // methods
         UpdateUser: function() {
             RootViewModel.PreloaderShow();
@@ -124,7 +146,18 @@
                 url: "api/users/" + chunckParams['param'],
                 type: 'GET'
             }).done(function(resp) {
-                UserViewModel.title(resp.name + ' (контактные данные)');
+                UserViewModel.name(resp.name);
+                switch(resp.type) {
+                    case 'ind':
+                        UserViewModel.perf_type('Физическое лицо');
+                        break;
+                    case 'ent':
+                        UserViewModel.perf_type('ФЛП');
+                        break;
+                    case 'firm':
+                        UserViewModel.perf_type('Фирма');
+                        break;
+                }
                 if (resp.details != null){
                     UserViewModel.contact_name(resp.details.contact_name);
                     UserViewModel.phone(resp.details.phone);
@@ -138,6 +171,7 @@
                     UserViewModel.vkontakte(resp.details.vkontakte);
                     UserViewModel.web_site(resp.details.web_site);
                     UserViewModel.instagram(resp.details.instagram);
+                    UserViewModel.avatar(resp.details.avatar);
                 }
                 else {
                     UserViewModel.contact_name('');
@@ -152,6 +186,7 @@
                     UserViewModel.vkontakte('');
                     UserViewModel.web_site('');
                     UserViewModel.instagram('');
+                    UserViewModel.avatar('');
                 }
                 RootViewModel.PreloaderHide();
             }).fail(function(xhr, status, text) {

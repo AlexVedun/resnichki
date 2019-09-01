@@ -1,4 +1,4 @@
-body {
+﻿body {
     display: flex;
     min-height: 100vh;
     flex-direction: column;
@@ -80,6 +80,10 @@ h3.truncate {
 .logo-image {
     height: 70px;
     border-radius: 0px;
+}
+
+.avatar-image {
+    max-height: 350px;
 }
 
 /*section {
