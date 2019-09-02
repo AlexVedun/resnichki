@@ -9,12 +9,12 @@
             <div class="card-content">
                 <div class="row input-field">
                     <i class="material-icons prefix">mail</i>
-                    <input class="validate" id="email" type="email" data-bind="value: loginForm.email">
+                    <input class="validate" id="email" name="login" type="email" data-bind="value: loginForm.email">
                     <label for="email">E-mail</label>
                 </div>
                 <div class="row input-field">
                     <i class="icon ion-md-key prefix"></i>
-                    <input class="validate" id="password" type="password" data-bind="value: loginForm.password">
+                    <input class="validate" id="password" name="password" type="password" data-bind="value: loginForm.password">
                     <label for="password">Пароль</label>
                 </div>
                 <div class="row">
@@ -45,6 +45,12 @@
             remember_me: ko.observable(false),
         },
         // methods
+        CleanForm: function() {
+            LoginViewModel.loginForm.email('');
+            LoginViewModel.loginForm.password('');
+            $("input[type='checkbox']").click();
+            LoginViewModel.loginForm.remember_me(false);
+        },
         LoginUser: function() {
             let formData = ko.toJS(this.loginForm);
             RootViewModel.PreloaderShow();
@@ -60,6 +66,7 @@
                 RootViewModel.PreloaderHide();
                 RootViewModel.isLogin(true);
                 localStorage.setItem('user_role', resp.user.role);
+                LoginViewModel.CleanForm();
                 switch (resp.user.role) {
                     case 'admin':
                         //userRole = resp.user.role;
@@ -81,48 +88,6 @@
             this.loginForm.remember_me(!this.loginForm.remember_me());
             return true;
         }
-        // UpdateUser: function() {
-        //     RootViewModel.PreloaderShow();
-        //     $.ajax({
-        //         url: "api/users/" + chunckParams['param'],
-        //         type: 'GET'
-        //     }).done(function(resp) {
-        //         console.log(resp);
-        //         UserViewModel.title(resp.name + ' (контактные данные)');
-        //         if (resp.details != null){
-        //             UserViewModel.contact_name(resp.details.contact_name);
-        //             UserViewModel.phone(resp.details.phone);
-        //             UserViewModel.mobile_1(resp.details.mobile_1);
-        //             UserViewModel.mobile_2(resp.details.mobile_2);
-        //             UserViewModel.mobile_3(resp.details.mobile_3);
-        //             UserViewModel.viber(resp.details.viber);
-        //             UserViewModel.whats_up(resp.details.whats_up);
-        //             UserViewModel.telegram(resp.details.telegram);
-        //             UserViewModel.skype(resp.details.skype);
-        //             UserViewModel.vkontakte(resp.details.vkontakte);
-        //             UserViewModel.web_site(resp.details.web_site);
-        //             UserViewModel.instagram(resp.details.instagram);
-        //         }
-        //         else {
-        //             UserViewModel.contact_name('');
-        //             UserViewModel.phone('');
-        //             UserViewModel.mobile_1('');
-        //             UserViewModel.mobile_2('');
-        //             UserViewModel.mobile_3('');
-        //             UserViewModel.viber('');
-        //             UserViewModel.whats_up('');
-        //             UserViewModel.telegram('');
-        //             UserViewModel.skype('');
-        //             UserViewModel.vkontakte('');
-        //             UserViewModel.web_site('');
-        //             UserViewModel.instagram('');
-        //         }
-        //         RootViewModel.PreloaderHide();
-        //     }).fail(function(xhr, status, text) {
-        //         RootViewModel.PreloaderHide();
-        //         alert("error: " + text);
-        //     });
-        // }
     }
 
     // object activation
