@@ -1,7 +1,7 @@
 <div id="category-div" >
     <div class="row"></div>
     <div class="row hide-on-small-only" data-bind="foreach: categories">
-        <a class="hoverable tooltipped" data-bind="attr: { href: link, 'data-tooltip': name }" data-position="bottom"><img style="width: 48px;" data-bind="attr: { src: icon }"></a>
+        <a class="tooltipped" data-bind="attr: { href: link, 'data-tooltip': name, id: id }" data-position="bottom"><img class="hoverable" style="width: 48px;" data-bind="attr: { src: icon }"></a>
     </div>
     <div class="row show-on-small hide-on-med-and-up">
         <div class="col s12">
@@ -68,6 +68,7 @@
                 $(document).ready(function(){
                     $('.tabs').tabs();
                 });
+                $('.tooltipped#' + chunckParams['param']).find('img').addClass('z-depth-2');
                 RootViewModel.PreloaderHide();
             }).fail(function(xhr, status, text) {
                 RootViewModel.PreloaderHide();
@@ -94,6 +95,7 @@
                 //ShowModalError('#category', xhr);
                 //alert("error: " + text);
             });
+
         }
     }
 
