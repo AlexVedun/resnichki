@@ -86,6 +86,9 @@ h3.truncate {
 .avatar-image {
     max-height: 350px;
 }
+a.main-menu:hover {
+    background-color: inherit;
+}
 
 /*section {
     display: none;
