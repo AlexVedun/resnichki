@@ -62,12 +62,28 @@
                 </ul>
             </div>
         </header>
+        {{-- progress bar --}}
+        <div class="preloader-background">
+            <div class="preloader-wrapper big active">
+                <div class="spinner-layer spinner-blue-only">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="gap-patch">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="circle-clipper right">
+                        <div class="circle"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <main>
             <div class="container">
                 {{-- progress bar --}}
-                <div class="progress" data-bind="visible: preloader">
+                {{-- <div class="progress" data-bind="visible: preloader">
                     <div class="indeterminate"></div>
-                </div>
+                </div> --}}
                 {{-- main window sections --}}
                 <section id="main" data-bind="visible: sections.main" class="row"></section>
                 <section id="categories" data-bind="visible: sections.categories" class="row"></section>
@@ -150,10 +166,12 @@
                     }
                 },
                 PreloaderShow: function() {
-                    this.preloader(true);
+                    //this.preloader(true);
+                    $('.preloader-background').fadeIn('fast');
                 },
                 PreloaderHide: function() {
-                    this.preloader(false);
+                    //this.preloader(false);
+                    $('.preloader-background').fadeOut('fast');
                 },
                 ShowChunck: function (_chunck) {
                     this.HideAll();
