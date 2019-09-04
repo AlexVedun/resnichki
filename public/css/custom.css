@@ -87,6 +87,11 @@ h3.truncate {
     width: 300px;
 }
 
+.news-card .card-action a {
+    color: #0d47a1
+    !important
+}
+
 .big-logo {
     padding: 5px;
 }

@@ -28,9 +28,11 @@
     </div>
     <div class="row">
         <div class="cards-list" data-bind="foreach: news">
-            <div class="news-card card hoverable">
+            <div class="news-card card hoverable" data-bind="class: card_color">
                 <div class="card-content">
-                    <span class="card-title" data-bind="text: user.name"></span>
+                    <span class="card-title" data-bind="text: date"></span>
+                    <p><i data-bind="text: user.name"></i></p>
+                    <p>&nbsp;</p>
                     <p data-bind="text: news"></p>
                 </div>
                 <div class="card-action">
@@ -58,10 +60,18 @@
             }).done(function(resp) {
                 MainViewModel.news([]);
                 MainViewModel.currentPage(resp.current_page);
-                resp.data.forEach(element => {
-                    element.date = moment(element.created_at).format('DD.MM.YYYY');
-                    MainViewModel.news.push(element);
-                });
+                for (const item of resp.data) {
+                    item.date = moment(item.created_at).format('DD.MM.YYYY');
+                    switch (item.status) {
+                        case 'new':
+                            item.card_color = 'green lighten-3';
+                            break;
+                        case 'update':
+                            item.card_color = 'yellow lighten-4';
+                            break;
+                    }
+                    MainViewModel.news.push(item);
+                }
                 RootViewModel.PreloaderHide();
             }).fail(function(xhr, status, text) {
                 RootViewModel.PreloaderHide();
@@ -82,10 +92,18 @@
                 else {
                     MainViewModel.currentPage(resp.current_page);
                 }
-                resp.data.forEach(element => {
-                    element.date = moment(element.created_at).format('DD.MM.YYYY');
-                    MainViewModel.news.push(element);
-                });
+                for (const item of resp.data) {
+                    item.date = moment(item.created_at).format('DD.MM.YYYY');
+                    switch (item.status) {
+                        case 'new':
+                            item.card_color = 'green lighten-3';
+                            break;
+                        case 'update':
+                            item.card_color = 'yellow lighten-4';
+                            break;
+                    }
+                    MainViewModel.news.push(item);
+                }
                 RootViewModel.PreloaderHide();
             }).fail(function(xhr, status, text) {
                 RootViewModel.PreloaderHide();
