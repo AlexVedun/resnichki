@@ -18,6 +18,7 @@ class CreateNewsTable extends Migration
             $table->text('news');
             $table->bigInteger('offer_id')->nullable()->unsigned();
             $table->bigInteger('user_id')->nullable()->unsigned();
+            $table->enum('status', ['new', 'update', 'admin']);
             $table->timestamps();
 
             $table->foreign('offer_id')->references('id')->on('offers')->onDelete('cascade');

@@ -38,6 +38,7 @@ class OffersTableSeeder extends Seeder
                 'news' => $title,
                 'offer_id' => $offerId,
                 'user_id' => $userId,
+                'status' => 'new',
                 'created_at' => now(),
             ]);
         }

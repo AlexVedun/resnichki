@@ -37,7 +37,7 @@ class Offer extends Model
 
     public function news()
     {
-        return $this->hasOne(News::class);
+        return $this->hasMany(News::class);
     }
 
     public function details()
