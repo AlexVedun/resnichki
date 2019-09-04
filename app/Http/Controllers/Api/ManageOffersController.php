@@ -22,7 +22,6 @@ class ManageOffersController extends Controller
         }
         else
         {
-            //offer->cover = GlobalFunctions::ConvertImage2base64('/covers/no_cover.png');
             $offer->cover = asset('/covers/no_cover.png');
         }
         if ($offer->details != null)
@@ -60,7 +59,18 @@ class ManageOffersController extends Controller
 
     public function saveOffers(Request $request)
     {
-        $offer = $request->offer_id != 0 ? Offer::find($request->offer_id) : Offer::create();
+        $isCreate = false;
+        $offer = null;
+        if ($request->offer_id != 0)
+        {
+            $offer = Offer::find($request->offer_id);
+        }
+        else
+        {
+            $offer = Offer::create();
+            $isCreate = true;
+        }
+        //$offer = $request->offer_id != 0 ? Offer::find($request->offer_id) : Offer::create();
         $offerDetails = $offer->details != null ? $offer->details : new OfferDetails();
         $offer->title = $request->title;
         $offer->short_descr = $request->short_descr;
@@ -108,6 +118,11 @@ class ManageOffersController extends Controller
         }
         $offer->details()->save($offerDetails);
         Auth::user()->offers()->save($offer);
+        $offer->news()->create([
+            'user_id' => Auth::id(),
+            'status' => $isCreate ? 'new' : 'update',
+            'news' => $offer->title,
+        ]);
         $offer->load('details.offerMedia');
         $this->fixUrls($offer);
         return $offer;

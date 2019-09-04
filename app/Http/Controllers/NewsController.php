@@ -35,9 +35,7 @@ class NewsController extends Controller
      */
     public function store(Request $request)
     {
-        News::create([
-            'news' => $request->news,
-        ]);
+
     }
 
     /**
