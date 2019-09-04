@@ -41,6 +41,16 @@
             <form method="POST" id="contacts-form" class="card col s12 m7 offset-m1 l7 offset-l1 xl7 offset-xl1" data-bind="submit: SaveContacts">
                 <div class="card-content">
                     <div class="row input-field">
+                        <i class="material-icons prefix">sentiment_satisfied </i>
+                        <input id="name" type="text" data-bind="attr: { value: contactsForm.name }" disabled>
+                        <label class="active" for="name">ФИО / Название фирмы</label>
+                    </div>
+                    <div class="row input-field">
+                        <i class="material-icons prefix">work</i>
+                        <input id="perf_type" type="text" data-bind="attr: { value: contactsForm.perf_type }" disabled>
+                        <label class="active" for="perf_type">Исполнитель</label>
+                    </div>
+                    <div class="row input-field">
                         <i class="material-icons prefix">face</i>
                         <input id="contact_name" type="text" data-bind="value: contactsForm.contact_name">
                         <label class="active" for="contact_name">Контактное лицо</label>
@@ -180,6 +190,8 @@
         avatar: ko.observable(''),
         is_avatar_change: ko.observable(false),
         contactsForm: {
+            name: ko.observable(''),
+            perf_type: ko.observable(''),
             contact_name: ko.observable(''),
             phone: ko.observable(''),
             mobile_1: ko.observable(''),
@@ -212,6 +224,18 @@
                 if (resp.details != null) {
                     PerformerViewModel.avatar(resp.details.avatar);
                     PerformerViewModel.is_avatar_change(false);
+                    PerformerViewModel.contactsForm.name(resp.name);
+                    switch(resp.type) {
+                        case 'ind':
+                            PerformerViewModel.contactsForm.perf_type('Физическое лицо');
+                            break;
+                        case 'ent':
+                            PerformerViewModel.contactsForm.perf_type('ФЛП');
+                            break;
+                        case 'firm':
+                            PerformerViewModel.contactsForm.perf_type('Фирма');
+                            break;
+                    }
                     PerformerViewModel.contactsForm.contact_name(resp.details.contact_name);
                     PerformerViewModel.contactsForm.phone(resp.details.phone);
                     PerformerViewModel.contactsForm.mobile_1(resp.details.mobile_1);
@@ -228,6 +252,8 @@
                 else {
                     PerformerViewModel.avatar('');
                     PerformerViewModel.is_avatar_change(false);
+                    PerformerViewModel.contactsForm.name('');
+                    PerformerViewModel.contactsForm.perf_type('');
                     PerformerViewModel.contactsForm.contact_name('');
                     PerformerViewModel.contactsForm.phone('');
                     PerformerViewModel.contactsForm.mobile_1('');
