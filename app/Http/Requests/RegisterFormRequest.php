@@ -28,4 +28,15 @@ class RegisterFormRequest extends FormRequest
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'name.required' => 'Введите ФИО или название фирмы!',
+            'email.required' => 'Введите адрес электронной почты!',
+            'email.unique' => 'Введенный адрес электронной почты уже используется!',
+            'name.max' => 'ФИО или название фирмы не может быть длиннее 255 символов!',
+            'email.max' => 'Адрес электронной почты не может быть длиннее 255 символов!',
+        ];
+    }
 }
