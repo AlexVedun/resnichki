@@ -14,9 +14,7 @@ class NewsController extends Controller
      */
     public function index()
     {
-        $news = News::all();
-        $news->load('user');
-        return $news;
+        return News::with('user')->latest()->paginate(10);
     }
 
     /**

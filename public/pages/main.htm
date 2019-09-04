@@ -39,12 +39,17 @@
             </div>
         </div>
     </div>
+    <div class="row">
+        <button class="col s12 m8 offset-m2 l6 offset-l3 xl4 offset-xl4 btn waves-effect waves-light" data-bind="click: GetMoreNews, hidden: lastPage"><i class="material-icons left">more</i>Показать больше новостей</button>
+    </div>
 </div>
 
 <script>
     // ViewModel object
     let MainViewModel = {
         news: ko.observableArray([]),
+        currentPage: ko.observable(0),
+        lastPage: ko.observable(false),
         UpdateNews: function() {
             RootViewModel.PreloaderShow();
             $.ajax({
@@ -52,9 +57,33 @@
                 type: 'GET'
             }).done(function(resp) {
                 MainViewModel.news([]);
-                resp.forEach(element => {
+                MainViewModel.currentPage(resp.current_page);
+                resp.data.forEach(element => {
                     element.date = moment(element.created_at).format('DD.MM.YYYY');
-                    //console.log(element.date);
+                    MainViewModel.news.push(element);
+                });
+                RootViewModel.PreloaderHide();
+            }).fail(function(xhr, status, text) {
+                RootViewModel.PreloaderHide();
+                HandleError(xhr, '#main');
+                //ShowModalError('#main', xhr);
+                //alert("error: " + text);
+            });
+        },
+        GetMoreNews: function() {
+            RootViewModel.PreloaderShow();
+            $.ajax({
+                url: "api/news?page=" + (MainViewModel.currentPage() + 1),
+                type: 'GET'
+            }).done(function(resp) {
+                if (resp.current_page == resp.last_page) {
+                    MainViewModel.lastPage(true);
+                }
+                else {
+                    MainViewModel.currentPage(resp.current_page);
+                }
+                resp.data.forEach(element => {
+                    element.date = moment(element.created_at).format('DD.MM.YYYY');
                     MainViewModel.news.push(element);
                 });
                 RootViewModel.PreloaderHide();
@@ -73,6 +102,8 @@
     // update news when main page becomes visible
     $(document).on("MainVisible", function () {
         $('.big-logo').attr('src', $('a.brand-logo').find('img').attr('src'));  // копируем адрес файла с логотипом
+        MainViewModel.lastPage(false);
+        MainViewModel.currentPage(0);
         MainViewModel.UpdateNews();
     });
 
