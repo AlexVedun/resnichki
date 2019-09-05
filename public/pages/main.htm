@@ -35,7 +35,7 @@
                     <p>&nbsp;</p>
                     <p data-bind="text: news"></p>
                 </div>
-                <div class="card-action">
+                <div class="card-action" data-bind="visible: status != 'admin'">
                     <a data-bind="attr: { href: '#offer/' + offer_id }">Перейти</a>
                 </div>
             </div>
@@ -52,6 +52,21 @@
         news: ko.observableArray([]),
         currentPage: ko.observable(0),
         lastPage: ko.observable(false),
+        ProcessNews: function (item) {
+            item.date = moment(item.created_at).format('DD.MM.YYYY');
+            switch (item.status) {
+                case 'new':
+                    item.card_color = 'green lighten-3';
+                    break;
+                case 'update':
+                    item.card_color = 'yellow lighten-4';
+                    break;
+                case 'admin':
+                    item.user.name = 'Администратор';
+                    item.card_color = 'red lighten-4';
+                    break;
+            }
+        },
         UpdateNews: function() {
             RootViewModel.PreloaderShow();
             $.ajax({
@@ -61,15 +76,7 @@
                 MainViewModel.news([]);
                 MainViewModel.currentPage(resp.current_page);
                 for (const item of resp.data) {
-                    item.date = moment(item.created_at).format('DD.MM.YYYY');
-                    switch (item.status) {
-                        case 'new':
-                            item.card_color = 'green lighten-3';
-                            break;
-                        case 'update':
-                            item.card_color = 'yellow lighten-4';
-                            break;
-                    }
+                    MainViewModel.ProcessNews(item);
                     MainViewModel.news.push(item);
                 }
                 RootViewModel.PreloaderHide();
@@ -93,15 +100,7 @@
                     MainViewModel.currentPage(resp.current_page);
                 }
                 for (const item of resp.data) {
-                    item.date = moment(item.created_at).format('DD.MM.YYYY');
-                    switch (item.status) {
-                        case 'new':
-                            item.card_color = 'green lighten-3';
-                            break;
-                        case 'update':
-                            item.card_color = 'yellow lighten-4';
-                            break;
-                    }
+                    MainViewModel.ProcessNews(item);
                     MainViewModel.news.push(item);
                 }
                 RootViewModel.PreloaderHide();

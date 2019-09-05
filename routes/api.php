@@ -41,6 +41,8 @@ Route::group(['namespace' => 'Api'], function () {
 
     Route::get('category/get/{id}', 'ManageCategoriesController@getCategory')->middleware('auth:api');
     Route::post('category/save', 'ManageCategoriesController@saveCategory')->middleware('auth:api');
+
+    Route::post('news/add/admin', 'ManageNewsController@addAdminNews')->middleware('auth:api');
 });
 
 Route::resource('categories', 'CategoryController');

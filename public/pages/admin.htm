@@ -10,9 +10,10 @@
     <div class="row">
         <div class="col s12">
             <ul class="admin-tabs tabs z-depth-1">
-                <li class="tab col s4"><a class="active" href="#manage-users">Пользователи</a></li>
-                <li class="tab col s4"><a href="#manage-offers">Предложения</a></li>
-                <li class="tab col s4"><a href="#manage-categories">Категории</a></li>
+                <li class="tab col s3"><a class="active" href="#manage-users">Пользователи</a></li>
+                <li class="tab col s3"><a href="#manage-offers">Предложения</a></li>
+                <li class="tab col s3"><a href="#manage-categories">Категории</a></li>
+                <li class="tab col s3"><a href="#admin-news">Новость</a></li>
             </ul>
         </div>
     <!-- Manage users -->
@@ -94,8 +95,24 @@
                     </table>
                 </div>
             </div>
-            <!-- <form id="offers-list-form" class="col s12 m8 offset-m2 l8 offset-l2 xl8 offset-xl2">
-            </form> -->
+        </div>
+    <!-- Admin news -->
+        <div id="admin-news" class="row">
+            <div class="row"></div>
+            <div class="col s12 m8 offset-m2 l8 offset-l2 xl8 offset-xl2 card">
+                <div class="card-content">
+                    <div class="row">
+                        <div class="input-field">
+                            <i class="material-icons prefix">mode_edit</i>
+                            <textarea name="news" id="news" class="materialize-textarea" data-bind="value: AdminNews.news"></textarea>
+                            <label for="news">Написать новость</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <button class="col s12 m6 offset-m3 l4 offset-l4 xl4 offset-xl4 btn waves-effect waves-light" data-bind="click: SendNews"><i class="left material-icons">send</i>Отправить</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -106,6 +123,9 @@
         usersList: ko.observableArray([]),
         categoriesList: ko.observableArray([]),
         offersList: ko.observableArray([]),
+        AdminNews: {
+            news: ko.observable(''),
+        },
         // methods
         UpdateUsers: function() {
             RootViewModel.PreloaderShow();
@@ -210,24 +230,26 @@
                 //alert("error: " + text);
             });
         },
-        SaveContacts:function() {
-            // let formData = ko.toJS(this.contactsForm);
-            // RootViewModel.PreloaderShow();
-            // $.ajax({
-            //     url: "api/user/save/contacts",
-            //     data: formData,
-            //     type: 'POST',
-            //     beforeSend: function (xhr) {
-            //         xhr.setRequestHeader("Authorization", 'Bearer '+ Cookies.get('wedding_token') /* localStorage.getItem('wedding_token') */);
-            //     }
-            // }).done(function(resp) {
-            //     M.toast({html: 'Изменения сохранены!', classes: 'rounded'});
-            //     RootViewModel.PreloaderHide();
-            // }).fail(function(xhr, status, text) {
-            //     RootViewModel.PreloaderHide();
-            //     ShowModalError('#performer', xhr);
-            //     //alert("error: " + text);
-            // });
+        SendNews:function() {
+            let formData = ko.toJS(this.AdminNews);
+            //formData.append("adminNews", AdminViewModel.adminNews());
+            console.log(formData);
+            RootViewModel.PreloaderShow();
+            $.ajax({
+                url: "api/news/add/admin",
+                data: formData,
+                type: 'POST',
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("Authorization", 'Bearer '+ Cookies.get('wedding_token'));
+                }
+            }).done(function(resp) {
+                M.toast({html: 'Новость добавлена!', classes: 'rounded'});
+                RootViewModel.PreloaderHide();
+            }).fail(function(xhr, status, text) {
+                RootViewModel.PreloaderHide();
+                ShowModalError('#admin', xhr);
+                //alert("error: " + text);
+            });
         },
         ChangePassword: function() {
             // let formData = ko.toJS(this.changePasswordForm);
