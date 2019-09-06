@@ -28,19 +28,12 @@ class CategoryController extends Controller
             }
             else
             {
-                //$item->cover = GlobalFunctions::ConvertImage2base64($item->cover);
                 $item->cover = asset($item->cover);
                 $item->icon = asset($item->icon);
             }
-            //$item->cover = GlobalFunctions::ConvertImage2base64($category->cover);
-            /* $image = public_path().'//covers//'.$category->cover;
-            $imageData = base64_encode(file_get_contents($image));
-            $item->cover = 'data: '.mime_content_type($image).';base64,'.$imageData; */
-            //$item->cover = base64_encode(File::get(public_path().'//covers//'.$category->cover));
             $result->push($item);
         }
         return $result;
-        //return Category::all();
     }
 
     /**
@@ -61,10 +54,7 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        Category::create([
-            'name' => $request->name,
-            'cover' => $request->cover,
-        ]);
+
     }
 
     /**
@@ -84,16 +74,13 @@ class CategoryController extends Controller
             }
             else
             {
-                //$offer->cover = GlobalFunctions::ConvertImage2base64('/covers/no_cover.png');
                 $offer->cover = asset('/covers/no_cover.png');
             }
-            //$offer->cover = GlobalFunctions::ConvertImage2base64('//media//covers//'.$offer->cover);
         }
         return response()->json([
             'name' => $categoryName,
             'offers' => $categoryOffers,
         ]);
-        //return Category::find($id)->offers;
     }
 
     /**
@@ -116,10 +103,7 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $category = Category::find($id);
-        $category->name = $request->name;
-        $category->cover = $request->cover;
-        $category->save();
+
     }
 
     /**

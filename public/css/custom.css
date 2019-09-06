@@ -76,11 +76,15 @@ h3.truncate {
     justify-content: space-around;
 }
 
-.category-card {
+.category-card,.category-image {
     width: 200px;
 }
 
-.offer-media-card {
+.category-icon {
+    width: 48px;
+}
+
+ .offer-media-card {
     width: 400px;
 }
 .news-card {

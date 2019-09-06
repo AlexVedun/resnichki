@@ -1,12 +1,12 @@
 <div id="category-div" >
     <div class="row"></div>
     <div class="row hide-on-small-only" data-bind="foreach: categories">
-        <a class="tooltipped" data-bind="attr: { href: link, 'data-tooltip': name, id: id }" data-position="bottom"><img class="hoverable" style="width: 48px;" data-bind="attr: { src: icon }"></a>
+        <a class="tooltipped" data-bind="attr: { href: link, 'data-tooltip': name, id: id }" data-position="bottom"><img class="hoverable category-icon" data-bind="attr: { src: icon }"></a>
     </div>
     <div class="row show-on-small hide-on-med-and-up">
         <div class="col s12">
             <ul class="custom-tabs tabs" data-bind="foreach: categories">
-                <li class="tab"><a target="_self" data-bind="attr: { href: link }"><img style="width: 48px;" data-bind="attr: { src: icon }"></a></li>
+                <li class="tab"><a target="_self" data-bind="attr: { href: link }"><img class="category-icon" data-bind="attr: { src: icon }"></a></li>
             </ul>
         </div>
     </div>

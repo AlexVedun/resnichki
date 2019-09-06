@@ -19,6 +19,7 @@ class CreateCategoriesTable extends Migration
             $table->string('cover')->nullable();
             $table->string('icon')->nullable();
             $table->boolean('is_cover')->default(false);
+            $table->boolean('is_icon')->default(false);
             $table->timestamps();
         });
     }

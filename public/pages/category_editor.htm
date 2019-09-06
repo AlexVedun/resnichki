@@ -1,7 +1,7 @@
 <div id="category-editor-div" >
     <div class="row"></div>
     <div class="row">
-        <div class="card col s12">
+        <div class="card col s12 m8 offset-m2 l8 offset-l2 xl8 offset-xl2">
             <div class="card-content" style="padding: 0px">
                 <span class="center-align"><h3 class="truncate">Редактор категорий</h3></span>
             </div>
@@ -26,10 +26,10 @@
                                 <label for="name-input">Название</label>
                             </div>
                         </div>
-
+                        <!-- Обложка -->
                         <span class="card-title center-align">Обложка</span>
                         <div class="row">
-                            <img class="responsive-img" data-bind="attr: { src: categoryEditorForm.cover }">
+                            <img class="category-image responsive-img" data-bind="attr: { src: categoryEditorForm.cover }">
                         </div>
 
                         <div class="row file-field input-field">
@@ -39,6 +39,21 @@
                             </div>
                             <div class="file-path-wrapper">
                                 <input id="cover-file-path" class="file-path validate" type="text" placeholder="Загрузить обложку">
+                            </div>
+                        </div>
+                        <!-- Иконка -->
+                        <span class="card-title center-align">Иконка</span>
+                        <div class="row">
+                            <img class="category-icon responsive-img" data-bind="attr: { src: categoryEditorForm.icon }">
+                        </div>
+
+                        <div class="row file-field input-field">
+                            <div class="btn">
+                                <span>Загрузить</span>
+                                <input id="category-icon-file" type="file" data-bind="event: { change: function() { $root.categoryEditorForm.is_icon_change(true); } }">
+                            </div>
+                            <div class="file-path-wrapper">
+                                <input id="icon-file-path" class="file-path validate" type="text" placeholder="Загрузить иконку">
                             </div>
                         </div>
                     </div>
@@ -60,6 +75,8 @@
             name: ko.observable(''),
             cover: ko.observable(''),
             is_cover_change: ko.observable(false),
+            icon: ko.observable(''),
+            is_icon_change: ko.observable(false),
             category_id: ko.observable(0),
         },
         isEdit: ko.observable(false),
@@ -67,10 +84,13 @@
         ClearCategoryEditor: function() {
             CategoryEditorViewModel.categoryEditorForm.name('');
             CategoryEditorViewModel.categoryEditorForm.cover('');
+            CategoryEditorViewModel.categoryEditorForm.icon('');
             CategoryEditorViewModel.categoryEditorForm.category_id(0);
             CategoryEditorViewModel.categoryEditorForm.is_cover_change(false);
+            CategoryEditorViewModel.categoryEditorForm.is_icon_change(false);
             CategoryEditorViewModel.isEdit(false);
             $('#cover-file-path').val('');
+            $('#icon-file-path').val('');
             M.updateTextFields();
         },
         UpdateCategory: function(_id) {
@@ -80,12 +100,13 @@
                     url: "api/category/get/" + _id,
                     type: 'GET',
                     beforeSend: function (xhr) {
-                        xhr.setRequestHeader("Authorization", 'Bearer '+ Cookies.get('wedding_token') /* localStorage.getItem('wedding_token') */ );
+                        xhr.setRequestHeader("Authorization", 'Bearer '+ Cookies.get('wedding_token'));
                     }
                 }).done(function(resp) {
                     console.log(resp);
                     CategoryEditorViewModel.categoryEditorForm.name(resp.name);
                     CategoryEditorViewModel.categoryEditorForm.cover(resp.cover);
+                    CategoryEditorViewModel.categoryEditorForm.icon(resp.icon);
                     CategoryEditorViewModel.categoryEditorForm.category_id(resp.id);
                     M.updateTextFields();
                     RootViewModel.PreloaderHide();
@@ -101,9 +122,11 @@
         SaveChanges: function() {
             let formData = new FormData();
             formData.append("cover_file", $('#category-cover-file').prop('files')[0]);
+            formData.append("icon_file", $('#category-icon-file').prop('files')[0]);
             formData.append("name", CategoryEditorViewModel.categoryEditorForm.name());
             formData.append("category_id", CategoryEditorViewModel.categoryEditorForm.category_id());
             formData.append("is_cover_change", CategoryEditorViewModel.categoryEditorForm.is_cover_change());
+            formData.append("is_icon_change", CategoryEditorViewModel.categoryEditorForm.is_icon_change());
             RootViewModel.PreloaderShow();
             $.ajax({
                 url: "api/category/save",
@@ -112,7 +135,7 @@
                 contentType: false,
                 processData: false,
                 beforeSend: function (xhr) {
-                    xhr.setRequestHeader("Authorization", 'Bearer '+ Cookies.get('wedding_token') /* localStorage.getItem('wedding_token') */);
+                    xhr.setRequestHeader("Authorization", 'Bearer '+ Cookies.get('wedding_token'));
                 }
             }).done(function(resp) {
                 M.toast({html: 'Изменения сохранены!', classes: 'rounded'});
