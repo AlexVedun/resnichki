@@ -80,10 +80,6 @@
         </div>
         <main>
             <div class="container">
-                {{-- progress bar --}}
-                {{-- <div class="progress" data-bind="visible: preloader">
-                    <div class="indeterminate"></div>
-                </div> --}}
                 {{-- main window sections --}}
                 <section id="main" data-bind="visible: sections.main" class="row"></section>
                 <section id="categories" data-bind="visible: sections.categories" class="row"></section>
@@ -96,6 +92,7 @@
                 <section id="offer_editor" data-bind="visible: sections.offer_editor" class="row"></section>
                 <section id="add_user" data-bind="visible: sections.add_user" class="row"></section>
                 <section id="category_editor" data-bind="visible: sections.category_editor" class="row"></section>
+                <section id="change_password" data-bind="visible: sections.change_password" class="row"></section>
             </div>
         </main>
         {{-- footer --}}
@@ -153,8 +150,8 @@
                     offer_editor: ko.observable(false),
                     add_user: ko.observable(false),
                     category_editor: ko.observable(false),
+                    change_password: ko.observable(false),
                 },
-                preloader: ko.observable(false),
                 isLogin: ko.observable(false),
                 // methods
                 HideAll: function() {
@@ -166,11 +163,9 @@
                     }
                 },
                 PreloaderShow: function() {
-                    //this.preloader(true);
                     $('.preloader-background').fadeIn('fast');
                 },
                 PreloaderHide: function() {
-                    //this.preloader(false);
                     $('.preloader-background').fadeOut('fast');
                 },
                 ShowChunck: function (_chunck) {
@@ -287,6 +282,7 @@
             let offerEditorVisibleEvent = new Event("OfferEditorVisible");
             let addUserVisibleEvent = new Event("AddUserVisible");
             let categoryEditorVisibleEvent = new Event("CategoryEditorVisible");
+            let changePasswordVisibleEvent = new Event("ChangePasswordVisible");
 
             RootViewModel.sections.main.subscribe(function (newValue) {
                 if (newValue) {
@@ -348,12 +344,18 @@
                 }
             });
 
+            RootViewModel.sections.change_password.subscribe(function (newValue) {
+                if (newValue) {
+                    document.dispatchEvent(changePasswordVisibleEvent);
+                }
+            });
+
             // check if user is login
             $.ajax({
                 url: "api/user/checkout",
                 type: 'GET',
                 beforeSend: function (xhr) {
-                    xhr.setRequestHeader("Authorization", 'Bearer '+ Cookies.get('wedding_token') /* localStorage.getItem('wedding_token') */);
+                    xhr.setRequestHeader("Authorization", 'Bearer '+ Cookies.get('wedding_token'));
                 }
             }).done(function (resp) {
                 RootViewModel.isLogin(true);

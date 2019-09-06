@@ -7,37 +7,47 @@
     <div class="row">
         <div class="col s12">
             <ul class="performer-tabs tabs">
-            <li class="tab col s4"><a class="active" href="#contacts">Данные исполнителя</a></li>
-            <li class="tab col s4"><a href="#offers">Предложения</a></li>
-            <li class="tab col s4"><a href="#change-password">Изменить пароль</a></li>
+            <li class="tab col s6"><a class="active" href="#contacts">Данные исполнителя</a></li>
+            <li class="tab col s6"><a href="#offers">Предложения</a></li>
             </ul>
         </div>
     <!-- Change user contacts -->
         <div id="contacts">
             <div class="row"></div>
-            <form method="POST" id="avatar-form" class="card col s12 m4 l4 xl4" enctype="multipart/form-data" data-bind="submit: SaveAvatar">
-                <div class="card-content">
-                    <div class="row center-align">
-                        <img class="responsive-img avatar-image" data-bind="attr: { src: avatar }">
-                    </div>
+            <div class="col s12 m4 l4 xl4">
+                <div class="row">
+                    <form method="POST" id="avatar-form" class="card" enctype="multipart/form-data" data-bind="submit: SaveAvatar">
+                        <div class="card-content">
+                            <div class="row center-align">
+                                <img class="responsive-img avatar-image" data-bind="attr: { src: avatar }">
+                            </div>
 
-                    <div class="row file-field input-field">
-                        <div class="btn">
-                            <span>Загрузить</span>
-                            <input name="avatar_file" id="avatar-file" type="file" data-bind="event: { change: function() { $root.is_avatar_change(true); } }">
+                            <div class="row file-field input-field">
+                                <div class="btn">
+                                    <span>Загрузить</span>
+                                    <input name="avatar_file" id="avatar-file" type="file" data-bind="event: { change: function() { $root.is_avatar_change(true); } }">
+                                </div>
+                                <div class="file-path-wrapper">
+                                    <input id="avatar-file-path" class="file-path validate" type="text" placeholder="Загрузить фото">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <button class="col s12 btn waves-effect waves-light" type="submit">
+                                    <i class="material-icons left">save</i>
+                                    Сохранить
+                                </button>
+                            </div>
                         </div>
-                        <div class="file-path-wrapper">
-                            <input id="avatar-file-path" class="file-path validate" type="text" placeholder="Загрузить фото">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <button class="col s12 btn waves-effect waves-light" type="submit">
-                            <i class="material-icons left">save</i>
-                            Сохранить
-                        </button>
-                    </div>
+                    </form>
                 </div>
-            </form>
+                <div class="row">
+                    <a class="col s12 btn waves-effect waves-light" href="#change_password">
+                        <i class="material-icons left">vpn_key</i>
+                        Изменить пароль
+                    </a>
+                </div>
+            </div>
+
             <form method="POST" id="contacts-form" class="card col s12 m7 offset-m1 l7 offset-l1 xl7 offset-xl1" data-bind="submit: SaveContacts">
                 <div class="card-content">
                     <div class="row input-field">
@@ -151,35 +161,6 @@
                 </div>
             </form>
         </div>
-    <!-- Change password section -->
-        <div id="change-password">
-            <div class="row"></div>
-            <form method="POST" id="change-password-form" class="card col s12 m8 offset-m2 l8 offset-l2 xl6 offset-xl3" data-bind="submit: ChangePassword">
-                <div class="card-content">
-                    <div class="row input-field">
-                        <i class="icon ion-md-key prefix"></i>
-                        <input class="validate" id="current_password" type="password" data-bind="value: changePasswordForm.current_password">
-                        <label for="current_password">Текущий пароль</label>
-                    </div>
-                    <div class="row input-field">
-                        <i class="material-icons prefix">done</i>
-                        <input class="validate" id="new_password" type="password" data-bind="value: changePasswordForm.new_password">
-                        <label for="new_password">Новый пароль</label>
-                    </div>
-                    <div class="row input-field">
-                        <i class="material-icons prefix">done_all</i>
-                        <input class="validate" id="new_password_confirmation" type="password" data-bind="value: changePasswordForm.new_password_confirmation">
-                        <label for="new_password_confirmation">Подтвердить новый пароль</label>
-                    </div>
-                    <div class="row">
-                        <button class="col s12 m8 offset-m2 l8 offset-l2 xl8 offset-xl2 btn waves-effect waves-light" type="submit">
-                            <i class="material-icons left">save</i>
-                            Изменить пароль
-                        </button>
-                    </div>
-                </div>
-            </form>
-        </div>
     </div>
 </div>
 
@@ -204,11 +185,6 @@
             vkontakte: ko.observable(''),
             web_site: ko.observable(''),
             instagram: ko.observable(''),
-        },
-        changePasswordForm: {
-            current_password: ko.observable(''),
-            new_password: ko.observable(''),
-            new_password_confirmation: ko.observable(''),
         },
         OffersList: ko.observableArray([]),
         // methods
@@ -322,33 +298,6 @@
                 //alert("error: " + text);
             });
         },
-        ChangePassword: function() {
-            let formData = ko.toJS(this.changePasswordForm);
-            RootViewModel.PreloaderShow();
-            $.ajax({
-                url: "api/user/password/change",
-                data: formData,
-                type: 'POST',
-                beforeSend: function (xhr) {
-                    xhr.setRequestHeader("Authorization", 'Bearer '+ Cookies.get('wedding_token') /* localStorage.getItem('wedding_token') */);
-                }
-            }).done(function(resp) {
-                M.toast({html: resp.message, classes: 'rounded'});
-                for (const key in PerformerViewModel.changePasswordForm) {
-                    if (PerformerViewModel.changePasswordForm.hasOwnProperty(key)) {
-                        const element = PerformerViewModel.changePasswordForm[key];
-                        element('');
-                    }
-                }
-                RootViewModel.PreloaderHide();
-            }).fail(function(xhr, status, text) {
-                console.log(xhr);
-                RootViewModel.PreloaderHide();
-                HandleError(xhr, '#performer');
-                //ShowModalError('#performer', xhr);
-                //alert("error: " + text);
-            });
-        },
         GetOffersList: function() {
             RootViewModel.PreloaderShow();
             $.ajax({
@@ -410,7 +359,7 @@
         $('input#title-input, textarea#short-descr').characterCounter();
     });
 
-    $(document).ready(function(){
-        $('.fixed-action-btn').floatingActionButton();
-    });
+    // $(document).ready(function(){
+    //     $('.fixed-action-btn').floatingActionButton();
+    // });
 </script>
