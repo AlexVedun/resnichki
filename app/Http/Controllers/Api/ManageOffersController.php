@@ -11,6 +11,7 @@ use App\Models\Offer;
 use App\Models\OfferDetails;
 use function GuzzleHttp\json_decode;
 use App\Models\OfferMedia;
+use Illuminate\Support\Str;
 
 class ManageOffersController extends Controller
 {
@@ -83,15 +84,33 @@ class ManageOffersController extends Controller
             {
                 Storage::delete($offer->cover);
             }
-            $offer->cover = $request->file('cover_file')->store('public/media/covers');
+            if ($request->file('cover_file')->getMimeType() == 'image/svg')
+            {
+                $fileName = Str::random(40).'.svg';
+                $offer->cover = $request->file('cover_file')->storeAs('public/media/covers', $fileName);
+            }
+            else
+            {
+                $offer->cover = $request->file('cover_file')->store('public/media/covers');
+            }
             $offer->is_cover = true;
         }
         if (json_decode($request->is_photo_add))
         {
             for ($i=0; $i < $request->photo_count; $i++) {
+                $pathForDb = '';
+                if ($request->file('photo'.$i)->getMimeType() == 'image/svg')
+                {
+                    $fileName = Str::random(40).'.svg';
+                    $pathForDb = $request->file('photo'.$i)->storeAs('public/media/covers', $fileName);
+                }
+                else
+                {
+                    $pathForDb = $request->file('photo'.$i)->store('public/media/covers');
+                }
                 $offerMedia = OfferMedia::create([
                     'type' => 'photo',
-                    'path_to_file' => $request->file('photo'.$i)->store('public/media/photo'),
+                    'path_to_file' => $pathForDb,
                 ]);
                 $offerDetails->offerMedia()->save($offerMedia);
             }

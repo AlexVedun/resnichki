@@ -87,6 +87,11 @@ h3.truncate {
  .offer-media-card {
     width: 400px;
 }
+
+.offer-editor-image,.offer-editor-video {
+    height: 400px;
+}
+
 .news-card {
     width: 300px;
     color: black

@@ -1,4 +1,4 @@
-<div id="offer-editor-div" >
+<div id="offer-editor-div">
     <div class="row"></div>
     <div class="row">
         <div class="card col s12 m8 offset-m2 l8 offset-l2 xl8 offset-xl2">
@@ -49,12 +49,12 @@
                         </div>
                     </div>
                 </div>
-
+            <!-- Обложка -->
                 <div class="row card">
                     <div class="card-content">
                         <span class="card-title center-align">Обложка</span>
-                        <div class="row">
-                            <img class="responsive-img" data-bind="attr: { src: offerEditorForm.cover }">
+                        <div class="row center-align">
+                            <img class="offer-editor-image" data-bind="attr: { src: offerEditorForm.cover }">
                         </div>
 
                         <div class="row file-field input-field">
@@ -63,70 +63,102 @@
                                 <input name="cover_file" id="cover-file" type="file" data-bind="event: { change: function() { $root.offerEditorForm.is_cover_change(true); } }">
                             </div>
                             <div class="file-path-wrapper">
-                                <input class="file-path validate" type="text" placeholder="Загрузить обложку">
+                                <input id="cover-file-path" class="file-path validate" type="text" placeholder="Загрузить обложку">
                             </div>
                         </div>
                     </div>
                 </div>
-
+            <!-- Фотографии -->
                 <div class="row card">
                     <div class="card-content">
                         <span class="card-title center-align">Фотографии</span>
                         <div class="row">
                             <table data-bind="foreach: offerEditorForm.photo">
                                 <tr>
-                                    <td>
-                                        <img class="responsive-img" data-bind="attr: { src: path_to_file }">
+                                    <td class="center-align">
+                                        <img class="offer-editor-image" data-bind="attr: { src: path_to_file }">
                                     </td>
                                     <td>
-                                        <button class="btn waves-effect waves-light" data-bind="click: function(data) { $root.DeleteMedia(data) }">Удалить</button>
+                                        <button class="btn waves-effect waves-light red" data-bind="click: function(data) { $root.DeleteMedia(data) }"><i class="material-icons">delete</i></button>
                                     </td>
                                 </tr>
                             </table>
                         </div>
 
-                        <div class="row file-field input-field">
-                            <div class="btn">
-                                <span>Загрузить</span>
-                                <input multiple name="photo" id="photo" type="file" data-bind="event: { change: function() { $root.offerEditorForm.is_photo_add(true); } }">
+                        <div id="photo-loader">
+                            <div class="row file-field input-field">
+                                <div class="btn">
+                                    <span>Загрузить</span>
+                                    <input name="photo" id="photo" type="file" accept="image/*" data-bind="event: { change: function() { $root.offerEditorForm.is_photo_add(true); } }">
+                                </div>
+                                <div class="file-path-wrapper">
+                                    <input id="photo-file-path" class="file-path validate" type="text" placeholder="Загрузить фото">
+                                </div>
                             </div>
-                            <div class="file-path-wrapper">
-                                <input id="photo-file-path" class="file-path validate" type="text" placeholder="Загрузить несколько фото">
-                            </div>
+                        </div>
+                        <div class="row">
+                            <button class="btn waves-effect waves-light" data-bind="click: function() {
+                                let last = $('#photo-loader').children().last();
+                                $(`<div class='row file-field input-field'>
+                                    <div class='btn'>
+                                        <span>Загрузить</span>
+                                        <input name='photo' id='photo' type='file' accept='image/*'>
+                                    </div>
+                                    <div class='file-path-wrapper'>
+                                        <input class='file-path validate' type='text' placeholder='Загрузить фото'>
+                                    </div>
+                                </div>`).insertAfter(last);
+                            }"><i class="left material-icons">add</i>Еще</button>
                         </div>
                     </div>
                 </div>
-
+            <!-- Видео -->
                 <div class="row card">
                     <div class="card-content">
                         <span class="card-title center-align">Видео</span>
                         <div class="row">
                             <table data-bind="foreach: offerEditorForm.video">
                                 <tr>
-                                    <td>
-                                        <video class="responsive-video" controls>
+                                    <td class="centr-align">
+                                        <video class="offer-editor-video" controls>
                                             <source data-bind="attr: { src: path_to_file }">
                                         </video>
                                     </td>
                                     <td>
-                                        <button class="btn waves-effect waves-light" data-bind="click: function(data) { $root.DeleteMedia(data) }">Удалить</button>
+                                        <button class="btn waves-effect waves-light red" data-bind="click: function(data) { $root.DeleteMedia(data) }"><i class="material-icons">delete</i></button>
                                     </td>
                                 </tr>
                             </table>
                         </div>
 
-                        <div class="row file-field input-field">
-                            <div class="btn">
-                                <span>Загрузить</span>
-                                <input multiple name="video" id="video" type="file" data-bind="event: { change: function() { $root.offerEditorForm.is_video_add(true); } }">
+                        <div id="video-loader">
+                            <div class="row file-field input-field">
+                                <div class="btn">
+                                    <span>Загрузить</span>
+                                    <input name="video" id="video" type="file" accept="video/*" data-bind="event: { change: function() { $root.offerEditorForm.is_video_add(true); } }">
+                                </div>
+                                <div class="file-path-wrapper">
+                                    <input id="video-file-path" class="file-path validate" type="text" placeholder="Загрузить видео">
+                                </div>
                             </div>
-                            <div class="file-path-wrapper">
-                                <input id="video-file-path" class="file-path validate" type="text" placeholder="Загрузить несколько видео">
-                            </div>
+                        </div>
+                        <div class="row">
+                            <button class="btn waves-effect waves-light" data-bind="click: function() {
+                                let last = $('#video-loader').children().last();
+                                $(`<div class='row file-field input-field'>
+                                    <div class='btn'>
+                                        <span>Загрузить</span>
+                                        <input name='video' id='video' type='file' accept='video/*'>
+                                    </div>
+                                    <div class='file-path-wrapper'>
+                                        <input class='file-path validate' type='text' placeholder='Загрузить видео'>
+                                    </div>
+                                </div>`).insertAfter(last);
+                            }"><i class="left material-icons">add</i>Еще</button>
                         </div>
                     </div>
                 </div>
-
+            <!-- Аудио -->
                 <div class="row card">
                     <div class="card-content">
                         <span class="card-title center-align">Аудио</span>
@@ -139,20 +171,36 @@
                                         </audio>
                                     </td>
                                     <td>
-                                        <button class="btn waves-effect waves-light" data-bind="click: function(data) { $root.DeleteMedia(data) }">Удалить</button>
+                                        <button class="btn waves-effect waves-light red" data-bind="click: function(data) { $root.DeleteMedia(data) }"><i class="material-icons">delete</i></button>
                                     </td>
                                 </tr>
                             </table>
                         </div>
 
-                        <div class="row file-field input-field">
-                            <div class="btn">
-                                <span>Загрузить</span>
-                                <input multiple name="audio" id="audio" type="file" data-bind="event: { change: function() { $root.offerEditorForm.is_audio_add(true); } }">
+                        <div id="audio-loader">
+                            <div class="row file-field input-field">
+                                <div class="btn">
+                                    <span>Загрузить</span>
+                                    <input name="audio" id="audio" type="file" accept="audio/*" data-bind="event: { change: function() { $root.offerEditorForm.is_audio_add(true); } }">
+                                </div>
+                                <div class="file-path-wrapper">
+                                    <input id="audio-file-path" class="file-path validate" type="text" placeholder="Загрузить аудиофайл">
+                                </div>
                             </div>
-                            <div class="file-path-wrapper">
-                                <input id="audio-file-path" class="file-path validate" type="text" placeholder="Загрузить несколько аудиофайлов">
-                            </div>
+                        </div>
+                        <div class="row">
+                            <button class="btn waves-effect waves-light" data-bind="click: function() {
+                                let last = $('#audio-loader').children().last();
+                                $(`<div class='row file-field input-field'>
+                                    <div class='btn'>
+                                        <span>Загрузить</span>
+                                        <input name='audio' id='audio' type='file' accept='audio/*'>
+                                    </div>
+                                    <div class='file-path-wrapper'>
+                                        <input class='file-path validate' type='text' placeholder='Загрузить аудиофайл'>
+                                    </div>
+                                </div>`).insertAfter(last);
+                            }"><i class="left material-icons">add</i>Еще</button>
                         </div>
                     </div>
                 </div>
@@ -197,7 +245,7 @@
                 url: "api/offers/get/" + _id,
                 type: 'GET',
                 beforeSend: function (xhr) {
-                    xhr.setRequestHeader("Authorization", 'Bearer '+ Cookies.get('wedding_token') /* localStorage.getItem('wedding_token') */ );
+                    xhr.setRequestHeader("Authorization", 'Bearer '+ Cookies.get('wedding_token'));
                 }
             }).done(function(resp) {
                 console.log(resp);
@@ -245,9 +293,19 @@
             OfferEditorViewModel.offerEditorForm.is_photo_add(false);
             OfferEditorViewModel.offerEditorForm.is_video_add(false);
             OfferEditorViewModel.offerEditorForm.is_audio_add(false);
+            $('#cover-file-path').val('');
             $('#photo-file-path').val('');
             $('#video-file-path').val('');
             $('#audio-file-path').val('');
+            for (let i = 1; i < $('#photo-loader').children().length; i++) {
+                $($('#photo-loader').children()[i]).remove();
+            }
+            for (let i = 1; i < $('#video-loader').children().length; i++) {
+                $($('#video-loader').children()[i]).remove();
+            }
+            for (let i = 1; i < $('#audio-loader').children().length; i++) {
+                $($('#audio-loader').children()[i]).remove();
+            }
             M.updateTextFields();
         },
         UpdateOffer: function(_id) {
@@ -256,10 +314,9 @@
                     url: "api/offers/get/" + _id,
                     type: 'GET',
                     beforeSend: function (xhr) {
-                        xhr.setRequestHeader("Authorization", 'Bearer '+ Cookies.get('wedding_token') /* localStorage.getItem('wedding_token') */ );
+                        xhr.setRequestHeader("Authorization", 'Bearer '+ Cookies.get('wedding_token'));
                     }
                 }).done(function(resp) {
-                    console.log(resp);
                     OfferEditorViewModel.offerEditorForm.title(resp.title);
                     OfferEditorViewModel.offerEditorForm.cover(resp.cover);
                     OfferEditorViewModel.offerEditorForm.short_descr(resp.short_descr);
@@ -300,9 +357,10 @@
         },
         SaveChanges: function() {
             let formData = new FormData();
-            let photoCount = $('#photo').prop('files').length;
-            let videoCount = $('#video').prop('files').length;
-            let audioCount = $('#audio').prop('files').length;
+            //let photoCount = $('#photo').prop('files').length; //$('#photo')[0].files[0].size
+            let photoCount = $('#photo-loader').children().length;
+            let videoCount = $('#video-loader').children().length;
+            let audioCount = $('#audio-loader').children().length;
             formData.append("cover_file", $('#cover-file').prop('files')[0]);
             formData.append("title", this.offerEditorForm.title());
             formData.append("short_descr", this.offerEditorForm.short_descr());
@@ -317,21 +375,27 @@
             formData.append("video_count", videoCount);
             formData.append("audio_count", audioCount);
             if (this.offerEditorForm.is_photo_add()) {
-                for (let i = 0; i < photoCount; i++) {
-                    const item = $('#photo').prop('files')[i];
-                    formData.append("photo" + i, item);
+                let i = 0;
+                for (const item of $('#photo-loader').children()) {
+                    let photo = $(item).find('input#photo').prop('files')[0];
+                    formData.append("photo" + i, photo);
+                    i++;
                 }
             }
             if (this.offerEditorForm.is_video_add()) {
-                for (let i = 0; i < videoCount; i++) {
-                    const item = $('#video').prop('files')[i];
-                    formData.append("video" + i, item);
+                let i = 0;
+                for (const item of $('#video-loader').children()) {
+                    let video = $(item).find('input#video').prop('files')[0];
+                    formData.append("video" + i, video);
+                    i++;
                 }
             }
             if (this.offerEditorForm.is_audio_add()) {
-                for (let i = 0; i < audioCount; i++) {
-                    const item = $('#audio').prop('files')[i];
-                    formData.append("audio" + i, item);
+                let i = 0;
+                for (const item of $('#audio-loader').children()) {
+                    let audio = $(item).find('input#audio').prop('files')[0];
+                    formData.append("audio" + i, audio);
+                    i++;
                 }
             }
             RootViewModel.PreloaderShow();
@@ -342,7 +406,7 @@
                 contentType: false,
                 processData: false,
                 beforeSend: function (xhr) {
-                    xhr.setRequestHeader("Authorization", 'Bearer '+ Cookies.get('wedding_token') /* localStorage.getItem('wedding_token') */);
+                    xhr.setRequestHeader("Authorization", 'Bearer '+ Cookies.get('wedding_token'));
                 }
             }).done(function(resp) {
                 M.toast({html: 'Изменения сохранены!', classes: 'rounded'});
@@ -361,7 +425,7 @@
                 url: "api/offers/media/" + _media.id,
                 type: 'DELETE',
                 beforeSend: function (xhr) {
-                    xhr.setRequestHeader("Authorization", 'Bearer '+ Cookies.get('wedding_token') /* localStorage.getItem('wedding_token') */ );
+                    xhr.setRequestHeader("Authorization", 'Bearer '+ Cookies.get('wedding_token'));
                 }
             }).done(function(resp) {
                 switch (_media.type)
