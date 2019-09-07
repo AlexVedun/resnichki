@@ -24,6 +24,7 @@
 
                             <div class="row file-field input-field">
                                 <div class="btn">
+                                    <i class="left material-icons">file_upload</i>
                                     <span>Загрузить</span>
                                     <input name="avatar_file" id="avatar-file" type="file" data-bind="event: { change: function() { $root.is_avatar_change(true); } }">
                                 </div>
@@ -148,9 +149,9 @@
                                     <!--ko text: short_descr--><!--/ko-->
                                 </div>
                                 <div class="card-action">
-                                    <a class="btn waves-effect waves-light" data-bind="attr: { href: '#offer_editor/' + $data.id }">Открыть</a>
+                                    <a class="btn waves-effect waves-light" data-bind="attr: { href: '#offer_editor/' + $data.id }"><i class="left material-icons">folder_open</i>Открыть</a>
                                     <!-- <button class="btn waves-effect waves-light" data-bind="click: $parent.SelectOffer.bind($data, $data.id)">Открыть</button> -->
-                                    <button class="btn waves-effect waves-light" data-bind="click: function (data) { $root.DeleteOffer (data); }">Удалить</button>
+                                    <button class="btn waves-effect waves-light red" data-bind="click: function (data) { $root.DeleteOffer (data); }"><i class="left material-icons">delete</i>Удалить</button>
                                 </div>
                                 <!-- <div class="card-action">
                                     <a href="#">This is a link</a>
@@ -194,7 +195,7 @@
                 url: "api/user/get",
                 type: 'GET',
                 beforeSend: function (xhr) {
-                    xhr.setRequestHeader("Authorization", 'Bearer '+ Cookies.get('wedding_token') /* localStorage.getItem('wedding_token') */ );
+                    xhr.setRequestHeader("Authorization", 'Bearer '+ Cookies.get('wedding_token'));
                 }
             }).done(function(resp) {
                 if (resp.details != null) {
@@ -260,7 +261,7 @@
                 data: formData,
                 type: 'POST',
                 beforeSend: function (xhr) {
-                    xhr.setRequestHeader("Authorization", 'Bearer '+ Cookies.get('wedding_token') /* localStorage.getItem('wedding_token') */);
+                    xhr.setRequestHeader("Authorization", 'Bearer '+ Cookies.get('wedding_token'));
                 }
             }).done(function(resp) {
                 M.toast({html: 'Изменения сохранены!', classes: 'rounded'});
@@ -284,7 +285,7 @@
                 contentType: false,
                 processData: false,
                 beforeSend: function (xhr) {
-                    xhr.setRequestHeader("Authorization", 'Bearer '+ Cookies.get('wedding_token') /* localStorage.getItem('wedding_token') */);
+                    xhr.setRequestHeader("Authorization", 'Bearer '+ Cookies.get('wedding_token'));
                 }
             }).done(function(resp) {
                 M.toast({html: 'Изменения сохранены!', classes: 'rounded'});
@@ -304,7 +305,7 @@
                 url: "api/offers/get",
                 type: 'GET',
                 beforeSend: function (xhr) {
-                    xhr.setRequestHeader("Authorization", 'Bearer '+ Cookies.get('wedding_token') /* localStorage.getItem('wedding_token') */ );
+                    xhr.setRequestHeader("Authorization", 'Bearer '+ Cookies.get('wedding_token'));
                 }
             }).done(function(resp) {
                 console.log(resp);
@@ -326,7 +327,7 @@
                 url: "api/offers/" + _offer.id,
                 type: 'DELETE',
                 beforeSend: function (xhr) {
-                    xhr.setRequestHeader("Authorization", 'Bearer '+ Cookies.get('wedding_token') /* localStorage.getItem('wedding_token') */ );
+                    xhr.setRequestHeader("Authorization", 'Bearer '+ Cookies.get('wedding_token'));
                 }
             }).done(function(resp) {
                 PerformerViewModel.OffersList.remove(_offer);
