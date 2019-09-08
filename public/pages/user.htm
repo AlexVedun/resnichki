@@ -27,6 +27,11 @@
                     <input id="perf_type" type="text" data-bind="attr: { value: perf_type }" disabled>
                     <label class="active" for="perf_type">Исполнитель</label>
                 </div>
+                <div class="row input-field">
+                    <i class="material-icons prefix">grade</i>
+                    <input id="prof_category" type="text" data-bind="attr: { value: prof_category }" disabled>
+                    <label class="active" for="prof_category">Профессиональная категория</label>
+                </div>
                 <div data-bind="if: contact_name ">
                     <div class="row input-field">
                         <i class="material-icons prefix">face</i>
@@ -126,6 +131,7 @@
         // properties
         name: ko.observable(''),
         perf_type: ko.observable(''),
+        prof_category: ko.observable(''),
         contact_name: ko.observable(''),
         phone: ko.observable(''),
         mobile_1: ko.observable(''),
@@ -159,6 +165,7 @@
                         break;
                 }
                 if (resp.details != null){
+                    UserViewModel.prof_category(resp.details.prof_category.category)
                     UserViewModel.contact_name(resp.details.contact_name);
                     UserViewModel.phone(resp.details.phone);
                     UserViewModel.mobile_1(resp.details.mobile_1);

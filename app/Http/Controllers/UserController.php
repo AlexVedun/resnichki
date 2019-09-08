@@ -48,8 +48,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = User::find($id);
-        $user['details'] = $user->details;
+        $user = User::with('details', 'details.prof_category')->find($id);
         if($user->details->is_avatar)
         {
             $user->details->avatar = asset(Storage::url($user->details->avatar));
