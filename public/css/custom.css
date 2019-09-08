@@ -89,7 +89,7 @@ h3.truncate {
 }
 
 .offer-editor-image,.offer-editor-video {
-    height: 400px;
+    max-height: 400px;
 }
 
 .news-card {
