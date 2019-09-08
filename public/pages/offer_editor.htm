@@ -421,7 +421,7 @@
                 location.hash = '#performer';
             }).fail(function(xhr, status, text) {
                 RootViewModel.PreloaderHide();
-                HandleError(xhr, '#offer_editor');
+                HandleError(xhr, '#offer_editor/' + chunckParams['param']);
                 //ShowModalError('#offer_editor', xhr);
                 //alert("error: " + text);
             });

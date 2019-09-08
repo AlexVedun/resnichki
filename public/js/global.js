@@ -79,6 +79,9 @@ function HandleError(_xhr, _chunck) {
     if (_xhr.status == 401) {
         location.hash = '#login';
     }
+    else if (_xhr.status == 413) {
+        ShowMessageBox('Ошибка!', 'Вы пытаетесь загрузить на сервер слишком много файлов, либо файлы большого размера. Попробуйте уменьшить количество загружаемых файлов или уменьшить их размер.', _chunck);
+    }
     else {
         ShowModalError(_chunck, _xhr);
     }
