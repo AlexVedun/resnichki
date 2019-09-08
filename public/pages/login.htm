@@ -82,8 +82,8 @@
                 }
             }).fail(function(xhr, status, text) {
                 RootViewModel.PreloaderHide();
-                HandleError(xhr, '#login');
-                //ShowModalError('#login', xhr);
+                //HandleError(xhr, '#login');
+                ShowModalError('#login', xhr);
                 //alert("error: " + text);
             });
         },
