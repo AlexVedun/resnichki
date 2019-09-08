@@ -80,59 +80,71 @@ class ManageOffersController extends Controller
         $offer->details()->save($offerDetails);
         if (json_decode($request->is_cover_change))
         {
-            if ($offer->is_cover)
+            if ($request->file('cover_file') != null)
             {
-                Storage::delete($offer->cover);
+                if ($offer->is_cover)
+                {
+                    Storage::delete($offer->cover);
+                }
+                if ($request->file('cover_file')->getMimeType() == 'image/svg')
+                {
+                    $fileName = Str::random(40).'.svg';
+                    $offer->cover = $request->file('cover_file')->storeAs('public/media/covers', $fileName);
+                }
+                else
+                {
+                    $offer->cover = $request->file('cover_file')->store('public/media/covers');
+                }
+                $offer->is_cover = true;
             }
-            if ($request->file('cover_file')->getMimeType() == 'image/svg')
-            {
-                $fileName = Str::random(40).'.svg';
-                $offer->cover = $request->file('cover_file')->storeAs('public/media/covers', $fileName);
-            }
-            else
-            {
-                $offer->cover = $request->file('cover_file')->store('public/media/covers');
-            }
-            $offer->is_cover = true;
         }
         if (json_decode($request->is_photo_add))
         {
             for ($i=0; $i < $request->photo_count; $i++) {
                 $pathForDb = '';
-                if ($request->file('photo'.$i)->getMimeType() == 'image/svg')
+                if ($request->file('photo'.$i) != null)
                 {
-                    $fileName = Str::random(40).'.svg';
-                    $pathForDb = $request->file('photo'.$i)->storeAs('public/media/covers', $fileName);
+                    if ($request->file('photo'.$i)->getMimeType() == 'image/svg')
+                    {
+                        $fileName = Str::random(40).'.svg';
+                        $pathForDb = $request->file('photo'.$i)->storeAs('public/media/photo', $fileName);
+                    }
+                    else
+                    {
+                        $pathForDb = $request->file('photo'.$i)->store('public/media/photo');
+                    }
+                    $offerMedia = OfferMedia::create([
+                        'type' => 'photo',
+                        'path_to_file' => $pathForDb,
+                    ]);
+                    $offerDetails->offerMedia()->save($offerMedia);
                 }
-                else
-                {
-                    $pathForDb = $request->file('photo'.$i)->store('public/media/covers');
-                }
-                $offerMedia = OfferMedia::create([
-                    'type' => 'photo',
-                    'path_to_file' => $pathForDb,
-                ]);
-                $offerDetails->offerMedia()->save($offerMedia);
             }
         }
         if (json_decode($request->is_video_add))
         {
             for ($i=0; $i < $request->video_count; $i++) {
-                $offerMedia = OfferMedia::create([
-                    'type' => 'video',
-                    'path_to_file' => $request->file('video'.$i)->store('public/media/video'),
-                ]);
-                $offerDetails->offerMedia()->save($offerMedia);
+                if ($request->file('video'.$i) != null)
+                {
+                    $offerMedia = OfferMedia::create([
+                        'type' => 'video',
+                        'path_to_file' => $request->file('video'.$i)->store('public/media/video'),
+                    ]);
+                    $offerDetails->offerMedia()->save($offerMedia);
+                }
             }
         }
         if (json_decode($request->is_audio_add))
         {
             for ($i=0; $i < $request->audio_count; $i++) {
-                $offerMedia = OfferMedia::create([
-                    'type' => 'audio',
-                    'path_to_file' => $request->file('audio'.$i)->store('public/media/audio'),
-                ]);
-                $offerDetails->offerMedia()->save($offerMedia);
+                if ($request->file('audio'.$i) != null)
+                {
+                    $offerMedia = OfferMedia::create([
+                        'type' => 'audio',
+                        'path_to_file' => $request->file('audio'.$i)->store('public/media/audio'),
+                    ]);
+                    $offerDetails->offerMedia()->save($offerMedia);
+                }
             }
         }
         $offer->details()->save($offerDetails);

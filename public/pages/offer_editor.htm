@@ -61,7 +61,7 @@
                             <div class="btn">
                                 <i class="left material-icons">file_upload</i>
                                 <span>Загрузить</span>
-                                <input name="cover_file" id="cover-file" type="file" data-bind="event: { change: function() { $root.offerEditorForm.is_cover_change(true); } }">
+                                <input name="cover_file" id="cover-file" type="file" accept="image/*" data-bind="event: { change: function() { $root.offerEditorForm.is_cover_change(true); } }">
                             </div>
                             <div class="file-path-wrapper">
                                 <input id="cover-file-path" class="file-path validate" type="text" placeholder="Загрузить обложку">
@@ -97,21 +97,13 @@
                                     <input id="photo-file-path" class="file-path validate" type="text" placeholder="Загрузить фото">
                                 </div>
                             </div>
+                            <div id="more-photo">
+
+                            </div>
                         </div>
                         <div class="row">
-                            <button class="btn waves-effect waves-light" data-bind="click: function() {
-                                let last = $('#photo-loader').children().last();
-                                $(`<div class='row file-field input-field'>
-                                    <div class='btn'>
-                                        <i class='left material-icons'>file_upload</i>
-                                        <span>Загрузить</span>
-                                        <input name='photo' id='photo' type='file' accept='image/*'>
-                                    </div>
-                                    <div class='file-path-wrapper'>
-                                        <input class='file-path validate' type='text' placeholder='Загрузить фото'>
-                                    </div>
-                                </div>`).insertAfter(last);
-                            }"><i class="left material-icons">add</i>Еще</button>
+                            <button class="btn waves-effect waves-light" data-bind="click: AddPhoto"><i class="left material-icons">add</i>Еще</button>
+                            <button class="btn waves-effect waves-light red" data-bind="click: RemovePhoto"><i class="left material-icons">remove</i>Удалить файл</button>
                         </div>
                     </div>
                 </div>
@@ -142,24 +134,16 @@
                                     <input name="video" id="video" type="file" accept="video/*" data-bind="event: { change: function() { $root.offerEditorForm.is_video_add(true); } }">
                                 </div>
                                 <div class="file-path-wrapper">
-                                    <input id="video-file-path" class="file-path validate" type="text" placeholder="Загрузить видео">
+                                    <input id="video-file-path" class="file-path validate" type="text" placeholder="Загрузить видеофайл">
                                 </div>
+                            </div>
+                            <div id="more-video">
+
                             </div>
                         </div>
                         <div class="row">
-                            <button class="btn waves-effect waves-light" data-bind="click: function() {
-                                let last = $('#video-loader').children().last();
-                                $(`<div class='row file-field input-field'>
-                                    <div class='btn'>
-                                        <i class='left material-icons'>file_upload</i>
-                                        <span>Загрузить</span>
-                                        <input name='video' id='video' type='file' accept='video/*'>
-                                    </div>
-                                    <div class='file-path-wrapper'>
-                                        <input class='file-path validate' type='text' placeholder='Загрузить видео'>
-                                    </div>
-                                </div>`).insertAfter(last);
-                            }"><i class="left material-icons">add</i>Еще</button>
+                            <button class="btn waves-effect waves-light" data-bind="click: AddVideo"><i class="left material-icons">add</i>Еще</button>
+                            <button class="btn waves-effect waves-light red" data-bind="click: RemoveVideo"><i class="left material-icons">remove</i>Удалить файл</button>
                         </div>
                     </div>
                 </div>
@@ -193,21 +177,13 @@
                                     <input id="audio-file-path" class="file-path validate" type="text" placeholder="Загрузить аудиофайл">
                                 </div>
                             </div>
+                            <div id="more-audio">
+
+                            </div>
                         </div>
                         <div class="row">
-                            <button class="btn waves-effect waves-light" data-bind="click: function() {
-                                let last = $('#audio-loader').children().last();
-                                $(`<div class='row file-field input-field'>
-                                    <div class='btn'>
-                                        <i class='left material-icons'>file_upload</i>
-                                        <span>Загрузить</span>
-                                        <input name='audio' id='audio' type='file' accept='audio/*'>
-                                    </div>
-                                    <div class='file-path-wrapper'>
-                                        <input class='file-path validate' type='text' placeholder='Загрузить аудиофайл'>
-                                    </div>
-                                </div>`).insertAfter(last);
-                            }"><i class="left material-icons">add</i>Еще</button>
+                            <button class="btn waves-effect waves-light" data-bind="click: AddAudio"><i class="left material-icons">add</i>Еще</button>
+                            <button class="btn waves-effect waves-light red" data-bind="click: RemoveAudio"><i class="left material-icons">remove</i>Удалить файл</button>
                         </div>
                     </div>
                 </div>
@@ -304,15 +280,9 @@
             $('#photo-file-path').val('');
             $('#video-file-path').val('');
             $('#audio-file-path').val('');
-            for (let i = 1; i < $('#photo-loader').children().length; i++) {
-                $($('#photo-loader').children()[i]).remove();
-            }
-            for (let i = 1; i < $('#video-loader').children().length; i++) {
-                $($('#video-loader').children()[i]).remove();
-            }
-            for (let i = 1; i < $('#audio-loader').children().length; i++) {
-                $($('#audio-loader').children()[i]).remove();
-            }
+            $('#photo-loader').children('#more-photo').empty();
+            $('#video-loader').children('#more-video').empty();
+            $('#audio-loader').children('#more-audio').empty();
             M.updateTextFields();
         },
         UpdateOffer: function(_id) {
@@ -365,9 +335,9 @@
         SaveChanges: function() {
             let formData = new FormData();
             //let photoCount = $('#photo').prop('files').length; //$('#photo')[0].files[0].size
-            let photoCount = $('#photo-loader').children().length;
-            let videoCount = $('#video-loader').children().length;
-            let audioCount = $('#audio-loader').children().length;
+            let photoCount = $('#photo-loader').find('[name=photo]').length;
+            let videoCount = $('#video-loader').find('[name=video]').length;
+            let audioCount = $('#audio-loader').find('[name=audio]').length;
             formData.append("cover_file", $('#cover-file').prop('files')[0]);
             formData.append("title", this.offerEditorForm.title());
             formData.append("short_descr", this.offerEditorForm.short_descr());
@@ -383,24 +353,24 @@
             formData.append("audio_count", audioCount);
             if (this.offerEditorForm.is_photo_add()) {
                 let i = 0;
-                for (const item of $('#photo-loader').children()) {
-                    let photo = $(item).find('input#photo').prop('files')[0];
+                for (const item of $('#photo-loader').find('[name=photo]')) {
+                    let photo = $(item).prop('files')[0];
                     formData.append("photo" + i, photo);
                     i++;
                 }
             }
             if (this.offerEditorForm.is_video_add()) {
                 let i = 0;
-                for (const item of $('#video-loader').children()) {
-                    let video = $(item).find('input#video').prop('files')[0];
+                for (const item of $('#video-loader').find('[name=video]')) {
+                    let video = $(item).prop('files')[0];
                     formData.append("video" + i, video);
                     i++;
                 }
             }
             if (this.offerEditorForm.is_audio_add()) {
                 let i = 0;
-                for (const item of $('#audio-loader').children()) {
-                    let audio = $(item).find('input#audio').prop('files')[0];
+                for (const item of $('#audio-loader').find('[name=audio]')) {
+                    let audio = $(item).prop('files')[0];
                     formData.append("audio" + i, audio);
                     i++;
                 }
@@ -455,6 +425,63 @@
                 //alert("error: " + text);
             });
         },
+        AddPhoto: function() {
+            if (OfferEditorViewModel.offerEditorForm.is_photo_add())
+            {
+                $('#photo-loader #more-photo').append
+                (`<div class='row file-field input-field'>
+                    <div class='btn'>
+                        <i class='left material-icons'>file_upload</i>
+                        <span>Загрузить</span>
+                        <input name='photo' id='photo' type='file' accept='image/*'>
+                    </div>
+                    <div class='file-path-wrapper'>
+                        <input class='file-path validate' type='text' placeholder='Загрузить фото'>
+                    </div>
+                </div>`);
+            }
+        },
+        RemovePhoto: function() {
+            $('#photo-loader #more-photo').children().last().remove();
+        },
+        AddVideo: function() {
+            if (OfferEditorViewModel.offerEditorForm.is_video_add())
+            {
+                $('#video-loader #more-video').append
+                (`<div class='row file-field input-field'>
+                    <div class='btn'>
+                        <i class='left material-icons'>file_upload</i>
+                        <span>Загрузить</span>
+                        <input name='video' id='video' type='file' accept='video/*'>
+                    </div>
+                    <div class='file-path-wrapper'>
+                        <input class='file-path validate' type='text' placeholder='Загрузить видеофайл'>
+                    </div>
+                </div>`);
+            }
+        },
+        RemoveVideo: function() {
+            $('#video-loader #more-video').children().last().remove();
+        },
+        AddAudio: function() {
+            if (OfferEditorViewModel.offerEditorForm.is_audio_add())
+            {
+                $('#audio-loader #more-audio').append
+                (`<div class='row file-field input-field'>
+                    <div class='btn'>
+                        <i class='left material-icons'>file_upload</i>
+                        <span>Загрузить</span>
+                        <input name='audio' id='audio' type='file' accept='audio/*'>
+                    </div>
+                    <div class='file-path-wrapper'>
+                        <input class='file-path validate' type='text' placeholder='Загрузить аудиофайл'>
+                    </div>
+                </div>`);
+            }
+        },
+        RemoveAudio: function() {
+            $('#audio-loader #more-audio').children().last().remove();
+        },
     }
 
     // object activation
@@ -462,8 +489,6 @@
 
     // update news when main page becomes visible
     $(document).on("OfferEditorVisible", function () {
-        //PerformerViewModel.UpdatePerformer();
-        //PerformerViewModel.GetOffersList();
         OfferEditorViewModel.GetCategoriesList();
         OfferEditorViewModel.ClearOfferEditor();
         OfferEditorViewModel.UpdateOffer(chunckParams['param']);
@@ -471,9 +496,5 @@
 
     $(document).ready(function() {
         $('input#title-input, textarea#short-descr').characterCounter();
-    });
-
-    $(document).ready(function(){
-        $('.fixed-action-btn').floatingActionButton();
     });
 </script>
