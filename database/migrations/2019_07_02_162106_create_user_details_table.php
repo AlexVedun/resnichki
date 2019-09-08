@@ -18,6 +18,7 @@ class CreateUserDetailsTable extends Migration
             $table->bigInteger('user_id')->unsigned();
             $table->string('avatar')->nullable();
             $table->boolean('is_avatar')->default(false);
+            $table->bigInteger('prof_category_id')->unsigned()->default(1);
             $table->string('contact_name')->nullable();
             $table->string('phone', 15)->nullable();
             $table->string('mobile_1', 15)->nullable();
@@ -33,6 +34,7 @@ class CreateUserDetailsTable extends Migration
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('prof_category_id')->references('id')->on('prof_categories')->onDelete('cascade');
         });
     }
 

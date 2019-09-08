@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\ChangePasswordRequest;
+use App\Models\ProfCategory;
 use Illuminate\Support\Facades\Hash;
 use App\Models\UserDetails;
 use App\User;
@@ -21,7 +22,7 @@ class ManageUserController extends Controller
     public function getUser()
     {
         $user = Auth::user();
-        $user['details'] = $user->details;
+        $user->load('details');
         if($user->details->is_avatar)
         {
             $user->details->avatar = asset(Storage::url($user->details->avatar));
@@ -35,7 +36,7 @@ class ManageUserController extends Controller
 
     public function getUsers()
     {
-        $users = User::with('details')->get();
+        $users = User::with('details', 'details.prof_category')->get();
         return $users;
     }
 
@@ -55,6 +56,7 @@ class ManageUserController extends Controller
         $userDetails->vkontakte = $request->vkontakte;
         $userDetails->web_site = $request->web_site;
         $userDetails->instagram = $request->instagram;
+        $userDetails->prof_category()->associate(ProfCategory::find($request->prof_category_id));
         $user->details()->save($userDetails);
     }
 
@@ -109,5 +111,10 @@ class ManageUserController extends Controller
             $user = User::find($id);
             $user->delete();
         }
+    }
+
+    public function getProfCategories()
+    {
+        return ProfCategory::all();
     }
 }

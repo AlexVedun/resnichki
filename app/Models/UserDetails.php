@@ -13,6 +13,7 @@ class UserDetails extends Model
     protected $fillable = [
         'user_id',
         'avatar',
+        'prof_category_id',
         'contact_name',
         'phone',
         'mobile_1',
@@ -32,5 +33,10 @@ class UserDetails extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    public function prof_category()
+    {
+        return $this->belongsTo(ProfCategory::class, 'prof_category_id', 'id');
     }
 }

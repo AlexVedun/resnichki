@@ -61,6 +61,15 @@
                         <input id="perf_type" type="text" data-bind="attr: { value: contactsForm.perf_type }" disabled>
                         <label class="active" for="perf_type">Исполнитель</label>
                     </div>
+                    <div class="row">
+                        <div class="input-field">
+                            <i class="material-icons prefix">list</i>
+                            <select id="prof-categories-list" data-bind="foreach: prof_categories">
+                                <option data-bind="text: $data.category, value: $data.id"></option>
+                            </select>
+                            <label>Категория</label>
+                        </div>
+                    </div>
                     <div class="row input-field">
                         <i class="material-icons prefix">face</i>
                         <input id="contact_name" type="text" data-bind="value: contactsForm.contact_name">
@@ -171,6 +180,7 @@
         title: ko.observable(''),
         avatar: ko.observable(''),
         is_avatar_change: ko.observable(false),
+        prof_categories: ko.observableArray([]),
         contactsForm: {
             name: ko.observable(''),
             perf_type: ko.observable(''),
@@ -186,6 +196,7 @@
             vkontakte: ko.observable(''),
             web_site: ko.observable(''),
             instagram: ko.observable(''),
+            prof_category_id: ko.observable(0),
         },
         OffersList: ko.observableArray([]),
         // methods
@@ -213,6 +224,7 @@
                             PerformerViewModel.contactsForm.perf_type('Фирма');
                             break;
                     }
+                    SetSelectedItem('prof-categories-list', resp.details.prof_category_id);
                     PerformerViewModel.contactsForm.contact_name(resp.details.contact_name);
                     PerformerViewModel.contactsForm.phone(resp.details.phone);
                     PerformerViewModel.contactsForm.mobile_1(resp.details.mobile_1);
@@ -243,6 +255,7 @@
                     PerformerViewModel.contactsForm.vkontakte('');
                     PerformerViewModel.contactsForm.web_site('');
                     PerformerViewModel.contactsForm.instagram('');
+                    SetSelectedItem('prof-categories-list', 1);
                 }
                 M.updateTextFields();
                 RootViewModel.PreloaderHide();
@@ -254,6 +267,7 @@
             });
         },
         SaveContacts:function() {
+            PerformerViewModel.contactsForm.prof_category_id(GetSelectedItemId('prof-categories-list'));
             let formData = ko.toJS(this.contactsForm);
             RootViewModel.PreloaderShow();
             $.ajax({
@@ -308,7 +322,6 @@
                     xhr.setRequestHeader("Authorization", 'Bearer '+ Cookies.get('wedding_token'));
                 }
             }).done(function(resp) {
-                console.log(resp);
                 PerformerViewModel.OffersList([]);
                 for (const item of resp) {
                     PerformerViewModel.OffersList.push(item);
@@ -339,6 +352,29 @@
                 //ShowModalError('#performer', xhr);
                 //alert("error: " + text);
             });
+        },
+        LoadProfCategories: function() {
+            RootViewModel.PreloaderShow();
+            $.ajax({
+                url: "api/prof_categories/get/",
+                type: 'GET',
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader("Authorization", 'Bearer '+ Cookies.get('wedding_token'));
+                }
+            }).done(function(resp) {
+                PerformerViewModel.prof_categories([]);
+                for (const item of resp) {
+                    PerformerViewModel.prof_categories.push(item);
+                }
+                $('#prof-categories-list').formSelect();
+                RootViewModel.PreloaderHide();
+                PerformerViewModel.UpdatePerformer();
+            }).fail(function(xhr, status, text) {
+                RootViewModel.PreloaderHide();
+                HandleError(xhr, '#offer_editor');
+                //ShowModalError('#offer_editor', xhr);
+                //alert("error: " + text);
+            });
         }
     }
 
@@ -347,8 +383,9 @@
 
     // update news when main page becomes visible
     $(document).on("PerformerVisible", function () {
-        PerformerViewModel.UpdatePerformer();
+        PerformerViewModel.LoadProfCategories();
         PerformerViewModel.GetOffersList();
+        //PerformerViewModel.UpdatePerformer();
     });
 
     // activate tabs
@@ -360,7 +397,4 @@
         $('input#title-input, textarea#short-descr').characterCounter();
     });
 
-    // $(document).ready(function(){
-    //     $('.fixed-action-btn').floatingActionButton();
-    // });
 </script>

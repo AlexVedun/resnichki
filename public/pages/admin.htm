@@ -31,8 +31,8 @@
                                 <th>ФИО</th>
                                 <th>e-mail</th>
                                 <th>Тип</th>
+                                <th>Категория</th>
                                 <th>Роль</th>
-                                <!-- <th>Категория</th>                                 -->
                                 <th></th>
                             </tr>
                         </thead>
@@ -42,6 +42,7 @@
                                 <td><a data-bind="attr: { href: '#user/' + id }, text: name"></a></td>
                                 <td data-bind="text: email"></td>
                                 <td data-bind="text: type"></td>
+                                <td data-bind="text: details.prof_category.category"></td>
                                 <td data-bind="text: role"></td>
                                 <td><button class="btn waves-effect waves-light red" data-bind="click: function(data) { $root.DeleteUser(data) }"><i class="material-icons">delete</i></button></td>
                             </tr>
@@ -134,7 +135,7 @@
                 url: "api/user/get/all",
                 type: 'GET',
                 beforeSend: function (xhr) {
-                    xhr.setRequestHeader("Authorization", 'Bearer '+ Cookies.get('wedding_token') /* localStorage.getItem('wedding_token') */ );
+                    xhr.setRequestHeader("Authorization", 'Bearer '+ Cookies.get('wedding_token'));
                 }
             }).done(function(resp) {
                 AdminViewModel.usersList([]);
@@ -160,6 +161,7 @@
                     }
                     AdminViewModel.usersList.push(item);
                 }
+                console.log(resp);
                 M.updateTextFields();
                 RootViewModel.PreloaderHide();
             }).fail(function(xhr, status, text) {
@@ -176,7 +178,7 @@
                     url: "api/user/" + _user.id,
                     type: 'DELETE',
                     beforeSend: function (xhr) {
-                        xhr.setRequestHeader("Authorization", 'Bearer '+ Cookies.get('wedding_token') /* localStorage.getItem('wedding_token') */ );
+                        xhr.setRequestHeader("Authorization", 'Bearer '+ Cookies.get('wedding_token'));
                     }
                 }).done(function(resp) {
                     AdminViewModel.usersList.remove(_user);
@@ -214,7 +216,7 @@
                 url: "api/offers/get/all",
                 type: 'GET',
                 beforeSend: function (xhr) {
-                    xhr.setRequestHeader("Authorization", 'Bearer '+ Cookies.get('wedding_token') /* localStorage.getItem('wedding_token') */ );
+                    xhr.setRequestHeader("Authorization", 'Bearer '+ Cookies.get('wedding_token'));
                 }
             }).done(function(resp) {
                 console.log(resp);
