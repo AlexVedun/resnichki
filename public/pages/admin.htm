@@ -28,7 +28,14 @@
                     <table class="highlight responsive-table">
                         <thead>
                             <tr>
-                                <th>ФИО</th>
+                                <th data-bind="click: function() {
+                                    console.log('click');
+                                    AdminViewModel.usersList(AdminViewModel.usersList.sorted(function(left, right){
+                                        return left.name === right.name ? 0
+                                                : left.name < right.name ? -1
+                                                : 1;
+                                    }));
+                                }">ФИО</th>
                                 <th>e-mail</th>
                                 <th>Тип</th>
                                 <th>Категория</th>
