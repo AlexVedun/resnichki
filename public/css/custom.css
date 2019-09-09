@@ -4,7 +4,8 @@
     flex-direction: column;
     background-position: 0 0;
     background-repeat: repeat;
-    /* background-image: url('../images/pattern.png'); */
+    background-image: url('../images/pattern.svg');
+    background-size: 400px;
     background-color: #e6d1f2;
   }
 
@@ -36,7 +37,7 @@
 nav {
     border-radius: 0px 0px 20px 20px;
     /* back ground-color: #FCEDF7; */
-    background-color: transparent;
+    background-color: white;
 }
 
 /* .custom-nav {
