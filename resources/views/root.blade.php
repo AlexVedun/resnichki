@@ -6,6 +6,9 @@
 
         <title>Resnichki</title>
 
+        {{-- Icons --}}
+        <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('images/apple-touch-icon-180x180.png') }}">
+        <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('images/favicon-32x32.png') }}">
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
         <link href="https://unpkg.com/ionicons@4.5.10-0/dist/css/ionicons.min.css" rel="stylesheet">
@@ -32,7 +35,7 @@
                                 <img class="responsive-img" src="{{url('images/logo.png')}}">
                             </div> --}}
                             <a href="/" class="brand-logo">
-                                <img style="border-radius: 0px;" class="z-depth-0" src="{{url('images/logo12.svg')}}">
+                                <img style="border-radius: 0px;" class="z-depth-0" src="{{url('images/logo18.svg')}}">
                             </a>
                             <a href="#" data-target="slide-out" class="sidenav-trigger show-on-med-and-down"><i class="material-icons">menu</i></a>
                             <ul id="nav-mobile" class="right hide-on-med-and-down">
@@ -50,7 +53,7 @@
                 <ul id="slide-out" class="sidenav">
                     <li>
                         <div class="background center-align">
-                            <img class="z-depth-0 logo-image" src="{{url('images/logo10.svg')}}">
+                            <img class="z-depth-0 logo-image" src="{{url('images/logo18.svg')}}">
                         </div>
                     </li>
                     <li><div class="divider"></div></li>

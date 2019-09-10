@@ -6,7 +6,7 @@
     background-repeat: repeat;
     background-image: url('../images/pattern.svg');
     background-size: 400px;
-    background-color: #e6d1f2;
+    background-color: #B1B3DA;
   }
 
   main {
@@ -37,7 +37,8 @@
 nav {
     border-radius: 0px 0px 20px 20px;
     /* back ground-color: #FCEDF7; */
-    background-color: white;
+    background-color: rgba(255, 255, 255, 0.9);
+    opacity: 20%;
 }
 
 /* .custom-nav {
@@ -55,7 +56,11 @@ nav {
 
 .card,/* .tabs, */.btn,.card-action,.material-tooltip {
     border-radius: 20px
-    !important
+    !important;
+}
+
+.card {
+    background-color: rgba(255, 255, 255, 0.9);
 }
 
 .custom-tabs {
