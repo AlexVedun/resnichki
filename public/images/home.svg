@@ -1,0 +1,23 @@
+<svg id="Пиктограммы_сайта" data-name="Пиктограммы сайта" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+        stroke: #000;
+        stroke-linecap: round;
+        stroke-miterlimit: 10;
+        stroke-width: 6px;
+      }
+    </style>
+  </defs>
+  <title>Главная страница</title>
+  <g>
+    <line class="cls-1" x1="4.9" y1="41.3" x2="49.5" y2="5"/>
+    <path class="cls-1" d="M94,41.1,78.3,28.3l.2-14A1.5,1.5,0,0,0,77,12.7H72.6a1.5,1.5,0,0,0-1.5,1.5v8.3L49.5,5"/>
+    <line class="cls-1" x1="10.6" y1="36.6" x2="10.6" y2="94"/>
+    <line class="cls-1" x1="88.3" y1="94" x2="10.6" y2="94"/>
+    <line class="cls-1" x1="88.3" y1="36.5" x2="88.3" y2="94"/>
+    <ellipse cx="53.2" cy="73.8" rx="2.5" ry="2.7"/>
+    <path class="cls-1" d="M39.9,55.6H59.4a2,2,0,0,1,2,2V94a0,0,0,0,1,0,0H37.9a0,0,0,0,1,0,0V57.6A2,2,0,0,1,39.9,55.6Z"/>
+  </g>
+</svg>

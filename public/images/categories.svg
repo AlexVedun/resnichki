@@ -1,0 +1,24 @@
+<svg id="Пиктограммы_сайта" data-name="Пиктограммы сайта" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+        stroke: #000;
+        stroke-miterlimit: 10;
+        stroke-width: 6px;
+      }
+    </style>
+  </defs>
+  <title>Меню</title>
+  <g>
+    <circle class="cls-1" cx="19.7" cy="20.2" r="10"/>
+    <circle class="cls-1" cx="49.7" cy="20.2" r="10"/>
+    <circle class="cls-1" cx="79.6" cy="20.1" r="10"/>
+    <circle class="cls-1" cx="19.7" cy="50.2" r="10"/>
+    <circle class="cls-1" cx="49.7" cy="50.2" r="10"/>
+    <circle class="cls-1" cx="79.7" cy="50.1" r="10"/>
+    <circle class="cls-1" cx="19.7" cy="80.2" r="10"/>
+    <circle class="cls-1" cx="49.7" cy="80.2" r="10"/>
+    <circle class="cls-1" cx="79.7" cy="80.1" r="10"/>
+  </g>
+</svg>

@@ -34,8 +34,8 @@
                             {{-- <div class="brand-logo">
                                 <img class="responsive-img" src="{{url('images/logo.png')}}">
                             </div> --}}
-                            <a href="/" class="brand-logo">
-                                <img style="border-radius: 0px;" class="z-depth-0" src="{{url('images/logo18.svg')}}">
+                            <a href="#main" class="brand-logo">
+                                <img style="border-radius: 0px;" class="z-depth-0" src="{{url('images/logo.svg')}}">
                             </a>
                             <a href="#" data-target="slide-out" class="sidenav-trigger show-on-med-and-down"><i class="material-icons">menu</i></a>
                             <ul id="nav-mobile" class="right hide-on-med-and-down">
@@ -44,6 +44,11 @@
                                 <li><a href="#login" data-bind="hidden: isLogin" class="tooltipped main-menu" data-position="bottom" data-tooltip="Вход"><i class="icon ion-md-log-in black-text"></i></a></li>
                                 <li><a href="#account" data-bind="visible: isLogin" class="tooltipped main-menu" data-position="bottom" data-tooltip="Личный кабинет"><i class="material-icons black-text">account_circle</i></a></li>
                                 <li><a href="#logout" data-bind="visible: isLogin" class="tooltipped main-menu" data-position="bottom" data-tooltip="Выход"><i class="icon ion-md-log-out black-text"></i></a></li>
+                                {{-- <li><a href="#main" data-bind="" class="tooltipped main-menu" data-position="bottom" data-tooltip="Главная"><img href="{{ asset('images/home.svg') }}"></a></li>
+                                <li><a href="#categories" data-bind="" class="tooltipped main-menu" data-position="bottom" data-tooltip="Категории"><i class="material-icons black-text">view_comfy</i></a></li>
+                                <li><a href="#login" data-bind="hidden: isLogin" class="tooltipped main-menu" data-position="bottom" data-tooltip="Вход"><i class="icon ion-md-log-in black-text"></i></a></li>
+                                <li><a href="#account" data-bind="visible: isLogin" class="tooltipped main-menu" data-position="bottom" data-tooltip="Личный кабинет"><i class="material-icons black-text">account_circle</i></a></li>
+                                <li><a href="#logout" data-bind="visible: isLogin" class="tooltipped main-menu" data-position="bottom" data-tooltip="Выход"><i class="icon ion-md-log-out black-text"></i></a></li> --}}
                             </ul>
                         </div>
                     </nav>
@@ -53,7 +58,7 @@
                 <ul id="slide-out" class="sidenav">
                     <li>
                         <div class="background center-align">
-                            <img class="z-depth-0 logo-image" src="{{url('images/logo18.svg')}}">
+                            <img class="z-depth-0 logo-image" src="{{url('images/logo.svg')}}">
                         </div>
                     </li>
                     <li><div class="divider"></div></li>
