@@ -28,17 +28,10 @@
                     <table class="highlight responsive-table">
                         <thead>
                             <tr>
-                                <th data-bind="click: function() {
-                                    console.log('click');
-                                    AdminViewModel.usersList(AdminViewModel.usersList.sorted(function(left, right){
-                                        return left.name === right.name ? 0
-                                                : left.name < right.name ? -1
-                                                : 1;
-                                    }));
-                                }">ФИО</th>
-                                <th>e-mail</th>
-                                <th>Тип</th>
-                                <th>Категория</th>
+                                <th data-bind="click: SortByUserName">ФИО</th>
+                                <th data-bind="click: SortByUserEmail">e-mail</th>
+                                <th data-bind="click: SortByUserType">Тип</th>
+                                <th data-bind="click: SortByUserProfCat">Категория</th>
                                 <th>Роль</th>
                                 <th></th>
                             </tr>
@@ -67,9 +60,9 @@
                         <thead>
                             <tr>
                                 <th>Дата</th>
-                                <th>Категория</th>
-                                <th>Заголовок</th>
-                                <th>Пользователь</th>
+                                <th data-bind="click: SortByOfferCat">Категория</th>
+                                <th data-bind="click: SortByOfferTitle">Заголовок</th>
+                                <th data-bind="click: SortByOfferPerf">Пользователь</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -134,6 +127,17 @@
         offersList: ko.observableArray([]),
         AdminNews: {
             news: ko.observable(''),
+        },
+        userListSort: {
+            isSortByName: false,
+            isSortByEmail: false,
+            isSortByUserType: false,
+            isSortByUserProfCat: false,
+        },
+        offersListSort: {
+            isSortByOfferCat: false,
+            isSortByOfferTitle: false,
+            isSortByOfferPerf: false,
         },
         // methods
         UpdateUsers: function() {
@@ -261,71 +265,111 @@
                 //alert("error: " + text);
             });
         },
-        ChangePassword: function() {
-            // let formData = ko.toJS(this.changePasswordForm);
-            // RootViewModel.PreloaderShow();
-            // $.ajax({
-            //     url: "api/user/password/change",
-            //     data: formData,
-            //     type: 'POST',
-            //     beforeSend: function (xhr) {
-            //         xhr.setRequestHeader("Authorization", 'Bearer '+ Cookies.get('wedding_token') /* localStorage.getItem('wedding_token') */);
-            //     }
-            // }).done(function(resp) {
-            //     M.toast({html: resp.message, classes: 'rounded'});
-            //     for (const key in PerformerViewModel.changePasswordForm) {
-            //         if (PerformerViewModel.changePasswordForm.hasOwnProperty(key)) {
-            //             const element = PerformerViewModel.changePasswordForm[key];
-            //             element('');
-            //         }
-            //     }
-            //     RootViewModel.PreloaderHide();
-            // }).fail(function(xhr, status, text) {
-            //     console.log(xhr);
-            //     RootViewModel.PreloaderHide();
-            //     ShowModalError('#performer', xhr);
-            //     //alert("error: " + text);
-            // });
+        SwitchUserSort: function(_switchTo)
+        {
+            for (const key in AdminViewModel.userListSort) {
+                AdminViewModel.userListSort[key] = false;
+            }
+            AdminViewModel.userListSort[_switchTo] = true;
         },
-        GetOffersList: function() {
-            // RootViewModel.PreloaderShow();
-            // $.ajax({
-            //     url: "api/offers/get",
-            //     type: 'GET',
-            //     beforeSend: function (xhr) {
-            //         xhr.setRequestHeader("Authorization", 'Bearer '+ Cookies.get('wedding_token') /* localStorage.getItem('wedding_token') */ );
-            //     }
-            // }).done(function(resp) {
-            //     console.log(resp);
-            //     PerformerViewModel.OffersList([]);
-            //     for (const item of resp) {
-            //         PerformerViewModel.OffersList.push(item);
-            //     }
-            //     RootViewModel.PreloaderHide();
-            // }).fail(function(xhr, status, text) {
-            //     RootViewModel.PreloaderHide();
-            //     ShowModalError('#performer', xhr);
-            //     //alert("error: " + text);
-            // });
+        SwitchOffersSort: function(_switchTo)
+        {
+            for (const key in AdminViewModel.offersListSort) {
+                AdminViewModel.offersListSort[key] = false;
+            }
+            AdminViewModel.offersListSort[_switchTo] = true;
         },
-        DeleteOffer: function(_offer) {
-            // RootViewModel.PreloaderShow();
-            // $.ajax({
-            //     url: "api/offers/" + _offer.id,
-            //     type: 'DELETE',
-            //     beforeSend: function (xhr) {
-            //         xhr.setRequestHeader("Authorization", 'Bearer '+ Cookies.get('wedding_token') /* localStorage.getItem('wedding_token') */ );
-            //     }
-            // }).done(function(resp) {
-            //     PerformerViewModel.OffersList.remove(_offer);
-            //     M.toast({html: 'Успешно удалено!', classes: 'rounded'});
-            //     RootViewModel.PreloaderHide();
-            // }).fail(function(xhr, status, text) {
-            //     RootViewModel.PreloaderHide();
-            //     ShowModalError('#performer', xhr);
-            //     //alert("error: " + text);
-            // });
-        }
+        SortByUserName: function() {
+            if(!AdminViewModel.userListSort.isSortByName) {
+                AdminViewModel.SwitchUserSort('isSortByName');
+                AdminViewModel.usersList(AdminViewModel.usersList.sorted(function(left, right){
+                    return left.name === right.name ? 0
+                            : left.name < right.name ? -1
+                            : 1;
+                }));
+            }
+            else {
+                AdminViewModel.usersList(AdminViewModel.usersList.reversed());
+            }
+        },
+        SortByUserEmail: function() {
+            if(!AdminViewModel.userListSort.isSortByEmail) {
+               AdminViewModel.SwitchUserSort('isSortByEmail');
+                AdminViewModel.usersList(AdminViewModel.usersList.sorted(function(left, right){
+                    return left.email === right.email ? 0
+                            : left.email < right.email ? -1
+                            : 1;
+                }));
+            }
+            else {
+                AdminViewModel.usersList(AdminViewModel.usersList.reversed());
+            }
+        },
+        SortByUserType: function() {
+            if(!AdminViewModel.userListSort.isSortByUserType) {
+               AdminViewModel.SwitchUserSort('isSortByUserType');
+                AdminViewModel.usersList(AdminViewModel.usersList.sorted(function(left, right){
+                    return left.type === right.type ? 0
+                            : left.type < right.type ? -1
+                            : 1;
+                }));
+            }
+            else {
+                AdminViewModel.usersList(AdminViewModel.usersList.reversed());
+            }
+        },
+        SortByUserProfCat: function() {
+            if(!AdminViewModel.userListSort.isSortByUserProfCat) {
+               AdminViewModel.SwitchUserSort('isSortByUserProfCat');
+                AdminViewModel.usersList(AdminViewModel.usersList.sorted(function(left, right){
+                    return left.details.prof_category.category === right.details.prof_category.category ? 0
+                            : left.details.prof_category.category < right.details.prof_category.category ? -1
+                            : 1;
+                }));
+            }
+            else {
+                AdminViewModel.usersList(AdminViewModel.usersList.reversed());
+            }
+        },
+        SortByOfferCat: function() {
+            if(!AdminViewModel.offersListSort.isSortByOfferCat) {
+                AdminViewModel.SwitchOffersSort('isSortByOfferCat');
+                AdminViewModel.offersList(AdminViewModel.offersList.sorted(function(left, right){
+                    return left.category.name === right.category.name ? 0
+                            : left.category.name < right.category.name ? -1
+                            : 1;
+                }));
+            }
+            else {
+                AdminViewModel.offersList(AdminViewModel.offersList.reversed());
+            }
+        },
+        SortByOfferTitle: function() {
+            if(!AdminViewModel.offersListSort.isSortByOfferTitle) {
+                AdminViewModel.SwitchOffersSort('isSortByOfferTitle');
+                AdminViewModel.offersList(AdminViewModel.offersList.sorted(function(left, right){
+                    return left.title === right.title ? 0
+                            : left.title < right.title ? -1
+                            : 1;
+                }));
+            }
+            else {
+                AdminViewModel.offersList(AdminViewModel.offersList.reversed());
+            }
+        },
+        SortByOfferPerf: function() {
+            if(!AdminViewModel.offersListSort.isSortByOfferPerf) {
+                AdminViewModel.SwitchOffersSort('isSortByOfferPerf');
+                AdminViewModel.offersList(AdminViewModel.offersList.sorted(function(left, right){
+                    return left.user.name === right.user.name ? 0
+                            : left.user.name < right.user.name ? -1
+                            : 1;
+                }));
+            }
+            else {
+                AdminViewModel.offersList(AdminViewModel.offersList.reversed());
+            }
+        },
     }
 
     // object activation
