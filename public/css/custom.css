@@ -61,6 +61,15 @@ nav {
 
 .card {
     background-color: rgba(255, 255, 255, 0.9);
+    /* font-family: Helvetica-Light; */
+    font-family: ArialRoundedMTProCyr-Bold;
+    font-size: 1.2em;
+    font-kerning: normal;
+    font-weight: 100;
+}
+
+.title-card {
+    font-family: Helvetica-Bold;
 }
 
 .custom-tabs {

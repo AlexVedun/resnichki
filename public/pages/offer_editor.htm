@@ -1,7 +1,7 @@
 <div id="offer-editor-div">
     <div class="row"></div>
     <div class="row">
-        <div class="card col s12 m8 offset-m2 l8 offset-l2 xl8 offset-xl2">
+        <div class="card title-card col s12 m8 offset-m2 l8 offset-l2 xl8 offset-xl2">
             <div class="card-content" style="padding: 0px">
                 <span class="center-align"><h3 class="truncate">Редактор предложения</h3></span>
             </div>
@@ -13,7 +13,7 @@
             <form method="post" id="offer-editor-form" class="col s12 m8 offset-m2 l8 offset-l2 xl8 offset-xl2" enctype="multipart/form-data" data-bind="submit: SaveChanges">
                 <div class="row card">
                     <div class="card-content">
-                        <span class="card-title center-align">Описание</span>
+                        <span class="card-title center-align title-card">Описание</span>
                         <div class="row">
                             <div class="input-field">
                                 <i class="material-icons prefix">mode_edit</i>
@@ -52,7 +52,7 @@
             <!-- Обложка -->
                 <div class="row card">
                     <div class="card-content">
-                        <span class="card-title center-align">Обложка</span>
+                        <span class="card-title center-align title-card">Обложка</span>
                         <div class="row center-align">
                             <img class="offer-editor-image responsive-img" data-bind="attr: { src: offerEditorForm.cover }">
                         </div>
@@ -72,7 +72,7 @@
             <!-- Фотографии -->
                 <div class="row card">
                     <div class="card-content">
-                        <span class="card-title center-align">Фотографии</span>
+                        <span class="card-title center-align title-card">Фотографии</span>
                         <div class="row">
                             <table data-bind="foreach: offerEditorForm.photo">
                                 <tr>
@@ -110,7 +110,7 @@
             <!-- Видео -->
                 <div class="row card">
                     <div class="card-content">
-                        <span class="card-title center-align">Видео</span>
+                        <span class="card-title center-align title-card">Видео</span>
                         <div class="row">
                             <table data-bind="foreach: offerEditorForm.video">
                                 <tr>
@@ -150,7 +150,7 @@
             <!-- Аудио -->
                 <div class="row card">
                     <div class="card-content">
-                        <span class="card-title center-align">Аудио</span>
+                        <span class="card-title center-align title-card">Аудио</span>
                         <div class="row">
                             <table data-bind="foreach: offerEditorForm.audio">
                                 <tr>
