@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Category;
 use Illuminate\Support\Facades\File;
 use App\Helpers\GlobalFunctions;
+use App\Models\Offer;
 use Illuminate\Support\Facades\Storage;
 
 class CategoryController extends Controller
@@ -66,7 +67,7 @@ class CategoryController extends Controller
     public function show($id)
     {
         $categoryName = Category::find($id)->name;
-        $categoryOffers = Category::find($id)->offers;
+        $categoryOffers = Offer::where('category_id', $id)->latest('updated_at')->get();
         foreach ($categoryOffers as $offer) {
             if ($offer->is_cover)
             {

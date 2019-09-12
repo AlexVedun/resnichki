@@ -37,8 +37,7 @@ class ManageOffersController extends Controller
     public function getOffers()
     {
         $user = Auth::user();
-        $user->offers->load('details.offerMedia');
-        $offers = $user->offers;
+        $offers = Offer::with('details', 'details.offerMedia')->where('user_id', $user->id)->latest('updated_at')->get();
         foreach ($offers as $offer)
         {
             $this->fixUrls($offer);

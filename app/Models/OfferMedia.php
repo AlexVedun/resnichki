@@ -18,6 +18,8 @@ class OfferMedia extends Model
         'updated_at',
     ];
 
+    protected $touches = ['offerDetails'];
+
     public function offerDetails()
     {
         return $this->belongsTo(OfferDetails::class, 'offer_details_id', 'id');

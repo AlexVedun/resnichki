@@ -20,6 +20,8 @@ class OfferDetails extends Model
         'updated_at',
     ];
 
+    protected $touches = ['offer'];
+
     public function offerMedia()
     {
         return $this->hasMany(OfferMedia::class);
