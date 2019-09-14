@@ -185,7 +185,6 @@
                     if ($page.find(">:first-child").length == 0) {
                         $.ajax({
                             url: "api/chunck/" + _chunck,
-                            //data: { Chunck: _chunck },
                             type: 'GET'
                         }).done(function (html) {
                             if (html) {
@@ -196,7 +195,6 @@
                         }).fail(function (xhr, status, text) {
                             RootViewModel.PreloaderHide();
                             ShowModalError('#main', xhr);
-                            //alert("error: " + text);
                         });
                     } else {
                         this.PreloaderHide();;
@@ -216,7 +214,7 @@
                         url: "api/logout",
                         type: 'GET',
                         beforeSend: function (xhr) {
-                            xhr.setRequestHeader("Authorization", 'Bearer '+ Cookies.get('wedding_token') /* localStorage.getItem('wedding_token') */);
+                            xhr.setRequestHeader("Authorization", 'Bearer '+ Cookies.get('wedding_token'));
                         }
                     }).done(function (resp) {
                         RootViewModel.isLogin(false);
@@ -230,7 +228,7 @@
                     });
                 });
                 this.get('#account', function(){
-                    switch (localStorage.getItem('user_role')/* userRole */) {
+                    switch (localStorage.getItem('user_role')) {
                         case 'admin':
                             location.hash = '#admin';
                             break;
@@ -242,7 +240,7 @@
                     }
                 });
                 this.get('#admin', function() {
-                    switch (localStorage.getItem('user_role')/* userRole */) {
+                    switch (localStorage.getItem('user_role')) {
                         case 'admin':
                             RootViewModel.HideAll();
                             RootViewModel.ShowChunck('admin');

@@ -62,8 +62,6 @@
                 data: formData,
                 type: 'POST'
             }).done(function(resp) {
-                //RootViewModel.token(resp.token);
-                //localStorage.setItem('wedding_token', resp.token);
                 let expires = new Date(resp.expires_at);
                 SetCookie('wedding_token', resp.token, expires.toUTCString());
                 RootViewModel.PreloaderHide();
@@ -72,11 +70,9 @@
                 LoginViewModel.CleanForm();
                 switch (resp.user.role) {
                     case 'admin':
-                        //userRole = resp.user.role;
                         location.hash = '#admin';
                         break;
                     case 'perf':
-                        //userRole = resp.user.role;
                         location.hash = '#performer';
                         break;
                 }
