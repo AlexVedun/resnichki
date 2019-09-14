@@ -38,24 +38,7 @@ class OfferController extends Controller
      */
     public function store(Request $request)
     {
-        $newOffer = Offer::create([
-            'title' => $request->title,
-            'short_descr' => $request->short_descr,
-            'category_id' => $request->category_id,
-            //'user_id' => User::id,
-            'user_id' => 2,
-            'cover' => $request->cover,
-        ]);
-        $newOffer->details()->create([
-            'description' => $request->description,
-            'is_video' => $request->is_video,
-            'is_photo' => $request->is_photo,
-            'is_audio' => $request->is_audio,
-        ]);
-        $newOffer->news()->create([
-            'news' => $newOffer->title,
-            'user_id' => $newOffer->user_id,
-        ]);
+
     }
 
     /**
@@ -66,10 +49,7 @@ class OfferController extends Controller
      */
     public function show($id)
     {
-        $offer = Offer::find($id);
-        $offer->details->load('offerMedia');
-        $offer->load('user');
-        //$offer->cover = GlobalFunctions::ConvertImage2base64('//media//covers//'.$offer->cover);
+        $offer = Offer::with('user', 'details.offerMedia')->find($id);
         if ($offer->is_cover)
         {
             $offer->cover = asset(Storage::url($offer->cover));
@@ -81,7 +61,6 @@ class OfferController extends Controller
         foreach ($offer->details->offerMedia as $item) {
             $item->path_to_file = asset(Storage::url($item->path_to_file));
         }
-        $offer['details'] = $offer->details;
         return $offer;
     }
 
@@ -116,7 +95,6 @@ class OfferController extends Controller
      */
     public function destroy($id)
     {
-        $offer = Offer::find($id);
-        $offer->delete();
+
     }
 }

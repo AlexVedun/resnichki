@@ -19,22 +19,19 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::all();
-        $result = collect();
         foreach ($categories as $category) {
-            $item = $category;
-            if ($item->is_cover)
+            if ($category->is_cover)
             {
-                $item->cover = asset(Storage::url($item->cover));
-                $item->icon = asset(Storage::url($item->icon));
+                $category->cover = asset(Storage::url($category->cover));
+                $category->icon = asset(Storage::url($category->icon));
             }
             else
             {
-                $item->cover = asset($item->cover);
-                $item->icon = asset($item->icon);
+                $category->cover = asset($category->cover);
+                $category->icon = asset($category->icon);
             }
-            $result->push($item);
         }
-        return $result;
+        return $categories;
     }
 
     /**
