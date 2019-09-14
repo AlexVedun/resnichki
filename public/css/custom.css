@@ -134,10 +134,6 @@ a.main-menu:hover {
     background-color: inherit;
 }
 
-/*section {
-    display: none;
+input[type=text]:not(.browser-default):disabled {
+    color: rgba(0,0,0,1) !important;
 }
-
-section.active {
-    display: block;
-}*/
