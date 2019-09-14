@@ -75,7 +75,7 @@ class CategoryController extends Controller
             }
             else
             {
-                $offer->cover = asset('/covers/no_cover.png');
+                $offer->cover = asset('/covers/no_cover.svg');
             }
         }
         return response()->json([

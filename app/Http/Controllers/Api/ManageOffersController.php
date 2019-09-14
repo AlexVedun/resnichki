@@ -23,7 +23,7 @@ class ManageOffersController extends Controller
         }
         else
         {
-            $offer->cover = asset('/covers/no_cover.png');
+            $offer->cover = asset('/covers/no_cover.svg');
         }
         if ($offer->details != null)
         {

@@ -76,7 +76,7 @@ class OfferController extends Controller
         }
         else
         {
-            $offer->cover = GlobalFunctions::ConvertImage2base64('/covers/no_cover.png');
+            $offer->cover = asset('/covers/no_cover.svg');
         }
         foreach ($offer->details->offerMedia as $item) {
             $item->path_to_file = asset(Storage::url($item->path_to_file));
