@@ -36,7 +36,8 @@
                                 <img class="responsive-img" src="{{url('images/logo.png')}}">
                             </div> --}}
                             <a href="#main" class="brand-logo">
-                                <img style="border-radius: 0px;" class="z-depth-0" src="{{url('images/logo.svg')}}">
+                                <img style="border-radius: 0px;" class="z-depth-0" src="{{url('images/logo_wo_border.svg')}}">
+                                <img hidden id="logo-with-border" style="border-radius: 0px;" class="z-depth-0" src="{{url('images/logo.svg')}}">
                             </a>
                             <a href="#" data-target="slide-out" class="sidenav-trigger show-on-med-and-down"><i class="material-icons">menu</i></a>
                             <ul id="nav-mobile" class="right hide-on-med-and-down">

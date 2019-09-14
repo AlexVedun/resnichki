@@ -119,7 +119,7 @@
 
     // update news when main page becomes visible
     $(document).on("MainVisible", function () {
-        $('.big-logo').attr('src', $('a.brand-logo').find('img').attr('src'));  // копируем адрес файла с логотипом
+        $('.big-logo').attr('src', $('a.brand-logo').find('#logo-with-border').attr('src'));  // копируем адрес файла с логотипом
         MainViewModel.lastPage(false);
         MainViewModel.currentPage(0);
         MainViewModel.UpdateNews();
