@@ -17,9 +17,9 @@ class CreateOfferDetailsTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('offer_id')->unsigned();
             $table->text('description')->nullable();
-            $table->boolean('is_photo')->default(false);
-            $table->boolean('is_video')->default(false);
-            $table->boolean('is_audio')->default(false);
+            // $table->boolean('is_photo')->default(false);
+            // $table->boolean('is_video')->default(false);
+            // $table->boolean('is_audio')->default(false);
             $table->timestamps();
 
             $table->foreign('offer_id')->references('id')->on('offers')->onDelete('cascade');

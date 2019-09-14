@@ -209,9 +209,9 @@
             categories: ko.observableArray([]),
             is_cover_change: ko.observable(false),
             description: ko.observable(''),
-            is_photo: ko.observable(),
-            is_video: ko.observable(),
-            is_audio: ko.observable(),
+            // is_photo: ko.observable(),
+            // is_video: ko.observable(),
+            // is_audio: ko.observable(),
             photo: ko.observableArray([]),
             video: ko.observableArray([]),
             audio: ko.observableArray([]),
@@ -300,9 +300,9 @@
                     OfferEditorViewModel.offerEditorForm.description(resp.details.description);
                     M.textareaAutoResize($('#short-descr'));
                     M.textareaAutoResize($('#description'));
-                    OfferEditorViewModel.offerEditorForm.is_photo(resp.details.is_photo);
-                    OfferEditorViewModel.offerEditorForm.is_video(resp.details.is_video);
-                    OfferEditorViewModel.offerEditorForm.is_audio(resp.details.is_audio);
+                    // OfferEditorViewModel.offerEditorForm.is_photo(resp.details.is_photo);
+                    // OfferEditorViewModel.offerEditorForm.is_video(resp.details.is_video);
+                    // OfferEditorViewModel.offerEditorForm.is_audio(resp.details.is_audio);
                     OfferEditorViewModel.offerEditorForm.offer_id(resp.id);
                     SetSelectedItem('categories-list', resp.category_id);
                     OfferEditorViewModel.offerEditorForm.photo([]);
