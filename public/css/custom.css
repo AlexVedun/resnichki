@@ -137,3 +137,11 @@ a.main-menu:hover {
 input[type=text]:not(.browser-default):disabled {
     color: rgba(0,0,0,1) !important;
 }
+
+#manage-users-form div.card-content {
+    overflow-y: auto;
+}
+
+.nav-wrapper .sidenav-trigger .material-icons {
+    color: black !important;
+}
