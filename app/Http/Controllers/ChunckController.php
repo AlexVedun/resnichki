@@ -46,7 +46,7 @@ class ChunckController extends Controller
      */
     public function show($id)
     {
-        $content = File::get(public_path().'\\pages\\'.$id.'.htm');
+        $content = File::get(public_path().'/pages/'.$id.'.htm');
         return response($content, 200)->header('Content-Type', 'text/html');
     }
 
